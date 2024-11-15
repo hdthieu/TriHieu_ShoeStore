@@ -36,5 +36,7 @@ public class Product {
     private List<ProductDetail> productDetails;
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
-
+    @ManyToOne
+    @JoinColumn(name = "promotionID", nullable = true)
+    private Promotion promotion;
 }

@@ -15,9 +15,8 @@ public class User {
     private int userID;
     private String name;
     private String email;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "addressID")
-    private Address address;
+    @OneToMany(mappedBy = "user")
+    private List<Address> addresses;
     @Column(name = "phoneNumber")
     private String phoneNumber;
     private String password;

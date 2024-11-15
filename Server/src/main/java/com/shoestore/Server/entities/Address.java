@@ -15,7 +15,8 @@ public class Address {
     private String city;
     private String ward;
     private String district;
-    @OneToOne(mappedBy = "address",cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "userID")
     private User user;
 
 
