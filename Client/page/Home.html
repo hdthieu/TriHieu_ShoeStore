@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="../css/Home.css" />
+</head>
+
+<body class="page-home">
+  <!-- Navbar -->
+  <div id="header"></div>
+
+  <div class="header">
+    <div class="slogan slogan-top">Step in Style</div>
+    <img src="../images/boots.png" alt="Ski Boots" class="header__boot-image header__boot-image--show" />
+    <div class="slogan slogan-bottom">Conquer Every Journey!</div>
+  </div>
+
+  <!-- Featured Items Section -->
+  <section class="featured-items py-5">
+    <div class="container">
+      <h2 class="featured-items__title text-center mb-5">Featured Items</h2>
+      <div class="row">
+        <!-- Item 1 -->
+        <div class="featured-items__item col-md-4 mb-4">
+          <div class="featured-items__content text-center p-4 border">
+            <img src="../images/shoe1.png" alt="Running Shoes" class="featured-items__image img-fluid mb-3"
+              style="height: 200px;" />
+            <h5 class="featured-items__category text-uppercase">
+              Men - On | Swiss Performance
+            </h5>
+            <h3 class="featured-items__name font-weight-bold">Running Shoes</h3>
+            <p class="featured-items__price old-price text-muted">
+              <s>$90.00</s>
+              <span class="featured-items__price--discount text-primary">$65.00</span>
+            </p>
+            <a href="#" class="featured-items__link btn btn-link text-warning font-weight-bold">Shop Now <i
+                class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="featured-items__item col-md-4 mb-4">
+          <div class="featured-items__content text-center p-4 border">
+            <img src="../images/shoe2.png" alt="Tennis Shoes" class="featured-items__image img-fluid mb-3"
+              style="height: 200px;" />
+            <h5 class="featured-items__category text-uppercase">
+              Asics Gel-Resolution
+            </h5>
+            <h3 class="featured-items__name font-weight-bold">Tennis Shoes</h3>
+            <p class="featured-items__price old-price text-muted">
+              <s>$130.00</s>
+              <span class="featured-items__price--discount text-danger">$95.00</span>
+            </p>
+            <a href="#" class="featured-items__link btn btn-link text-warning font-weight-bold">Shop Now <i
+                class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="featured-items__item col-md-4 mb-4">
+          <div class="featured-items__content text-center p-4 border">
+            <img src="../images/shoe3.png" alt="Running Shoes" class="featured-items__image img-fluid mb-3"
+              style="height: 200px;" />
+            <h5 class="featured-items__category text-uppercase">
+              Men - On | Swiss Performance
+            </h5>
+            <h3 class="featured-items__name font-weight-bold">Running Shoes</h3>
+            <p class="featured-items__price old-price text-muted">
+              <s>$70.00</s>
+              <span class="featured-items__price--discount text-success">$56.00</span>
+            </p>
+            <a href="#" class="featured-items__link btn btn-link text-warning font-weight-bold">Shop Now <i
+                class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="banner">
+    <img src="../images/banner.png" alt="Banner"/>
+  </div>
+  
+  <div class="product-tab-container">
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <div class="tab-item active">
+        <i class="fas fa-check"></i>
+        <span class="tab-title">Sellers</span>
+      </div>
+      <div class="tab-item">
+        <i class="fas fa-check"></i>
+        <span class="tab-title">Arrival</span>
+      </div>
+      <div class="tab-item">
+        <i class="fas fa-check"></i>
+        <span class="tab-title">Trending</span>
+      </div>
+    </div>
+
+    <div class="related-products-v2">
+      <h2 class="productList__title">Product List</h2>
+      
+      <div class="productList__list">
+        <button class="" onclick="scrollProducts('prev')">&lt;</button>
+        <div class="productList__card">
+          <div class="productList__image-wrapper">
+            <img src="../images/../images/product1.jpg" alt="Product 1" class="productList__image">
+            <span class="productList__discount-badge">-20%</span>
+          </div>
+          <div class="productList__info">
+            <div class="productList__name">Product 1</div>
+            <div class="productList__category">Category</div>
+            <div class="productList__price">
+              $100 <span class="productList__price--old">$120</span>
+            </div>
+          </div>
+          <div class="productList__actions">
+            <button class="productList__add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        
+        <div class="productList__list">
+          <div class="productList__card">
+            <div class="productList__image-wrapper">
+              <img src="../images/product2.jpg" alt="Product 1" class="productList__image">
+              <span class="productList__discount-badge">-20%</span>
+            </div>
+            <div class="productList__info">
+              <div class="productList__name">Product 1</div>
+              <div class="productList__category">Category</div>
+              <div class="productList__price">
+                $100 <span class="productList__price--old">$120</span>
+              </div>
+            </div>
+            <div class="productList__actions">
+              <button class="productList__add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+          <div class="productList__card">
+            <div class="productList__image-wrapper">
+              <img src="../images/product1.jpg" alt="Product 1" class="productList__image">
+              <span class="productList__discount-badge">-20%</span>
+            </div>
+            <div class="productList__info">
+              <div class="productList__name">Product 1</div>
+              <div class="productList__category">Category</div>
+              <div class="productList__price">
+                $100 <span class="productList__price--old">$120</span>
+              </div>
+            </div>
+            <div class="productList__actions">
+              <button class="productList__add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+          <div class="productList__card">
+            <div class="productList__image-wrapper">
+              <img src="../images/product1.jpg" alt="Product 1" class="productList__image">
+              <span class="productList__discount-badge">-20%</span>
+            </div>
+            <div class="productList__info">
+              <div class="productList__name">Product 1</div>
+              <div class="productList__category">Category</div>
+              <div class="productList__price">
+                $100 <span class="productList__price--old">$120</span>
+              </div>
+            </div>
+            <div class="productList__actions">
+              <button class="productList__add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+          <div class="productList__card">
+            <div class="productList__image-wrapper">
+              <img src="../images/product1.jpg" alt="Product 1" class="productList__image">
+              <span class="productList__discount-badge">-20%</span>
+            </div>
+            <div class="productList__info">
+              <div class="productList__name">Product 1</div>
+              <div class="productList__category">Category</div>
+              <div class="productList__price">
+                $100 <span class="productList__price--old">$120</span>
+              </div>
+            </div>
+            <div class="productList__actions">
+              <button class="productList__add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+          <div class="productList__card">
+            <div class="productList__image-wrapper">
+              <img src="../images/product1.jpg" alt="Product 1" class="productList__image">
+              <span class="productList__discount-badge">-20%</span>
+            </div>
+            <div class="productList__info">
+              <div class="productList__name">Product 1</div>
+              <div class="productList__category">Category</div>
+              <div class="productList__price">
+                $100 <span class="productList__price--old">$120</span>
+              </div>
+            </div>
+            <div class="productList__actions">
+              <button class="productList__add-to-cart">Add to Cart</button>
+            </div>
+          </div>
+          <div class="productList__card">
+            <div class="productList__image-wrapper">
+              <img src="../images/product1.jpg" alt="Product 1" class="productList__image">
+              <span class="productList__discount-badge">-20%</span>
+            </div>
+            <div class="productList__info">
+              <div class="productList__name">Product 1</div>
+              <div class="productList__category">Category</div>
+              <div class="productList__price">
+                $100 <span class="productList__price--old">$120</span>
+              </div>
+            </div>
+            <div class="productList__actions">
+              <button class="productList__add-to-cart">Add to Cart</button>
+            </div>
+          </div>               
+      </div>
+  
+      <button class="" onclick="scrollProducts('next')">&gt;</button>
+  </div>
+  
+  </div>
+
+  <!-- Service Section -->
+  <div class="service-container">
+    <div class="service-box">
+      <div class="service-icon">🚀</div> <!-- Replace with actual icon image if needed -->
+      <div class="service-title">EXPRESS SHIPPING</div>
+      <div class="service-description">Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque</div>
+    </div>
+    <div class="service-box">
+      <div class="service-icon">🛡️</div> <!-- Replace with actual icon image if needed -->
+      <div class="service-title">PAYMENT SECURED</div>
+      <div class="service-description">Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque</div>
+    </div>
+    <div class="service-box">
+      <div class="service-icon">💰</div> <!-- Replace with actual icon image if needed -->
+      <div class="service-title">MONEY BACK GUARANTEE</div>
+      <div class="service-description">Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque</div>
+    </div>
+    <div class="service-box">
+      <div class="service-icon">🎧</div> <!-- Replace with actual icon image if needed -->
+      <div class="service-title">24/7 HELP CENTER</div>
+      <div class="service-description">Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque</div>
+    </div>
+  </div>
+
+  <!-- Brand Section -->
+  <div class="brand-section">
+    <img src="../images/logo1.png" alt="Brand Logo"> <!-- Replace with actual logo paths -->
+    <img src="../images/logo1.png" alt="Brand Logo">
+    <img src="../images/logo1.png" alt="Brand Logo">
+    <img src="../images/logo1.png" alt="Brand Logo">
+    <img src="../images/logo1.png" alt="Brand Logo">
+  </div>
+
+  <!-- Product Section -->
+  <div class="product-section">
+    <div class="product-card">
+      <img src="../images/shoe1.png" alt="Product Image"> <!-- Replace with actual product image paths -->
+    </div>
+    <div class="product-card">
+      <img src="../images/shoe2.png" alt="Product Image">
+    </div>
+    <div class="product-card">
+      <img src="../images/shoe2.png" alt="Product Image">
+    </div>
+    <div class="product-card">
+      <img src="../images/shoe2.png" alt="Product Image">
+    </div>
+    <div class="product-card">
+      <img src="../images/shoe1.png" alt="Product Image">
+    </div>
+  </div>
+
+  <div id="footer"></div>
+  <script src="../js/Home.js"></script>
+  <script src="../js/script.js"></script>
+  <!-- Bootstrap and FontAwesome Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
