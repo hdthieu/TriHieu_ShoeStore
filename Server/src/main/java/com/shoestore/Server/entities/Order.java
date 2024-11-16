@@ -21,7 +21,8 @@ public class Order {
     private int orderID;
     private LocalDate orderDate;
     private String status;
-    @OneToOne(cascade = CascadeType.ALL)
+    private double feeShip;
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "voucherID")
     private Voucher voucher;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

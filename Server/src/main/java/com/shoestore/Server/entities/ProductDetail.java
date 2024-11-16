@@ -11,7 +11,9 @@ public class ProductDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "productDetailID")
     private int productDetailID;
+    @Enumerated(EnumType.STRING)
     private Color color;
+    @Enumerated(EnumType.STRING)
     private Size size;
     @Column(name = "stockQuantity")
     private int stockQuantity;
