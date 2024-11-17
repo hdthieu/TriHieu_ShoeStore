@@ -38,7 +38,7 @@ function showTab(tab) {
 function scrollProducts(direction) {
     const productList = document.querySelector('.related-products__list');
     const productCard = document.querySelector('.product-card');
-    const productWidth = productCard.offsetWidth + 20; // including gap between cards
+    const productWidth = productCard.offsetWidth + 15; // including gap between cards
 
     if (direction === 'next') {
         productList.scrollBy({ left: productWidth, behavior: 'smooth' });
@@ -46,3 +46,12 @@ function scrollProducts(direction) {
         productList.scrollBy({ left: -productWidth, behavior: 'smooth' });
     }
 }
+
+fetch("breadcrumb.html")
+  .then((response) => response.text())
+  .then((data) => {
+    document.getElementById("breadcrumb-container").innerHTML = data;
+
+    // Cập nhật tên trang sau khi breadcrumb được tải
+    document.getElementById("current-page").textContent = "ProductDetail";
+  });
