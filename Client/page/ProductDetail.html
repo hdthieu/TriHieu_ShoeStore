@@ -12,17 +12,21 @@
 
 <body class="page-product-detail">
     <div id="header"></div>
+    <div id="breadcrumb-container"></div>
     <div class="container mt-5">
         <div class="product-details">
             <!-- Product Image and Thumbnails -->
             <div class="product-image">
                 <img src="../images/product1.jpg" alt="Main Product Image" id="mainProductImage" />
                 <div class="thumbnail-images">
-                    <img src="../images/product2.jpg" alt="Product Thumbnail" onclick="changeImage('product1.jpg')"
-                        class="active" />
-                    <img src="../images/product1.jpg" alt="Product Thumbnail" onclick="changeImage('product2.jpg')" />
-                    <img src="../images/product1.jpg" alt="Product Thumbnail" onclick="changeImage('product3.jpg')" />
-                    <img src="../images/product1.jpg" alt="Product Thumbnail" onclick="changeImage('product4.jpg')" />
+                    <img src="../images/product2.jpg" alt="Product Thumbnail"
+                        onclick="changeImage('../images/product2.jpg')" class="active" />
+                    <img src="../images/product1.jpg" alt="Product Thumbnail"
+                        onclick="changeImage('../images/product1.jpg')" />
+                    <img src="../images/product1.jpg" alt="Product Thumbnail"
+                        onclick="changeImage('../images/product1.jpg')" />
+                    <img src="../images/product1.jpg" alt="Product Thumbnail"
+                        onclick="changeImage('../images/product1.jpg')" />
                 </div>
             </div>
 
@@ -96,7 +100,7 @@
                     elit. Aenean commodo ligula eget dolor.
                 </p>
 
-                <img src="product1.jpg" alt="Product Image 1" />
+                <img src="../images/product1.jpg" alt="Product Image 1" />
 
                 <p>
                     Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
@@ -109,7 +113,7 @@
                     consectetur adipiscing elit.
                 </p>
 
-                <img src="product2.jpg" alt="Product Image 2" />
+                <img src="../images/product2.jpg" alt="Product Image 2" />
 
                 <p>
                     Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
@@ -208,14 +212,14 @@
 
         <div class="related-products">
             <h2 class="related-products__title">Related Products</h2>
-            <button class="related-products__button related-products__button--prev"
-                onclick="scrollProducts('prev')">&lt;</button>
-
+            <button class="related-products__button related-products__button--prev" onclick="scrollProducts('prev')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             <div class="related-products__list">
                 <!-- Product Card 1 -->
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product1.jpg" alt="Product 1" class="product-card__image">
+                        <img src="../images/product1.jpg" alt="Product 1" class="product-card__image">
                         <span class="product-card__discount-badge">-30%</span>
                     </div>
                     <div class="product-card__info">
@@ -231,7 +235,7 @@
                 <!-- Product Card 2 -->
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product1.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -246,7 +250,7 @@
                 <!-- Add more product cards as needed -->
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product2.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -260,7 +264,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product2.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -274,7 +278,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product2.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -288,7 +292,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product2.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -302,7 +306,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product1.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -316,7 +320,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product1.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -330,7 +334,7 @@
                 </div>
                 <div class="product-card">
                     <div class="product-card__image-wrapper">
-                        <img src="product2.jpg" alt="Product 2" class="product-card__image">
+                        <img src="../images/product1.jpg" alt="Product 2" class="product-card__image">
                         <span class="product-card__discount-badge">-20%</span>
                     </div>
                     <div class="product-card__info">
@@ -345,13 +349,13 @@
 
             </div>
 
-            <button class="related-products__button related-products__button--next"
-                onclick="scrollProducts('next')">&gt;</button>
+            <button class="related-products__button related-products__button--next" onclick="scrollProducts('next')"><i
+                    class="fas fa-chevron-right"></i></button>
         </div>
 
     </div>
+    
     <div id="footer"></div>
-    <!-- <script src="../js/Home.js"></script> -->
     <script src="../js/script.js"></script>
     <script src="../js/ProductDetail.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

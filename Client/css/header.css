@@ -11,6 +11,7 @@
 .page-about .navbar, 
 .page-products .navbar, 
 .page-product-detail .navbar,
+.page-cart .navbar,
 .navbar--scrolled {
     background-color: #003366; /* Dark blue color for non-home pages and when scrolled */
 }

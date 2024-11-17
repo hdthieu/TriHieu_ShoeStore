@@ -3,9 +3,6 @@
     gap: 20px;
 }
 
-.page-product-detail{
-    margin-top: 100px;
-}
 .product-image img {
     width: 100%;
     border-radius: 8px;
@@ -277,11 +274,24 @@
 
 /* Related Products Container */
 .related-products {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.related-products__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}/* Related Products Container */
+.related-products {
     padding: 20px;
     position: relative;
     overflow: hidden;
 }
 
+/* Title Styling */
 .related-products__title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -290,27 +300,31 @@
 
 .related-products__list {
     display: flex;
-    gap: 20px;
+    gap: 15px; 
     overflow: hidden;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Mượt khi cuộn */
+    max-width: calc(5 * 200px + 4 * 10px); 
+    margin: 0 auto; /* Căn giữa danh sách sản phẩm */
+    padding: 0 5px; /* Dành không gian cho nút prev và next */
 }
 
-/* Product Card Styling */
 .product-card {
     position: relative;
+    flex: 0 0 195px; /* Đảm bảo mỗi sản phẩm có kích thước cố định */
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-    min-width: 200px;
     text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
 }
+
 
 .product-card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Product Image Wrapper */
 .product-card__image-wrapper {
     position: relative;
     overflow: hidden;
@@ -326,6 +340,7 @@
     max-height: 100%;
 }
 
+/* Discount Badge */
 .product-card__discount-badge {
     position: absolute;
     top: 10px;
@@ -366,57 +381,56 @@
     margin-left: 5px;
 }
 
-/* Add to Cart Button (hidden by default) */
 .product-card__actions {
     position: absolute;
-    bottom: -40px; /* Start hidden */
+    bottom: -50px; /* Ẩn nút Add to Cart khi chưa hover */
     left: 0;
     right: 0;
     text-align: center;
-    transition: bottom 0.3s ease;
     padding: 10px;
+    opacity: 0;
+    transition: bottom 0.3s ease, opacity 0.3s ease;
 }
 
 .product-card:hover .product-card__actions {
-    bottom: 10px; /* Slide up on hover */
+    bottom: 10px; /* Hiển thị nút Add to Cart khi hover */
+    opacity: 1;
 }
 
 .product-card__add-to-cart {
     background-color: #ffc107;
-    color: #fff;
+    color: white;
     border: none;
     padding: 8px 16px;
     font-size: 0.9rem;
     font-weight: bold;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .product-card__add-to-cart:hover {
     background-color: #e0a800;
+    transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
 }
-
 /* Navigation Buttons */
 .related-products__button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
     font-size: 2rem;
-    color: #333;
+    background: none;
+    border: none;
     cursor: pointer;
-    padding: 10px;
     z-index: 10;
 }
 
 .related-products__button--prev {
-    left: -15px; /* Position further from product list */
+    left: 0; /* Dời nút prev ra ngoài */
 }
 
 .related-products__button--next {
-    right: -15px; /* Position further from product list */
+    right: 0; /* Dời nút next ra ngoài */
 }
 
 .related-products__button:hover {
@@ -424,5 +438,5 @@
 }
 
 .related-products__button:focus {
-    outline: none; /* Ensure outline is removed when button is focused */
+    outline: none; /* Xóa viền khi focus */
 }
