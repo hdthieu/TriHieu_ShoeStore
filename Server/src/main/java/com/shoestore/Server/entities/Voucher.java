@@ -25,6 +25,6 @@ public class Voucher {
     @Column(name = "discountValue")
     private double discountValue;
     private String status;
-    @OneToOne(mappedBy = "voucher",cascade = CascadeType.ALL)
-    private Order order;
+    @OneToMany( mappedBy = "voucher",cascade = CascadeType.ALL)
+    private List<Order> orders;
 }
