@@ -1,13 +1,14 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Entity
-@Data
 @Table
+@Data
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,8 @@ public class Category {
     private int categoryID;
     private String name;
     private String description;
+
     @OneToMany(mappedBy = "category")
+    @JsonBackReference
     private List<Product> products;
 }
