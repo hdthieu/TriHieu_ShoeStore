@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+
     <style>
       .sidebar {
         min-height: 100vh;
@@ -174,6 +175,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Tìm kiếm đợt giảm giá theo tên, mã..."
+                id="search-input"
               />
             </div>
             <div class="col-md-6 d-flex align-items-center">
@@ -188,6 +190,18 @@
                   checked
                 />
                 <label class="form-check-label" for="status-all">Tất cả</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  id="status-notyet"
+                  value="notyet"
+                />
+                <label class="form-check-label" for="status-notyet"
+                  >Chưa bắt đầu</label
+                >
               </div>
               <div class="form-check form-check-inline">
                 <input
@@ -213,69 +227,28 @@
                   >Đã kết thúc</label
                 >
               </div>
-
               <button class="btn btn-warning btn-custom">
                 + Thêm đợt giảm giá
               </button>
             </div>
           </div>
 
-          <!-- Table -->
-          <table class="table table-bordered">
-            <thead class="thead-light">
-              <tr>
-                <th>#</th>
-                <th>Mã</th>
-                <th>Tên</th>
-                <th>Giá trị</th>
-                <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>p303</td>
-                <td>p303</td>
-                <td>10</td>
-                <td>18:09:00 21/12/2023</td>
-                <td>18:09:00 30/12/2023</td>
-                <td><span class="status-active">Đang diễn ra</span></td>
-                <td>
-                  <button class="btn btn-edit btn-sm">Sửa</button>
-                  <button class="btn btn-delete btn-sm">Xóa</button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>p302</td>
-                <td>p302</td>
-                <td>10</td>
-                <td>17:51:00 21/12/2023</td>
-                <td>17:51:00 30/12/2023</td>
-                <td><span class="status-active">Đang diễn ra</span></td>
-                <td>
-                  <button class="btn btn-edit btn-sm">Sửa</button>
-                  <button class="btn btn-delete btn-sm">Xóa</button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>chilkt</td>
-                <td>Kim Chi</td>
-                <td>10</td>
-                <td>19:14:00 18/12/2023</td>
-                <td>19:15:01 18/12/2023</td>
-                <td><span class="status-ended">Đã kết thúc</span></td>
-                <td>
-                  <button class="btn btn-edit btn-sm">Sửa</button>
-                  <button class="btn btn-delete btn-sm">Xóa</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div id="voucher-list">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Tên</th>
+                  <th>Mô tả</th>
+                  <th>Giảm giá</th>
+                  <th>Trạng thái</th>
+                  <th>Thời gian</th>
+                </tr>
+              </thead>
+              <tbody id="voucher-list-body">
+                <!-- Dữ liệu voucher sẽ được thêm vào đây -->
+              </tbody>
+            </table>
+          </div>
 
           <!-- Pagination -->
           <nav>
@@ -287,14 +260,12 @@
           </nav>
         </main>
         <main class="main-content col-md-10 ml-sm-auto px-4">
-          <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-          >
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h2>Thêm Mã Khuyến Mãi</h2>
           </div>
-
+        
           <!-- Form Thêm Mã Khuyến Mãi -->
-          <form>
+          <form id="voucher-form">
             <div class="row">
               <!-- Tên phiếu giảm giá -->
               <div class="form-group col-md-6">
@@ -307,39 +278,51 @@
                   required
                 />
               </div>
-
-              <!-- Số lượng -->
-              <div class="form-group col-md-6">
-                <label for="soLuong">* Số lượng</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="soLuong"
-                  placeholder="Nhập số lượng"
-                  required
-                />
-              </div>
             </div>
-
+        
             <div class="row">
-              <!-- Phần trăm giảm -->
+              <!-- Kiểu giảm giá (Percentage hoặc Flat) -->
               <div class="form-group col-md-6">
-                <label for="phanTramGiam">* Phần trăm giảm</label>
-                <div class="input-group">
+                <label>* Kiểu giảm giá</label><br>
+                <div class="form-check form-check-inline">
                   <input
-                    type="number"
-                    class="form-control"
-                    id="phanTramGiam"
-                    placeholder="Nhập % giảm"
-                    required
+                    type="radio"
+                    id="discount-percentage"
+                    name="discount-type"
+                    class="form-check-input"
+                    value="Percentage"
+                    checked
                   />
-                  <div class="input-group-append">
-                    <span class="input-group-text">%</span>
-                  </div>
+                  <label class="form-check-label" for="discount-percentage">Phần trăm</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    id="discount-flat"
+                    name="discount-type"
+                    class="form-check-input"
+                    value="Flat"
+                  />
+                  <label class="form-check-label" for="discount-flat">Giảm giá tiền</label>
                 </div>
               </div>
-
-              <!-- Giá trị đơn tối thiểu -->
+            </div>
+        
+            <div class="row">
+              <!-- Phần trăm giảm -->
+              <div class="form-group col-md-6" id="percentage-container">
+                <label for="phanTramGiam">Giảm giá</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phanTramGiam"
+                    placeholder="giảm giá"
+                    required
+                  />
+                  
+                </div>
+              </div>
               <div class="form-group col-md-6">
                 <label for="giaTriDonToiThieu">* Giá trị đơn tối thiểu</label>
                 <div class="input-group">
@@ -350,13 +333,13 @@
                     placeholder="Nhập giá trị đơn tối thiểu"
                     required
                   />
-                  <div class="input-group-append">
-                    <span class="input-group-text">VNĐ</span>
-                  </div>
+                 
                 </div>
               </div>
             </div>
-
+           
+            
+        
             <div class="row">
               <!-- Ngày bắt đầu -->
               <div class="form-group col-md-6">
@@ -370,7 +353,7 @@
                   />
                 </div>
               </div>
-
+        
               <!-- Ngày kết thúc -->
               <div class="form-group col-md-6">
                 <label for="ngayKetThuc">* Ngày kết thúc</label>
@@ -384,7 +367,7 @@
                 </div>
               </div>
             </div>
-
+        
             <!-- Nút hành động -->
             <div class="form-group text-right">
               <button type="reset" class="btn btn-secondary">Làm mới</button>
@@ -392,6 +375,7 @@
             </div>
           </form>
         </main>
+        
       </div>
     </div>
 
@@ -406,5 +390,6 @@
         element.classList.add("active-border");
       }
     </script>
+    <script type="module" src="../js/XuLyThemMoiKhuyenMai.js"></script>
   </body>
 </html>
