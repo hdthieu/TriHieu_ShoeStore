@@ -30,7 +30,7 @@ public class VoucherServiceImpl implements VoucherService {
         entityVoucher.setEndDate(voucher.getEndDate());
         entityVoucher.setDiscountType(voucher.getDiscountType());
         entityVoucher.setDiscountValue(voucher.getDiscountValue());
-        entityVoucher.setGiaTriDonToiThieu(voucher.getGiaTriDonToiThieu());
+        entityVoucher.setMinValueOrder(voucher.getMinValueOrder());
 
         // Tính toán trạng thái (status) dựa trên ngày
         LocalDate today = LocalDate.now();

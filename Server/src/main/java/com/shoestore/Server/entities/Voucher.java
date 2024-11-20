@@ -28,12 +28,12 @@ public class Voucher {
     @Column(name = "discountValue")
     private double discountValue;
     private String status;
-    private double giaTriDonToiThieu;
+    private double minValueOrder;
     @OneToMany( mappedBy = "voucher",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Order> orders;
 
-    public Voucher(int voucherID, String name, LocalDate startDate, String description, LocalDate endDate, String discountType, double discountValue, String status, double giaTriDonToiThieu) {
+    public Voucher(int voucherID, String name, LocalDate startDate, String description, LocalDate endDate, String discountType, double discountValue, String status, double minValueOrder) {
         this.voucherID = voucherID;
         this.name = name;
         this.startDate = startDate;
@@ -42,6 +42,6 @@ public class Voucher {
         this.discountType = discountType;
         this.discountValue = discountValue;
         this.status = status;
-        this.giaTriDonToiThieu = giaTriDonToiThieu;
+        this.minValueOrder = minValueOrder;
     }
 }
