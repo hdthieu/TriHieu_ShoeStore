@@ -1,13 +1,15 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Entity
-@Data
 @Table
+@Data
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +17,11 @@ public class Supplier {
     private int supplierID;
     private String supplierName;
     private String address;
-    private String phoneNumber;
     @OneToMany(mappedBy = "supplier")
+    @JsonBackReference
     private List<Product> products;
     @ElementCollection
-    @CollectionTable(name = "Supplier_PhoneNumber",
-            joinColumns = @JoinColumn(name = "supplierID"))
+    @CollectionTable(name = "Supplier_PhoneNumber", joinColumns = @JoinColumn(name = "supplierID"))
     @Column(name = "phoneNumbers")
     private List<String> phoneNumbers;
 }
