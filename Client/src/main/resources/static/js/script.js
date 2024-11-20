@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Load header
-  fetch("/header.html")
+  fetch("header.html")
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("header").innerHTML = html;
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => console.error("Error loading the header:", error));
 
   // Load footer
-  fetch("/footer.html")
+  fetch("footer.html")
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("footer").innerHTML = html;

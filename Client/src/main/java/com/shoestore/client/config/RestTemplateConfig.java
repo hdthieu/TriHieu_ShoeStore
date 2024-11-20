@@ -1,4 +1,4 @@
-package com.shoestore.client.configs;
+package com.shoestore.client.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
