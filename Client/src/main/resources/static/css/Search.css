@@ -160,3 +160,12 @@ body {
     background-color: #007bff;
     color: #fff;
 }
+.link-details {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link-details:hover {
+    text-decoration: none;
+    color: inherit;
+}

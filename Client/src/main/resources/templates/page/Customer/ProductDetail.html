@@ -7,7 +7,7 @@
     <title>Product Detail</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="../../../../../resources/static/css/ProductDetail.css" />
+    <link rel="stylesheet" href="/css/ProductDetail.css" />
 </head>
 
 <body class="page-product-detail">
@@ -32,8 +32,8 @@
 
             <!-- Product Information -->
             <div class="product-info">
-                <h6>Nike / Running Shoes</h6>
-                <h1>Nike Air Force 1 '07</h1>
+                <h6 th:text="${product.getBrand().getName()+' / '+product.getCategory().getName()}"></h6>
+                <h1 th:text="${product.productName}"></h1>
                 <p>⭐⭐⭐⭐⭐ <span>(2.5k Reviews)</span></p>
                 <div class="product-tags">
                     <span>Running Shoes</span>
@@ -42,24 +42,16 @@
                 </div>
 
                 <h5 class="mt-4">Product Description</h5>
-                <p>
-                    Classic and comfortable, you'll want to wear these AF-1s time after
-                    time...
-                </p>
+                <p th:text="${product.description}">
 
                 <!-- Price and Discount -->
-                <p class="product-price">$1,400,000</p>
+                <p class="product-price" th:text="${product.price}"></p>
 
                 <!-- Size Chart -->
                 <h5>Size Chart</h5>
                 <div class="size-options">
-                    <div class="size-box">38</div>
-                    <div class="size-box">39</div>
-                    <div class="size-box">40</div>
-                    <div class="size-box">41</div>
-                    <div class="size-box">42</div>
-                    <div class="size-box">43</div>
-                    <div class="size-box">44</div>
+                    <div class="size-box" th:each="detail : ${productDetail}" th:text="${detail.size}">38</div>
+
                 </div>
 
                 <!-- Quantity Control -->
@@ -356,8 +348,8 @@
     </div>
     
     <div id="footer"></div>
-    <script src="../../../../../resources/static/js/script.js"></script>
-    <script src="../../../../../resources/static/js/ProductDetail.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/ProductDetail.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

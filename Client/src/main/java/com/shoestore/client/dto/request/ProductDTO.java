@@ -3,10 +3,12 @@ package com.shoestore.client.dto.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class ProductDTO {
     private int productID;
@@ -18,5 +20,6 @@ public class ProductDTO {
     private BrandDTO brand;
     private CategoryDTO category;
     private SupplierDTO supplier;
+//    private ProductDetailDTO productDetails;
 //    private PromotionDTO promotionDTO;
 }
