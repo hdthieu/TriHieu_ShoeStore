@@ -31,6 +31,7 @@ async function loadVoucherList() {
                     <td>${voucher.startDate}</td>
                     <td>${voucher.endDate}</td>
                     <td>${voucher.status}</td>
+                    <td>${voucher.giaTriDonToiThieu}</td>
                     <td>
                         <button class="btn-success rounded">Chỉnh Sửa</button> |
                         <button class="btn-danger rounded" onclick="deleteVoucher(${voucher.voucherID})">Xóa</button>
@@ -70,7 +71,6 @@ async function deleteVoucher(voucherID) {
 document.addEventListener('DOMContentLoaded', loadVoucherList);  // Đảm bảo danh sách được tải khi trang load
 
 
-// Lắng nghe sự kiện submit của form
 // Lắng nghe sự kiện submit của form
 document.getElementById('voucher-form').addEventListener('submit', async function (e) {
     e.preventDefault(); // Ngăn form gửi theo cách mặc định
@@ -113,6 +113,73 @@ document.getElementById('voucher-form').addEventListener('submit', async functio
     } catch (err) {
         console.error(err);
         alert('Có lỗi xảy ra khi thêm khuyến mãi!');
+    }
+});
+
+document.getElementById('voucher-form-edit').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const voucherID = this.dataset.currentId;  // ID của voucher cần cập nhật
+    const updatedVoucherData = {
+        name: document.getElementById('tenPhieuGiamGiaEdit').value,
+        discountType: document.querySelector('input[name="discount-type"]:checked').value,
+        discountValue: parseFloat(document.getElementById('phanTramGiam-edit').value),
+        minimumOrderValue: parseFloat(document.getElementById('giaTriDonToiThieu-edit').value),
+        startDate: document.getElementById('ngayBatDau-edit').value,
+        endDate: document.getElementById('ngayKetThuc-edit').value,
+        description: document.getElementById('moTa-edit').value
+    };
+
+    try {
+        const response = await fetch(`${apiUrl}/${voucherID}`, {
+            method: 'PUT',  // Đảm bảo là PUT để cập nhật dữ liệu
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedVoucherData)  // Chuyển đổi dữ liệu thành JSON
+        });
+
+        if (response.ok) {
+            alert('Cập nhật khuyến mãi thành công!');
+            loadVoucherList();  // Tải lại danh sách khuyến mãi
+            this.reset();  // Đặt lại form sau khi cập nhật thành công
+        } else {
+            const error = await response.json();
+            alert(`Cập nhật thất bại: ${error.message}`);
+        }
+    } catch (error) {
+        console.error('Lỗi khi cập nhật khuyến mãi:', error);
+        alert('Có lỗi xảy ra khi cập nhật khuyến mãi!');
+    }
+});
+
+document.getElementById('voucher-list').addEventListener('click', async (e) => {
+    if (e.target.classList.contains('btn-success')) {
+        const voucherID = e.target.closest('tr').children[0].textContent; // Lấy ID từ hàng tương ứng.
+
+        try {
+            const response = await fetch(`${apiUrl}/${voucherID}`);
+            console.log(response)
+            if (response.ok) {
+                const voucher = await response.json();
+
+                // Hiển thị thông tin lên form chỉnh sửa
+                document.getElementById('tenPhieuGiamGiaEdit').value = voucher.name;
+                document.querySelector(`input[name="discount-type"][value="${voucher.discountType}"]`).checked = true;
+                document.getElementById('phanTramGiam-edit').value = voucher.discountValue;
+                document.getElementById('giaTriDonToiThieu-edit').value = voucher.giaTriDonToiThieu;
+                document.getElementById('ngayBatDau-edit').value = voucher.startDate;
+                document.getElementById('ngayKetThuc-edit').value = voucher.endDate;
+                document.getElementById('moTa-edit').value = voucher.description;
+
+                // Thêm ID hiện tại vào một biến để sử dụng khi cập nhật
+                document.getElementById('voucher-form-edit').dataset.currentId = voucherID;
+            } else {
+                alert('Không thể tải dữ liệu khuyến mãi!');
+            }
+        } catch (error) {
+            console.error('Lỗi khi lấy thông tin khuyến mãi:', error);
+        }
     }
 });
 

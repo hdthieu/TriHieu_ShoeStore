@@ -367,6 +367,131 @@
         </div>
       </form>
     </main>
+
+
+    <main class="main-content col-md-10 ml-sm-auto px-4">
+      <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+      >
+        <h2>Chỉnh Sửa Mã Khuyến Mãi</h2>
+      </div>
+
+      <!-- Form Thêm Mã Khuyến Mãi -->
+      <form id="voucher-form-edit">
+        <div class="row">
+          <!-- Tên phiếu giảm giá -->
+          <div class="form-group col-md-6">
+            <label for="tenPhieuGiamGia">* Tên phiếu giảm giá</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="tenPhieuGiamGiaEdit"
+                    placeholder="Nhập tên phiếu giảm giá Cần Chỉnh Sửa"
+                    required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Kiểu giảm giá (Percentage hoặc Flat) -->
+          <div class="form-group col-md-6">
+            <label>* Chỉnh sửa Kiểu giảm giá </label><br>
+            <div class="form-check form-check-inline">
+              <input
+                      type="radio"
+                      id="discount-percentage-edit"
+                      name="discount-type"
+                      class="form-check-input"
+                      value="Percentage"
+                      checked
+              />
+              <label class="form-check-label" for="discount-percentage-edit">Phần trăm</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                      type="radio"
+                      id="discount-flat-edit"
+                      name="discount-type"
+                      class="form-check-input"
+                      value="Flat"
+              />
+              <label class="form-check-label" for="discount-flat-edit">Giảm giá tiền</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Phần trăm giảm -->
+          <div class="form-group col-md-6" id="percentage-container-edit">
+            <label for="phanTramGiam-edit">Chỉnh Sửa Giảm giá</label>
+            <div class="input-group">
+              <input
+                      type="text"
+                      class="form-control"
+                      id="phanTramGiam-edit"
+                      placeholder="giảm giá"
+                      required
+              />
+
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="giaTriDonToiThieu-edit">* Chỉnh Sửa Giá trị đơn tối thiểu</label>
+            <div class="input-group">
+              <input
+                      type="text"
+                      class="form-control"
+                      id="giaTriDonToiThieu-edit"
+                      placeholder="Nhập giá trị đơn tối thiểu"
+                      required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Ngày bắt đầu -->
+          <div class="form-group col-md-6">
+            <label for="ngayBatDau-edit">* Chỉnh Sửa Ngày bắt đầu</label>
+            <div class="input-group">
+              <input
+                      type="date"
+                      class="form-control"
+                      id="ngayBatDau-edit"
+                      required
+              />
+            </div>
+          </div>
+
+          <!-- Ngày kết thúc -->
+          <div class="form-group col-md-6">
+            <label for="ngayKetThuc-edit">* Chỉnh Sửa Ngày kết thúc</label>
+            <div class="input-group">
+              <input
+                      type="date"
+                      class="form-control"
+                      id="ngayKetThuc-edit"
+                      required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label for="moTa-edit">* Chỉnh sửa mô tả khuyến mãi</label>
+          <textarea
+                  class="form-control"
+                  id="moTa-edit"
+                  placeholder="Nhập mô tả khuyến mãi"
+                  rows="3"
+                  required
+          ></textarea>
+        </div>
+        <!-- Nút hành động -->
+        <div class="form-group text-right">
+          <button type="reset" class="btn btn-secondary">Làm mới</button>
+          <button type="submit" class="btn btn-success">Lưu</button>
+        </div>
+      </form>
+    </main>
   </div>
 </div>
 
