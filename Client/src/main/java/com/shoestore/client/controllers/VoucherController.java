@@ -1,4 +1,4 @@
-package com.shoestore.client.controller;
+package com.shoestore.client.controllers;
 import com.shoestore.client.dto.request.VoucherDTO;
 import com.shoestore.client.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;

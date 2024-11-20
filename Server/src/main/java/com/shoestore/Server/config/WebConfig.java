@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Áp dụng cho tất cả các endpoint
-                        .allowedOrigins("http://localhost:9090") // Cho phép client từ localhost:9090
+                        .allowedOrigins("http://localhost:3000") // Cho phép client từ localhost:9090
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); // Các phương thức HTTP cho phép
             }
         };

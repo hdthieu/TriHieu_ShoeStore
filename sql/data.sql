@@ -1,4 +1,5 @@
 ﻿-- Thêm dữ liệu cho bảng Role
+use ShoeStore
 INSERT INTO Role (name, description)
 VALUES
 ('Admin', 'Quản trị viên với toàn quyền quản lý'),
@@ -85,19 +86,32 @@ VALUES
 ('Luxury brand shoes', 'Luxury');
 
 -- Thêm dữ liệu cho bảng Supplier
-INSERT INTO Supplier (address, phoneNumber, supplierName)
+INSERT INTO Supplier (address,supplierName)
 VALUES
-('123 Main St, New York, NY', '212-555-1234', 'Global Sports Inc.'),
-('456 Elm St, San Francisco, CA', '415-555-5678', 'Elite Shoes LLC'),
-('789 Maple Ave, Chicago, IL', '312-555-9012', 'Active Wear Co.'),
-('321 Oak St, Seattle, WA', '206-555-3456', 'Fit and Style Ltd.'),
-('654 Pine St, Boston, MA', '617-555-7890', 'Performance Gear Corp.'),
-('987 Cedar Rd, Austin, TX', '512-555-6789', 'Trendsetters Supply'),
-('159 Spruce St, Miami, FL', '305-555-2345', 'Urban Outfits Inc.'),
-('753 Birch St, Denver, CO', '303-555-9876', 'Trail Blazers Ltd.'),
-('951 Aspen Dr, Atlanta, GA', '404-555-5678', 'Southern Comfort Gear'),
-('852 Redwood Ave, Portland, OR', '503-555-6789', 'Pacific Edge Shoes');
-
+('123 Main St, New York, NY', 'Global Sports Inc.'),
+('456 Elm St, San Francisco, CA', 'Elite Shoes LLC'),
+('789 Maple Ave, Chicago, IL', 'Active Wear Co.'),
+('321 Oak St, Seattle, WA', 'Fit and Style Ltd.'),
+('654 Pine St, Boston, MA', 'Performance Gear Corp.'),
+('987 Cedar Rd, Austin, TX', 'Trendsetters Supply'),
+('159 Spruce St, Miami, FL', 'Urban Outfits Inc.'),
+('753 Birch St, Denver, CO', 'Trail Blazers Ltd.'),
+('951 Aspen Dr, Atlanta, GA','Southern Comfort Gear'),
+('852 Redwood Ave, Portland, OR','Pacific Edge Shoes');
+INSERT INTO Supplier_PhoneNumber (supplierID, phoneNumbers) 
+VALUES 
+    (1, '0911111111'), 
+    (1, '0911222222'), 
+    (2, '0913333333'), 
+    (3, '0914444444'), 
+    (4, '0915555555'),
+    (5, '0916666666'),
+	(5, '0911111156'), 
+    (6, '0911222999'), 
+    (6, '0913333458'), 
+    (7, '0914444454'), 
+    (8, '0915554564'),
+    (9, '0916666846');
 
 INSERT INTO Product (description, price, productName, status, brandID, categoryID, promotionID, supplierID)
 VALUES
