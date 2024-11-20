@@ -133,17 +133,22 @@
                 <!-- Product Cards -->
                 <th:block th:each="product : ${products}">
                     <div class="col-md-4 mb-4">
-                        <div class="product-card">
-                            <img th:src="@{${product.imageURL.get(0)}}" />
-                            <div class="product-info">
-                                <h6 th:text="${product.productName}"></h6>
-                                <p th:text="${product.description}"></p>
-                                <p class="product-price" th:text="${product.price}"></p>
+                        <a th:href="@{'/product-details/' + ${product.productID}}" class="link-details">
+                            <div class="product-card">
+
+
+                                <img th:src="@{${product.imageURL.get(0)}}"/>
+                                <div class="product-info">
+                                    <h6 th:text="${product.productName}"></h6>
+                                    <p th:text="${product.description}"></p>
+                                    <p class="product-price" th:text="${product.price}"></p>
+                                </div>
+
+                                <div class="add-to-cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
                             </div>
-                            <div class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </th:block>
             </div>
@@ -172,7 +177,7 @@
 </div>
 <div id="footer"></div>
 <!-- <script src="../js/Search.js"></script> -->
-<script src="/static/js/Home.js"></script>
+<script src="/js/Home.js"></script>
 <script src="/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

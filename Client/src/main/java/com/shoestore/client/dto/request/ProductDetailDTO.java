@@ -9,8 +9,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class BrandDTO {
-    private int brandID;
-    private String name;
-
+public class ProductDetailDTO {
+    private int productDetailID;
+    private String color;
+    private String size;
+    private int stockQuantity;
+//    private ProductDTO product;
 }
