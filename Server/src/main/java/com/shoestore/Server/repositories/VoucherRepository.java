@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VoucherRepository extends JpaRepository<Voucher, Integer> {
-    Page<Voucher> findByNameContainingIgnoreCase(String name, Pageable pageable);
-    Page<Voucher> findByStatusAndNameContainingIgnoreCase(String status, String name, Pageable pageable);
+    List<Voucher> findByNameContainingIgnoreCase(String name);
+    List<Voucher> findByStatusAndNameContainingIgnoreCase(String status, String name);
+
 }
 

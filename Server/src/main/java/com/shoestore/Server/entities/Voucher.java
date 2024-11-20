@@ -1,7 +1,9 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table
+@NoArgsConstructor
 public class Voucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +28,20 @@ public class Voucher {
     @Column(name = "discountValue")
     private double discountValue;
     private String status;
+    private double giaTriDonToiThieu;
     @OneToMany( mappedBy = "voucher",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Order> orders;
+
+    public Voucher(int voucherID, String name, LocalDate startDate, String description, LocalDate endDate, String discountType, double discountValue, String status, double giaTriDonToiThieu) {
+        this.voucherID = voucherID;
+        this.name = name;
+        this.startDate = startDate;
+        this.description = description;
+        this.endDate = endDate;
+        this.discountType = discountType;
+        this.discountValue = discountValue;
+        this.status = status;
+        this.giaTriDonToiThieu = giaTriDonToiThieu;
+    }
 }

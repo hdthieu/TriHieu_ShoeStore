@@ -14,37 +14,52 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/vouchers")
 public class VoucherController {
 
     @Autowired
     private VoucherRepository voucherRepository;
 
+    @Autowired
+    private VoucherService voucherService;
+
+    @PostMapping("/add")
+    public ResponseEntity<Voucher> addVoucher(@RequestBody Voucher voucherDTO) {
+        Voucher savedVoucher = voucherService.addVoucher(voucherDTO);
+        return ResponseEntity.ok(savedVoucher);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteVoucher(@PathVariable("id") int id) {
+        voucherService.deleteVoucher(id);
+        System.out.println("voucher deleted  : ");
+        return ResponseEntity.ok("Voucher deleted");
+    }
+
     @GetMapping
     public ResponseEntity<Map<String, Object>> getVouchers(
             @RequestParam(required = false, defaultValue = "all") String status,
-            @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size
+            @RequestParam(required = false, defaultValue = "") String search
     ) {
-        Pageable paging = PageRequest.of(page, size);
-        Page<Voucher> vouchersPage;
+        // Lấy danh sách Voucher mà không phân trang
+        List<Voucher> vouchers;
 
+        // Kiểm tra trạng thái voucher và tìm kiếm theo tên
         if ("all".equals(status)) {
-            vouchersPage = voucherRepository.findByNameContainingIgnoreCase(search, paging);
+            vouchers = voucherRepository.findByNameContainingIgnoreCase(search);
         } else {
-            vouchersPage = voucherRepository.findByStatusAndNameContainingIgnoreCase(status, search, paging);
+            vouchers = voucherRepository.findByStatusAndNameContainingIgnoreCase(status, search);
         }
 
+        // Chuẩn bị response trả về cho client
         Map<String, Object> response = new HashMap<>();
-        response.put("vouchers", vouchersPage.getContent());
-        response.put("totalItems", vouchersPage.getTotalElements());
-        response.put("totalPages", vouchersPage.getTotalPages());
+        response.put("vouchers", vouchers);  // Danh sách voucher không phân trang
 
         return ResponseEntity.ok(response);
     }
-}
 
+
+
+
+}
