@@ -76,6 +76,7 @@
 .cart-item__stock {
     font-size: 0.9rem;
     font-weight: bold;
+    margin-left: 10px;
 }
 
 .cart-item__stock--in {
