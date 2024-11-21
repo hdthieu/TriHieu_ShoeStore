@@ -1,10 +1,10 @@
 package com.shoestore.Server.repositories;
 
-import com.shoestore.Server.entities.Supplier;
+import com.shoestore.Server.entities.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
-    Supplier findBySupplierID(int id);
+public interface BrandRepository extends JpaRepository<Brand,Integer> {
+    Brand findByBrandID(int id);
 }
