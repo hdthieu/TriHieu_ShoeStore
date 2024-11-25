@@ -18,5 +18,6 @@ public class ProductDTO {
     private BrandDTO brand;
     private CategoryDTO category;
     private SupplierDTO supplier;
+    private List<ProductDetailDTO> productDetails;
 //    private PromotionDTO promotionDTO;
 }

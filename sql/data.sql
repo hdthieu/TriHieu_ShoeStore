@@ -287,7 +287,7 @@ VALUES
 ('Lunar New Year', '2024-02-15', 'Lunar New Year', 'Percentage', '20%', '2024-01-25');
 
 
-INSERT INTO Voucher (description, discountType, discountValue, endDate, name, startDate, status, giaTriDonToiThieu)
+INSERT INTO Voucher (description, discountType, discountValue, endDate, name, startDate, status, minValueOrder)
 VALUES
 ('Welcome Voucher', 'Percentage', 10, '2024-12-31', 'WELCOME10', '2024-01-01', 'Upcoming', 35000),
 ('Holiday Discount', 'Flat', 20, '2024-12-25', 'HOLIDAY20', '2024-12-01', 'Active', 25000),

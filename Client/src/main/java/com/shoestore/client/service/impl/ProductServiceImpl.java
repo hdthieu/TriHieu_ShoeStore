@@ -24,4 +24,23 @@ public class ProductServiceImpl implements ProductService {
         System.out.println("Response Body: " + response.getBody());
         return response.getBody().getProductDTOs();
     }
+
+    @Override
+    public ProductDTO addProduct(ProductDTO productDTO) {
+        String apiUrl = "http://localhost:8080/products/add";
+        ResponseEntity<ProductDTO> response = restTemplate.postForEntity(
+                apiUrl, productDTO, ProductDTO.class
+        );
+        return response.getBody();
+    }
+
+    @Override
+    public ProductDTO getProductById(int id) {
+        String apiUrl="http://localhost:8080/products/detail/"+id;
+        ResponseEntity<ProductDTO> response= restTemplate.exchange(
+                apiUrl, HttpMethod.GET,null, ProductDTO.class
+        );
+        System.out.println("Response Body: " + response.getBody());
+        return response.getBody();
+    }
 }
