@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            position: fixed;
+            width: 16.66%;
+            background-color: #343a40;
+        }
+        .sidebar .nav-link {
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 16.66%;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        #imagePreview {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            display: none;
+        }
+        #editImagePreview {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        .color-size-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .sidebar .nav-link.active-border {
+        border-left: 4px solid #17a2b8; 
+        background-color: #495057;
+        color: #ffffff; 
+      }
+      .styleUser{
+        margin-top: 50%;
+        color: #fff;
+      }
+
+
+      .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.modal-dialog {
+    background-color: white;
+    border-radius: 5px;
+    width: 50%;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="sidebar col-md-2 d-none d-md-block">
+                <div class="sidebar-sticky">
+                    <h4 class="text-light text-center mt-4">AdminAD</h4>
+                    <ul class="nav flex-column mt-3">
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Home</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý bài đánh giá</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh mục</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Đơn hàng</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="styleUser text-center">
+                        <h6>Đào Thanh Phú</h6>
+                        <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        </div>
+
+<!-- Chi tiết sản phẩm -->
+<div id="productDetailForm" class="container-fluid" style=" width: 100%; height: 100vh; overflow-y: auto;">
+    <h1 class="text-center mb-4">Chi tiết sản phẩm</h1>
+    
+    <!-- Card lớn hơn với chiều rộng 60% -->
+    <div class="card" style="width: 60%; margin: 0 auto;">
+        <div class="card-header">Thông tin sản phẩm</div>
+        <div class="card-body">
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label>Mã sản phẩm</label>
+                    <p th:text="${product.productID}"></p>
+                </div>
+                <div class="col-md-2">
+                    <label>Tên sản phẩm</label>
+                    <p th:text="${product.productName}"></p>
+                </div>
+                <div class="col-md-2">
+                    <label>Giá sản phẩm</label>
+                    <p th:text="${product.price}"></p>
+                </div>
+                <div class="col-md-2">
+                    <label>Danh mục</label>
+                    <p th:text="${product.category.name}"></p>
+                </div>
+                <div class="col-md-2">
+                    <label>Mô tả sản phẩm</label>
+                    <p th:text="${product.description}"></p>
+                </div>
+                <div class="col-md-2">
+                    <label>Hình ảnh sản phẩm</label>
+                    <img th:src="@{/images/{image}(image=${product.imageURL[0]})}" alt="Hình sản phẩm"
+                         style="width:100%; height:auto; border:1px solid #ccc; padding:5px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Card cho bảng chi tiết (Size, Color, Quantity) -->
+    <div class="card mt-4" style="width: 60%; margin: 0 auto;">
+        <div class="card-header">Chi tiết sản phẩm</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-md-4">Kích thước</th>
+                        <th class="col-md-4">Màu sắc</th>
+                        <th class="col-md-4">Số lượng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <!-- Lặp qua danh sách productDetails -->
+                <tr th:each="detail : ${product.productDetails}">
+                    <td th:text="${detail.size}"></td>
+                    <td th:text="${detail.color}"></td>
+                    <td th:text="${detail.stockQuantity}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Nút thêm chi tiết mới -->
+    <button type="button" class="btn btn-success mt-3" onclick="showAddDetailModal()" style="margin-left: 30%;">+ Thêm mới</button>
+    <!-- Nút quay lại -->
+    <button type="button" class="btn btn-secondary mt-3" style="margin-left: 30%;" id="goBackButton">Quay lại</button>
+
+</div>
+
+<!-- Modal Thêm Chi Tiết Mới -->
+<div id="addDetailModal" class="modal" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm chi tiết sản phẩm</h5>
+                <button type="button" class="close" onclick="closeAddDetailModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addDetailForm">
+                    <div class="form-group">
+                        <label for="detailSize">Kích thước</label>
+                        <select class="form-control" id="detailSize" name="size" required>
+                            <!-- Các giá trị kích thước từ enum Size -->
+                            <option value="SIZE_36">36</option>
+                            <option value="SIZE_37">37</option>
+                            <option value="SIZE_38">38</option>
+                            <option value="SIZE_39">39</option>
+                            <option value="SIZE_40">40</option>
+                            <option value="SIZE_41">41</option>
+                            <option value="SIZE_42">42</option>
+                            <option value="SIZE_43">43</option>
+                            <option value="SIZE_44">44</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detailColor">Màu sắc</label>
+                        <select class="form-control" id="detailColor" name="color" required>
+                            <!-- Các giá trị màu sắc từ enum Color -->
+                            <option value="RED">Red</option>
+                            <option value="GREEN">Green</option>
+                            <option value="BLUE">Blue</option>
+                            <option value="YELLOW">Yellow</option>
+                            <option value="BLACK">Black</option>
+                            <option value="WHITE">White</option>
+                            <option value="PINK">Pink</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detailQuantity">Số lượng</label>
+                        <input type="number" class="form-control" id="detailQuantity" name="quantity" required>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveDetail()">Lưu</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAddDetailModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function setActive(element) {
+    let menuItems = document.querySelectorAll('.sidebar .nav-link');
+    menuItems.forEach(item => item.classList.remove('active-border')); // Xóa lớp active-border khỏi tất cả các mục
+    element.classList.add('active-border'); // Thêm lớp active-border cho mục được chọn
+}
+
+function showAddDetailModal() {
+    document.getElementById('addDetailModal').style.display = 'flex';
+}
+
+function closeAddDetailModal() {
+    document.getElementById('addDetailModal').style.display = 'none';
+}
+
+
+    function saveDetail() {
+        // Lấy giá trị từ form
+        const size = document.getElementById('detailSize').value;
+        const color = document.getElementById('detailColor').value;
+        const quantity = document.getElementById('detailQuantity').value;
+
+        // Lấy productID từ phần tử <p> trong thông tin sản phẩm
+        const productID = document.querySelector('.card .card-body .form-group .col-md-2 p').textContent.trim();
+
+        // Tạo đối tượng dữ liệu cần gửi theo đúng định dạng JSON
+        const productDetail = {
+            color: color,
+            size: size,
+            stockQuantity: parseInt(quantity), // Chuyển quantity thành số
+            product: {
+                productID: parseInt(productID) // Chuyển productID thành số
+            }
+        };
+
+        // Gửi request POST tới API
+        fetch('http://localhost:8080/products-details', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productDetail)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Lỗi khi thêm chi tiết sản phẩm');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Chi tiết sản phẩm đã được thêm thành công!');
+                console.log(data);
+                // Đóng modal sau khi lưu thành công
+                closeAddDetailModal();
+                window.location.reload();
+            })
+            .catch(error => {
+                alert('Có lỗi xảy ra: ' + error.message);
+            });
+    }
+    document.getElementById("goBackButton").addEventListener("click", function () {
+        window.history.back();
+    });
+
+
+</script>
+
+</body>
+</html>

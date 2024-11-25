@@ -16,10 +16,10 @@ public class Review {
     private String contents;
     private int start;
     private LocalDate createDate;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "productID")
     private Product product;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 }

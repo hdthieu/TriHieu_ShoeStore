@@ -25,6 +25,27 @@ public class ProductServiceImpl implements ProductService {
         System.out.println("Response Body: " + response.getBody());
         return response.getBody().getProductDTOs();
     }
+
+
+    @Override
+    public ProductDTO addProduct(ProductDTO productDTO) {
+        String apiUrl = "http://localhost:8080/products/add";
+        ResponseEntity<ProductDTO> response = restTemplate.postForEntity(
+                apiUrl, productDTO, ProductDTO.class
+        );
+        return response.getBody();
+    }
+
+    @Override
+    public ProductDTO getProductByIdForDetail(int id) {
+        String apiUrl="http://localhost:8080/products/detailFor/"+id;
+        ResponseEntity<ProductDTO> response= restTemplate.exchange(
+                apiUrl, HttpMethod.GET,null, ProductDTO.class
+        );
+        System.out.println("Response Body: " + response.getBody());
+        return response.getBody();
+    }
+
     public ProductDTO getProductById(int id) {
         String apiUrl = "http://localhost:8080/products/{id}";
         ResponseEntity<ProductFindDTO> response = restTemplate.exchange(
@@ -37,6 +58,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
 
 
 }
