@@ -21,4 +21,11 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     @JsonBackReference("brandReference")
     private List<Product> products;
+
+    public Brand() {
+    }
+    public Brand(int brandID) {
+        this.brandID = brandID;
+    }
+
 }
