@@ -6,19 +6,26 @@ import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
+
 @Entity
-@Data
 @Table
+@Data
 public class CartItem {
-    @Id
+    @EmbeddedId
+    private CartItemKey id;
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("cartId")
     @JoinColumn(name = "cartID")
-    private Cart cart;
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productID")
     @JsonBackReference
+    private Cart cart;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("productId")
+    @JoinColumn(name = "productID")
     private Product product;
+
     private int quantity;
     private double subTotal;
 }

@@ -1,23 +1,15 @@
 package com.shoestore.Server.controller;
 
 
-/*
-    @author: Đào Thanh Phú
-    Date: 11/22/2024
-    Time: 3:25 PM
-    ProjectName: Server
-*/
-
-
-import com.shoestore.Server.entities.Product;
 import com.shoestore.Server.entities.ProductDetail;
 import com.shoestore.Server.service.ProductDetailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("products-details")
@@ -27,6 +19,7 @@ public class ProductDetailController {
     public ProductDetailController(ProductDetailService productDetailService) {
         this.productDetailService = productDetailService;
     }
+
 
     @PostMapping
     public ResponseEntity<ProductDetail> addProductDetail(@RequestBody ProductDetail productDetail) {
@@ -39,4 +32,14 @@ public class ProductDetailController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String,Object>> getProductDetailsByProductId(@PathVariable int id) {
+        List<ProductDetail> productDetails=productDetailService.getByProductId(id);
+        Map<String,Object> response= new HashMap<>();
+        response.put("productDetails",productDetails);
+        return ResponseEntity.ok(response);
+    }
+
+
 }

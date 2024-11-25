@@ -2,6 +2,7 @@ package com.shoestore.client.service.impl;
 
 
 import com.shoestore.client.dto.request.ProductDTO;
+import com.shoestore.client.dto.response.ProductFindDTO;
 import com.shoestore.client.dto.response.ProductResponseDTO;
 import com.shoestore.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
         return response.getBody().getProductDTOs();
     }
 
+
     @Override
     public ProductDTO addProduct(ProductDTO productDTO) {
         String apiUrl = "http://localhost:8080/products/add";
@@ -43,4 +45,20 @@ public class ProductServiceImpl implements ProductService {
         System.out.println("Response Body: " + response.getBody());
         return response.getBody();
     }
+
+    public ProductDTO getProductById(int id) {
+        String apiUrl = "http://localhost:8080/products/{id}";
+        ResponseEntity<ProductFindDTO> response = restTemplate.exchange(
+                apiUrl, HttpMethod.GET, null, ProductFindDTO.class, id
+        );
+        System.out.println("Response Body: " + response.getBody());
+
+        if (response.getBody() != null && response.getBody().getProductDTOs() != null && !response.getBody().getProductDTOs().isEmpty()) {
+            return response.getBody().getProductDTOs().get(0);
+        }
+        return null;
+    }
+
+
+
 }

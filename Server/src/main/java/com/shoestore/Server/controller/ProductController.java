@@ -8,8 +8,15 @@ import com.shoestore.Server.service.ProductService;
 import com.shoestore.Server.service.SupplierService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -34,12 +41,13 @@ public class ProductController {
     }
 
     @GetMapping // Ánh xạ HTTP GET
-    public ResponseEntity<Map<String,Object>> getProducts(){
+    public ResponseEntity<Map<String,Object>> getAllProducts(){
         List<Product> products=productService.getAllProduct();
         Map<String,Object> response= new HashMap<>();
         response.put("products",products);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/add")
     public ResponseEntity<Map<String,Object>> getCategories(){
         Map<String,Object> response= new HashMap<>();
@@ -100,5 +108,14 @@ public class ProductController {
         }
     }
 
+
+
+    @GetMapping("/{id}") // Ánh xạ HTTP GET
+    public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
+        List<Product> products=productService.getById(id);
+        Map<String,Object> response= new HashMap<>();
+        response.put("product",products);
+        return ResponseEntity.ok(response);
+    }
 
 }
