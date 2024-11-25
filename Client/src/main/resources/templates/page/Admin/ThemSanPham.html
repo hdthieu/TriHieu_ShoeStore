@@ -213,52 +213,42 @@
     document.getElementById("productForm").addEventListener("submit", function(event) {
         event.preventDefault();
 
+        // Tạo FormData để gửi dữ liệu và ảnh
+        const formData = new FormData();
+
+        // Thêm dữ liệu sản phẩm vào FormData
+        formData.append("productName", document.getElementById("productName").value);
+        formData.append("description", document.getElementById("productDescription").value);
+        formData.append("price", parseFloat(document.getElementById("productPrice").value));
+        formData.append("status", "AVAILABLE");
+        formData.append("brandID", document.getElementById("productBrand").value);
+        formData.append("categoryID", document.getElementById("productCategory").value);
+        formData.append("supplierID", document.getElementById("productSupplier").value);
+
         // Lấy tất cả tệp hình ảnh đã chọn
         const imageFiles = document.getElementById("productImage").files;
-        let imageNames = [];  // Mảng chứa tên tất cả các tệp hình ảnh
 
-        // Lặp qua các tệp hình ảnh và lấy tên của chúng
+        // Lặp qua các tệp hình ảnh và thêm chúng vào FormData
         for (let i = 0; i < imageFiles.length; i++) {
-            imageNames.push(imageFiles[i].name);  // Thêm tên tệp vào mảng
+            formData.append("image", imageFiles[i]);  // Thêm ảnh vào FormData
         }
 
-        // Tạo dữ liệu JSON với danh sách tên hình ảnh
-        const productData = {
-            productName: document.getElementById("productName").value,
-            imageURL: imageNames,  // Gửi mảng các tên hình ảnh
-            description: document.getElementById("productDescription").value,
-            price: parseFloat(document.getElementById("productPrice").value),
-            status: "AVAILABLE",
-            brand: {
-                brandID: parseInt(document.getElementById("productBrand").value),
-            },
-            category: {
-                categoryID: parseInt(document.getElementById("productCategory").value),
-            },
-            supplier: {
-                supplierID: parseInt(document.getElementById("productSupplier").value),
-            }
-        };
-
-        // Gửi yêu cầu POST lên API với dữ liệu JSON
+        // Gửi yêu cầu POST lên API với FormData
         fetch('http://localhost:8080/products', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',  // Đảm bảo là gửi JSON
-            },
-            body: JSON.stringify(productData)  // Chuyển đối tượng JS thành JSON
+            body: formData  // Gửi FormData thay vì JSON
         })
             .then(response => response.json())
             .then(data => {
                 console.log("Sản phẩm đã được thêm thành công:", data);
                 window.location.href = 'http://localhost:3000/product';
-                // Xử lý sau khi gửi thành công
             })
             .catch(error => {
                 console.error("Lỗi khi gửi dữ liệu:", error);
-                // Xử lý lỗi
             });
     });
+
+
 
 
     document.getElementById("goBack").addEventListener("click", function () {
