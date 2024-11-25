@@ -145,10 +145,14 @@
                     <label>Mô tả sản phẩm</label>
                     <p th:text="${product.description}"></p>
                 </div>
+
                 <div class="col-md-2">
                     <label>Hình ảnh sản phẩm</label>
-                    <img th:src="@{/images/{image}(image=${product.imageURL[0]})}" alt="Hình sản phẩm"
+                    <th:block th:each="image : ${product.imageURL}">
+                    <img th:src="@{http://localhost:8080/images/{image}(image=${image})}" alt="Hình ảnh sản phẩm"
                          style="width:100%; height:auto; border:1px solid #ccc; padding:5px;" />
+                    </th:block>
+
                 </div>
             </div>
         </div>

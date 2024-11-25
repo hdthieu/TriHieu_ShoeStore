@@ -143,7 +143,7 @@
                                 <td>
                                     <div th:each="image : ${product.imageURL}">
                                         <!-- Hiển thị ảnh từ URL trả về -->
-                                        <img th:src="@{${image}}"
+                                        <img th:src="@{http://localhost:8080/images/{image}(image=${image})}"
                                              alt="Hình ảnh sản phẩm" class="image-preview"
                                              style="max-width: 50px; max-height: 50px; margin-right: 5px;" />
                                     </div>

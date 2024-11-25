@@ -110,12 +110,14 @@ public class ProductController {
                 String fileName = file.getOriginalFilename();  // Lấy tên ảnh từ MultipartFile
                 String filePath = uploadDirPath + File.separator + fileName;
 
+                System.out.println(filePath);
+
                 // Lưu ảnh vào thư mục
                 File destFile = new File(filePath);
                 file.transferTo(destFile);  // Lưu tệp vào thư mục
 
                 // Tạo URL cho ảnh
-                String imageUrl = "http://localhost:8080/images/" + fileName;
+                String imageUrl =  fileName;
                 imageUrls.add(imageUrl);  // Lưu URL ảnh vào danh sách
             }
 
@@ -176,19 +178,67 @@ public class ProductController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable int id,
-            @RequestBody Product updatedProduct) {
+            @RequestParam(value = "image", required = false) MultipartFile[] files ,  // Tham số ảnh có thể có hoặc không
+            @RequestParam("productName") String productName,  // Tên sản phẩm
+            @RequestParam("description") String description,  // Mô tả sản phẩm
+            @RequestParam("price") double price,  // Giá sản phẩm
+            @RequestParam("status") String status,  // Trạng thái sản phẩm
+            @RequestParam("brand") int brandID,  // ID thương hiệu
+            @RequestParam("category") int categoryID,  // ID danh mục
+            @RequestParam("supplier") int supplierID  // ID nhà cung cấp
+    ) {
         try {
-            // Đảm bảo ID của sản phẩm được gán đúng
-            updatedProduct.setProductID(id);
+            // Tìm sản phẩm hiện tại từ ID
+            Product existingProduct = productService.getProductById(id);
+            if (existingProduct == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Nếu không tìm thấy sản phẩm
+            }
 
-            // Lưu trực tiếp sản phẩm đã chỉnh sửa
-            Product savedProduct = productService.saveProduct(updatedProduct);
+            // Cập nhật các thông tin của sản phẩm
+            existingProduct.setProductName(productName);
+            existingProduct.setDescription(description);
+            existingProduct.setPrice(price);
+            existingProduct.setStatus(status);
+            existingProduct.setBrand(new Brand(brandID));
+            existingProduct.setCategory(new Category(categoryID));
+            existingProduct.setSupplier(new Supplier(supplierID));
+
+            // Nếu có ảnh được tải lên, lưu lại ảnh mới
+            if (files != null && files.length > 0) {
+                List<String> imageUrls = new ArrayList<>();
+                // Đường dẫn lưu ảnh
+                String uploadDirPath = userDir + File.separator + uploadDir + File.separator + "images";
+
+                // Lưu ảnh vào thư mục và tạo URL
+                for (MultipartFile file : files) {
+                    String fileName = file.getOriginalFilename();
+                    String filePath = uploadDirPath + File.separator + fileName;
+                    File destFile = new File(filePath);
+                    file.transferTo(destFile);
+
+                    // Tạo URL cho ảnh
+                    String imageUrl =  fileName;
+                    imageUrls.add(imageUrl);
+                }
+                existingProduct.setImageURL(imageUrls);  // Cập nhật đường dẫn ảnh
+            }else {
+                // Nếu không có ảnh tải lên, giữ nguyên danh sách ảnh cũ
+                existingProduct.setImageURL(existingProduct.getImageURL());
+            }
+
+            // Lưu sản phẩm đã cập nhật vào cơ sở dữ liệu
+            Product savedProduct = productService.saveProduct(existingProduct);
 
             // Trả về sản phẩm đã cập nhật
             return ResponseEntity.ok(savedProduct);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         } catch (Exception e) {
-            // Xử lý lỗi nếu có
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 
