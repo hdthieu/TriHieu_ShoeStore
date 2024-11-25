@@ -1,5 +1,6 @@
 package com.shoestore.client.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shoestore.client.dto.request.BrandDTO;
 import com.shoestore.client.dto.request.ProductDTO;
 import lombok.Getter;
@@ -14,5 +15,6 @@ import java.util.List;
 public class BrandResponseDTO {
     private int totalItems;
     private int totalPages;
+    @JsonProperty("brands")
     private List<BrandDTO> brandDTOs;
 }

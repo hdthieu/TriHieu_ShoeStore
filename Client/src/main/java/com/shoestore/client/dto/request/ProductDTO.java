@@ -1,5 +1,6 @@
 package com.shoestore.client.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,6 @@ public class ProductDTO {
     private BrandDTO brand;
     private CategoryDTO category;
     private SupplierDTO supplier;
-//    private ProductDetailDTO productDetails;
+    private List<ProductDetailDTO> productDetails;
 //    private PromotionDTO promotionDTO;
 }

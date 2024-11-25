@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            position: fixed;
+            width: 16.66%;
+            background-color: #343a40;
+        }
+        .sidebar .nav-link {
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 16.66%;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        #imagePreview {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            display: none;
+        }
+        #editImagePreview {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        .color-size-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .sidebar .nav-link.active-border {
+        border-left: 4px solid #17a2b8; 
+        background-color: #495057;
+        color: #ffffff; 
+      }
+      .styleUser{
+        margin-top: 50%;
+        color: #fff;
+      }
+
+
+      .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.modal-dialog {
+    background-color: white;
+    border-radius: 5px;
+    width: 50%;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="sidebar col-md-2 d-none d-md-block">
+                <div class="sidebar-sticky">
+                    <h4 class="text-light text-center mt-4">AdminAD</h4>
+                    <ul class="nav flex-column mt-3">
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Home</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý bài đánh giá</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh mục</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Đơn hàng</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="styleUser text-center">
+                        <h6>Đào Thanh Phú</h6>
+                        <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+</div>
+            
+
+<!-- Chỉnh sửa sản phẩm -->
+<div id="editProduct" class="container mt-5">
+    <h1 class="text-center mb-4">Chỉnh sửa sản phẩm</h1>
+    <div class="card form-container">
+        <div class="card-header">Thông tin sản phẩm</div>
+        <div class="card-body">
+            <form id="editProductForm" enctype="multipart/form-data">
+                <!-- Trường ẩn chứa ID sản phẩm -->
+                <input type="hidden" id="editProductID" name="productID" th:value="${product.productID}" />
+
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="editProductName">Tên sản phẩm</label>
+                        <input type="text" class="form-control form-control-sm" id="editProductName" name="productName" th:value="${product.productName}" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="editProductPrice">Giá sản phẩm</label>
+                        <input type="number" class="form-control form-control-sm" id="editProductPrice" name="price" th:value="${product.price}" step="0.01" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductCategory">Danh mục</label>
+                    <select class="form-control form-control-sm" id="editProductCategory" name="category" required>
+                        <option value="" disabled>Chọn danh mục</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.categoryID}"
+                                th:text="${category.name}"
+                                th:selected="${category.categoryID == product.category.categoryID}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductSupplier">Nhà cung cấp</label>
+                    <select class="form-control form-control-sm" id="editProductSupplier" name="supplier" required>
+                        <option value="" disabled>Chọn nhà cung cấp</option>
+                        <option th:each="supplier : ${suppliers}"
+                                th:value="${supplier.supplierID}"
+                                th:text="${supplier.supplierName}"
+                                th:selected="${supplier.supplierID == product.supplier.supplierID}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductBrand">Thương hiệu</label>
+                    <select class="form-control form-control-sm" id="editProductBrand" name="brand" required>
+                        <option value="" disabled>Chọn thương hiệu</option>
+                        <option th:each="brand : ${brands}"
+                                th:value="${brand.brandID}"
+                                th:text="${brand.name}"
+                                th:selected="${brand.brandID == product.brand.brandID}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductDescription">Mô tả sản phẩm</label>
+                    <textarea class="form-control form-control-sm" id="editProductDescription" name="description" rows="2" th:text="${product.description}" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductImage">Hình ảnh sản phẩm</label>
+                    <input type="file" class="form-control-file" id="editProductImage" name="image" accept="image/*" onchange="previewEditImage(event)">
+                    <div id="editImageContainer">
+                        <p>Hình ảnh hiện tại:</p>
+                        <div id="">
+                            <div th:each="image : ${product.imageURL}">
+                                <img id="editImagePreview" th:src="@{'/images/' + ${image}}" alt="Hình ảnh sản phẩm" class="image-preview" style="max-width: 300px; max-height: 300px; margin-right: 10px;" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
+                <button type="button" class="btn btn-secondary" id="goBack">Hủy</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function setActive(element) {
+    let menuItems = document.querySelectorAll('.sidebar .nav-link');
+    menuItems.forEach(item => item.classList.remove('active-border')); // Xóa lớp active-border khỏi tất cả các mục
+    element.classList.add('active-border'); // Thêm lớp active-border cho mục được chọn
+}
+
+
+    function previewEditImage(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Thay đổi hình ảnh preview khi người dùng chọn tệp mới
+            var imgPreview = document.getElementById('editImagePreview');
+            imgPreview.src = e.target.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('editProductForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Ngừng submit mặc định của form
+
+        // Tạo FormData từ form
+        const formData = new FormData(this);
+
+        const productID = formData.get('productID');
+        // Tạo đối tượng dữ liệu gửi lên API
+        const data = {
+            productID: productID,
+            productName: formData.get('productName'),
+            price: formData.get('price'),
+            description: formData.get('description'),
+            status: "AVAILABLE",  // Giá trị này có thể thay đổi tùy thuộc vào yêu cầu của bạn
+            category: {
+                categoryID: formData.get('category')
+            },
+            supplier: {
+                supplierID: formData.get('supplier')
+            },
+            brand: {
+                brandID: formData.get('brand')
+            },
+            imageURL: [] // Mảng này sẽ chứa tên của các hình ảnh
+        };
+
+        // Lấy các file hình ảnh (nếu có)
+        const imageFiles = formData.getAll('image'); // getAll để lấy tất cả các file hình ảnh
+        if (imageFiles.length > 0) {
+            // Lặp qua tất cả các file hình ảnh và lấy tên file
+            for (let i = 0; i < imageFiles.length; i++) {
+                data.imageURL.push(imageFiles[i].name); // Thêm tên file vào mảng imageURL
+            }
+
+            // Gửi PUT request với dữ liệu đã có imageURL
+            sendPutRequest(data);
+        } else {
+            // Nếu không có hình ảnh, gửi PUT request mà không có imageURL
+            sendPutRequest(data);
+        }
+    });
+
+    // Hàm gửi PUT request để cập nhật sản phẩm
+    function sendPutRequest(data) {
+        fetch('http://localhost:8080/products/update/' + data.productID, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data) // Chuyển dữ liệu sang JSON
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Cập nhật sản phẩm thành công!');
+                    window.location.href = 'http://localhost:3000/product';
+                    // Xử lý sau khi cập nhật thành công, ví dụ quay lại trang trước
+                } else {
+                    alert('Cập nhật sản phẩm thất bại!');
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi gửi PUT request:', error);
+                alert('Lỗi khi cập nhật sản phẩm');
+            });
+    }
+
+    document.getElementById("goBack").addEventListener("click", function () {
+        window.history.back();
+    });
+
+</script>
+
+</body>
+</html>
