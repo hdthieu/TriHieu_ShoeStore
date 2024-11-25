@@ -71,8 +71,8 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable int id) {
+    @GetMapping("/detailFor/{id}")
+    public ResponseEntity<Product> getProductByIdForDetail(@PathVariable int id) {
         Product product = productService.getProductById(id);
         if (product != null) {
             return ResponseEntity.ok(product);

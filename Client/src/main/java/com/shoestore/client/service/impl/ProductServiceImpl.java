@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductById(int id) {
-        String apiUrl="http://localhost:8080/products/detail/"+id;
+    public ProductDTO getProductByIdForDetail(int id) {
+        String apiUrl="http://localhost:8080/products/detailFor/"+id;
         ResponseEntity<ProductDTO> response= restTemplate.exchange(
                 apiUrl, HttpMethod.GET,null, ProductDTO.class
         );

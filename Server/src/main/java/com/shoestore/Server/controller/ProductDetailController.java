@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/details")
+@RequestMapping("products-details")
 public class ProductDetailController {
     private final ProductDetailService productDetailService;
 

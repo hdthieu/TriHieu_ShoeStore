@@ -75,14 +75,14 @@ public class ProductController {
 
     @GetMapping("/detail/{id}")
     public String showProductDetail(@PathVariable int id, Model model) {
-        ProductDTO productDTO = productService.getProductById(id);
+        ProductDTO productDTO = productService.getProductByIdForDetail(id);
         model.addAttribute("product", productDTO);
         return "page/Admin/ChiTietSanPham";
     }
 
     @GetMapping("/update/{id}")
     public String showProductDetailUpdate(@PathVariable int id, Model model) {
-        ProductDTO productDTO = productService.getProductById(id);
+        ProductDTO productDTO = productService.getProductByIdForDetail(id);
         model.addAttribute("product", productDTO);
         List<CategoryDTO> categories= categoryService.getAllCategory();
         model.addAttribute("categories",categories);
