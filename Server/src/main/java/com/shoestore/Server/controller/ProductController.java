@@ -36,7 +36,7 @@ public class ProductController {
     @Value("${user.dir}")  // Lấy thư mục gốc của dự án
     private String userDir;
 
-    @Value("${file.upload-dir:src\\main\\resources\\static}")  // Đọc đường dẫn thư mục lưu ảnh từ application.properties
+    @Value("${file.upload-dir:src/main/resources/static}")  // Đọc đường dẫn thư mục lưu ảnh từ application.properties
     private String uploadDir;
 
     private final ProductService productService;
@@ -110,8 +110,6 @@ public class ProductController {
                 String fileName = file.getOriginalFilename();  // Lấy tên ảnh từ MultipartFile
                 String filePath = uploadDirPath + File.separator + fileName;
 
-                System.out.println("File path: " + filePath);
-
                 // Lưu ảnh vào thư mục
                 File destFile = new File(filePath);
                 file.transferTo(destFile);  // Lưu tệp vào thư mục
@@ -151,6 +149,7 @@ public class ProductController {
                     .body("Lỗi không xác định: " + e.getMessage());
         }
     }
+
 
 
 
