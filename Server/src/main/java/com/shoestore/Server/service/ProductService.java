@@ -11,8 +11,6 @@ public interface ProductService {
     public boolean deleteProduct(int id);
 
     public Product getProductById(int id);
-
-
     List<Product> getById(int id);
-
+    List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice);
 }

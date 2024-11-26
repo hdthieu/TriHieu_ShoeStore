@@ -59,6 +59,61 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    public List<ProductDTO> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> color, List<String> size, Double minPrice, Double maxPrice) {
+        StringBuilder apiUrl = new StringBuilder("http://localhost:8080/products/filtered");
+
+        // Thêm các tham số vào URL nếu không null
+        boolean hasParam = false;
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            apiUrl.append(hasParam ? "&" : "?").append("categoryIds=")
+                    .append(String.join(",", categoryIds.stream().map(String::valueOf).toArray(String[]::new))); // Sử dụng categoryIds thay vì category
+            hasParam = true;
+        }
+        if (brandIds != null && !brandIds.isEmpty()) {
+            apiUrl.append(hasParam ? "&" : "?").append("brandIds=")
+                    .append(String.join(",", brandIds.stream().map(String::valueOf).toArray(String[]::new))); // Sử dụng brandIds thay vì brand
+            hasParam = true;
+        }
+        if (color != null && !color.isEmpty()) {
+            apiUrl.append(hasParam ? "&" : "?").append("color=")
+                    .append(String.join(",", color));
+            hasParam = true;
+        }
+        if (size != null && !size.isEmpty()) {
+            apiUrl.append(hasParam ? "&" : "?").append("size=")
+                    .append(String.join(",", size));
+            hasParam = true;
+        }
+        if (minPrice != null) {
+            apiUrl.append(hasParam ? "&" : "?").append("minPrice=").append(minPrice);
+            hasParam = true;
+        }
+        if (maxPrice != null) {
+            apiUrl.append(hasParam ? "&" : "?").append("maxPrice=").append(maxPrice);
+        }
+
+        // Gửi request đến BE
+        ResponseEntity<ProductResponseDTO> response = restTemplate.exchange(
+                apiUrl.toString(),
+                HttpMethod.GET,
+                null,
+                ProductResponseDTO.class
+        );
+
+        // Trả về danh sách sản phẩm từ response body
+        if (response.getBody() != null) {
+            return response.getBody().getProductDTOs();
+        }
+
+        // Trả về danh sách rỗng nếu không có sản phẩm nào
+        return List.of();
+    }
+
+
+
+
+
 
 
 }

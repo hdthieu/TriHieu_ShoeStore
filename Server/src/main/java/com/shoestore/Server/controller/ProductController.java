@@ -39,6 +39,22 @@ public class ProductController {
         this.brandService = brandService;
         this.supplierService = supplierService;
     }
+    @GetMapping("/filtered")
+    public ResponseEntity<Map<String, Object>> getFilteredProducts(
+            @RequestParam(required = false) List<Integer> categoryIds,
+            @RequestParam(required = false) List<Integer> brandIds,
+            @RequestParam(required = false) List<String> colors,
+            @RequestParam(required = false) List<String> sizes,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice
+    ) {
+        List<Product> products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", products);
+
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping // Ánh xạ HTTP GET
     public ResponseEntity<Map<String,Object>> getAllProducts(){

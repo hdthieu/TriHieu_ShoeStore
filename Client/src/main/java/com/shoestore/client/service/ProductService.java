@@ -14,5 +14,5 @@ public interface ProductService {
     public ProductDTO getProductByIdForDetail(int id);
 
     public ProductDTO getProductById(int id);
-
+    List<ProductDTO> getFilteredProducts(List<Integer> category, List<Integer> brand, List<String> color, List<String> size, Double minPrice, Double maxPrice);
 }

@@ -1,9 +1,6 @@
 package com.shoestore.client.controllers;
 
-import com.shoestore.client.dto.request.BrandDTO;
-import com.shoestore.client.dto.request.CategoryDTO;
-import com.shoestore.client.dto.request.ProductDTO;
-import com.shoestore.client.dto.request.SupplierDTO;
+import com.shoestore.client.dto.request.*;
 import com.shoestore.client.service.BrandService;
 import com.shoestore.client.service.CategoryService;
 import com.shoestore.client.service.ProductService;
@@ -30,15 +27,6 @@ public class ProductController {
     private SupplierService supplierService;
     @Autowired
     private BrandService brandService;
-
-
-    @GetMapping("/product-search")
-    public String showProducts(Model model){
-        List<ProductDTO> products= productService.getAllProduct();
-        model.addAttribute("products",products);
-        System.out.println(products);
-        return "page/Customer/Search";
-    }
 
     @GetMapping("/product")
     public String listProductsAdmin(Model model){

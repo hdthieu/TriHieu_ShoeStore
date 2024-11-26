@@ -31,4 +31,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> getAllCategory() {
         return categoryRepository.findAll();
     }
+
+    @Override
+    public List<Object[]> getCategoryWithCount() {
+        return categoryRepository.getAllCategoriesWithProductCount();
+    }
 }

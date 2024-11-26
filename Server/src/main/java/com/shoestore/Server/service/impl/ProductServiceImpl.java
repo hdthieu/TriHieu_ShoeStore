@@ -1,8 +1,12 @@
 package com.shoestore.Server.service.impl;
 
+import com.shoestore.Server.entities.Color;
 import com.shoestore.Server.entities.Product;
+import com.shoestore.Server.entities.Size;
 import com.shoestore.Server.repositories.ProductRepository;
 import com.shoestore.Server.service.ProductService;
+import com.shoestore.Server.specifications.ProductSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -39,4 +43,32 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByProductID(id);
 
     }
+
+    @Override
+    public List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice) {
+        Specification<Product> spec = Specification.where(null);
+
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            spec = spec.and(ProductSpecification.hasCategories(categoryIds));
+        }
+
+        if (brandIds != null && !brandIds.isEmpty()) {
+            spec = spec.and(ProductSpecification.hasBrands(brandIds));
+        }
+        if (colors != null && !colors.isEmpty()) {
+            spec = spec.and(ProductSpecification.hasColors(colors));
+        }
+        if (sizes != null && !sizes.isEmpty()) {
+            spec = spec.and(ProductSpecification.hasSizes(sizes));
+        }
+        if (minPrice != null) {
+            spec = spec.and(ProductSpecification.hasMinPrice(minPrice));
+        }
+        if (maxPrice != null) {
+            spec = spec.and(ProductSpecification.hasMaxPrice(maxPrice));
+        }
+
+        return productRepository.findAll(spec);
+    }
+
 }
