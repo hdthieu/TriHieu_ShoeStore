@@ -74,11 +74,10 @@ public class SearchController {
             // Nếu không có filter, lấy toàn bộ sản phẩm
             products = productService.getAllProduct();
         } else {
-            System.out.println(categoryIds);
-            System.out.println(minPrice);
+
             // Nếu có filter, gọi service để lấy sản phẩm theo filters
             products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice);
-            System.out.println(products.size());
+
         }
 
         // Thêm danh sách sản phẩm vào model
