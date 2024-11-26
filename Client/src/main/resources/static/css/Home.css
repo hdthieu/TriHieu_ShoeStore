@@ -8,7 +8,7 @@ html {
 
 /* Block cho header */
 .header {
-  background: url("../images/mountain-background.jpg") no-repeat center center;
+  background: url("../images/misc/mountain-background.jpg") no-repeat center center;
   background-size: cover;
   height: 600px;
   display: flex;
