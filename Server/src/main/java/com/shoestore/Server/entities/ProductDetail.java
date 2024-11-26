@@ -20,6 +20,6 @@ public class ProductDetail {
     private int stockQuantity;
     @ManyToOne
     @JoinColumn(name = "productID")
-    @JsonBackReference("productDetailsReference")
+    @JsonBackReference
     private Product product;
 }

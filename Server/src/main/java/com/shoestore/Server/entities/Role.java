@@ -1,5 +1,6 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,5 +17,6 @@ public class Role {
     private String name;
     private String description;
     @OneToMany(mappedBy = "role")
+    @JsonBackReference
     private List<User> users;
 }
