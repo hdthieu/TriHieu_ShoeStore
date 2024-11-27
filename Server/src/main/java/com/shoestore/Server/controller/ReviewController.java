@@ -46,11 +46,16 @@ public class ReviewController {
         }
     }
 
-    @PostMapping("/rating/{rating}")
+    @GetMapping("/rating{rating}")
     public ResponseEntity<Map<String,Object>> getReviewByRating(@PathVariable int rating) {
-        List<Review> reviews = reviewService.getReviewByRating(rating);
         Map<String, Object> response = new HashMap<>();
-        response.put("reviews", reviews);
+        if(rating ==-1){
+            List<Review> reviews = reviewService.getAllReview();
+            response.put("reviews", reviews);
+        }else {
+            List<Review> reviews = reviewService.getReviewByRating(rating);
+            response.put("reviews", reviews);
+        }
         return ResponseEntity.ok(response);
     }
 }

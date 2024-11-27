@@ -17,4 +17,5 @@ import java.util.List;
 public interface ReviewService {
 
     public List<ReviewDTO> getAllReview();
+    public List<ReviewDTO> getReviewByRating(int rating);
 }

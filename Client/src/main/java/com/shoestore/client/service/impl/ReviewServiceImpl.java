@@ -17,6 +17,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -28,6 +29,19 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewDTO> getAllReview() {
         String apiUrl="http://localhost:8080/reviews";
+        ResponseEntity<ReviewResponseDTO> response= restTemplate.exchange(
+                apiUrl, HttpMethod.GET,null, ReviewResponseDTO.class
+        );
+        System.out.println("Response Body: " + response.getBody());
+        return response.getBody().getReviewDTOs();
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewByRating(int rating) {
+        String apiUrl = UriComponentsBuilder
+                .fromHttpUrl("http://localhost:8080/reviews/rating{rating}")
+                .buildAndExpand(rating)
+                .toUriString();
         ResponseEntity<ReviewResponseDTO> response= restTemplate.exchange(
                 apiUrl, HttpMethod.GET,null, ReviewResponseDTO.class
         );

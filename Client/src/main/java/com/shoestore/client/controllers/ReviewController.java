@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -26,6 +27,14 @@ public class ReviewController {
     @GetMapping("/product/review")
     public String listReviewForAdmin(Model model){
         List<ReviewDTO> reviews= reviewService.getAllReview();
+        model.addAttribute("reviews",reviews);
+        System.out.println(reviews);
+        return "page/Admin/QuanLyBaiDanhGia";
+    }
+
+    @GetMapping("/product/review/rating{rating}")
+    public String listReviewByRating(Model model,@PathVariable int rating){
+        List<ReviewDTO> reviews= reviewService.getReviewByRating(rating);
         model.addAttribute("reviews",reviews);
         System.out.println(reviews);
         return "page/Admin/QuanLyBaiDanhGia";
