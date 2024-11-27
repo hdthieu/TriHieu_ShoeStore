@@ -24,13 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/products")
@@ -55,19 +55,34 @@ public class ProductController {
         this.supplierService = supplierService;
     }
     @GetMapping("/filtered")
-    public ResponseEntity<Map<String, Object>> getFilteredProducts(
+    public ResponseEntity<LinkedHashMap<String, Object>> getFilteredProducts(
             @RequestParam(required = false) List<Integer> categoryIds,
             @RequestParam(required = false) List<Integer> brandIds,
             @RequestParam(required = false) List<String> colors,
             @RequestParam(required = false) List<String> sizes,
             @RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String sortBy
     ) {
-        List<Product> products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice);
+        // Giải mã tham số sortBy nếu cần
+        try {
+            if (sortBy != null) {
+                sortBy = URLDecoder.decode(sortBy, StandardCharsets.UTF_8.toString());
+                System.out.println("SortBy sau khi giải mã: " + sortBy);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  // Xử lý lỗi nếu giải mã thất bại
+        }
 
-        Map<String, Object> response = new HashMap<>();
+        // Tiến hành lấy dữ liệu sản phẩm với các tham số đã giải mã
+        List<Product> products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice, sortBy);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        // Debug dữ liệu trước khi trả về
+        System.out.println("Dữ liệu trước khi trả về: " + products);
+        System.out.println("Số lượng sản phẩm: " + products.size());
+
         response.put("products", products);
-
         return ResponseEntity.ok(response);
     }
 

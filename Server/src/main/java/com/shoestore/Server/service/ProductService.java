@@ -13,8 +13,6 @@ public interface ProductService {
 
     public Product getProductById(int id);
     List<Product> getById(int id);
-    List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice);
-
     // nay cua hieu
     public List<Product> getProductsNotInOrderDetail(int orderID);
 
@@ -25,4 +23,5 @@ public interface ProductService {
 
     List<ProductDTO> getTop10Trending();
 
+    List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice,String sortBy);
 }

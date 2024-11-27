@@ -85,4 +85,15 @@ public class Product {
                 ", status='" + status + '\'' +
                 '}';
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productID=" + productID +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
