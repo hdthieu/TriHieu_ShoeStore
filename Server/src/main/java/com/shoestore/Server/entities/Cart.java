@@ -1,5 +1,6 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,8 +16,12 @@ public class Cart {
     @Column(name = "cartID")
     private int cartID;
     private LocalDateTime createAt;
+
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<CartItem> cartItems;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userID")
     private User user;

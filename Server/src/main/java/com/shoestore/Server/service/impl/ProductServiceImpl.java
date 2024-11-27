@@ -7,6 +7,7 @@ import com.shoestore.Server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,8 +27,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    public boolean deleteProduct(int id) {
+        productRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public Product getProductById(int id) {
+        return productRepository.findById(id).orElse(null);
+
+    }
     public List<Product> getById(int id) {
         return productRepository.findByProductID(id);
+
     }
 
     // nay cua hieu

@@ -1,5 +1,6 @@
 package com.shoestore.Server.service.impl;
 
+
 import com.shoestore.Server.entities.ProductDetail;
 import com.shoestore.Server.repositories.ProductDetailRepository;
 import com.shoestore.Server.service.ProductDetailService;
@@ -11,13 +12,22 @@ import java.util.List;
 public class ProductDetailServiceImpl implements ProductDetailService {
     @Autowired
     private final ProductDetailRepository productDetailRepository;
+
     public ProductDetailServiceImpl(ProductDetailRepository productDetailRepository) {
         this.productDetailRepository = productDetailRepository;
     }
 
+
+
+    @Override
+    public ProductDetail addProductDetail(ProductDetail productDetail) {
+        return productDetailRepository.save(productDetail);
+
+    }
     @Override
     public List<ProductDetail> getByProductId(int productID) {
         return productDetailRepository.findByProduct_ProductID(productID);
+
     }
 
     @Override

@@ -1,5 +1,15 @@
 package com.shoestore.client.dto.request;
 
+
+
+/*
+    @author: Đào Thanh Phú
+    Date: 11/22/2024
+    Time: 3:09 PM
+    ProjectName: Client
+*/
+
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,4 +25,5 @@ public class ProductDetailDTO {
     private String size;
     private int stockQuantity;
 //    private ProductDTO product;
+
 }
