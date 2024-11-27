@@ -38,6 +38,19 @@
     transition: background-color 0.2s ease;
 }
 
+.cart-item__checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.cart-item__checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #007bff;
+}
 .cart-item:hover {
     background-color: #f9f9f9;
 }
