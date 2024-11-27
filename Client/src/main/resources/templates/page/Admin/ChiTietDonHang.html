@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,33 +8,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    <style>
-      .sidebar {
-        min-height: 100vh;
-        position: fixed;
-        width: 16.66%;
-        background-color: #343a40; /
-      }
-      .sidebar .nav-link {
-        color: #fff;
-      }
-      .main-content {
-        margin-left: 16.66%;
-      }
-
-      .sidebar .nav-link.active-border {
-        border-left: 4px solid #17a2b8;
-        background-color: #495057;
-        color: #ffffff;
-      }
-      .styleUser{
-        margin-top: 50%;
-        color: #fff;
-      }
-      .styleForm{
-        width: 50%;margin: 0 auto;
-      }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/ChiTietDonHang.css}"/>
   </head>
   <body>
     <div class="container-fluid">
@@ -122,50 +96,41 @@
             class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
             <div class="progress-tracker my-5">
-              <h5>Hóa đơn HD15030032</h5>
-              <div
-                class="progress-steps d-flex justify-content-between align-items-center pt-4"
-              >
-                <!-- Step 1 -->
-                <div class="step text-center">
+              <h5>Hóa đơn <span id="O_ID" th:text="${orderDetail['orderID']}"></span></h5>
+              <div class="progress-steps d-flex justify-content-between align-items-center pt-4 ">
+                <div class="step text-center" th:class=" ${orderDetail['status'] == 'Processing' or orderDetail['status'] == 'Shipped' or orderDetail['status'] == 'Delivered' or orderDetail['status'] == 'Return' ? 'active' : 'inactive'}">
                   <div class="icon-circle bg-primary text-white mb-2">
-                    <i class="fas fa-file-alt"></i>
+                    <img src="https://static.thenounproject.com/png/2965944-200.png" alt="Processing Icon" class="icon-img">
                   </div>
-                  <p class="font-weight-bold">Tạo đơn hàng</p>
-                  <p class="small">17:52:50 21/12/2023</p>
+                  <p class="font-weight-bold bg-primary text-white ">Processing</p>
                 </div>
-                <!-- Step 2 -->
-                <div class="step text-center">
+
+                <!-- Step 2: Shipped -->
+                <div class="step text-center" th:class="${orderDetail['status'] == 'Shipped' or orderDetail['status'] == 'Delivered' or orderDetail['status'] == 'Return' ? 'active' : 'inactive'}">
                   <div class="icon-circle bg-success text-white mb-2">
-                    <i class="fas fa-truck-loading"></i>
+                    <img src="https://cdn-icons-png.flaticon.com/512/411/411712.png" alt="Shipped Icon" class="icon-img">
                   </div>
-                  <p class="font-weight-bold">Chờ giao</p>
-                  <p class="small">18:14:48 21/12/2023</p>
+                  <p class="font-weight-bold bg-success text-white">Shipped</p>
                 </div>
-                <!-- Step 3 -->
-                <div class="step text-center">
+
+                <!-- Step 3: Delivered -->
+                <div class="step text-center" th:class="${orderDetail['status'] == 'Delivered' or orderDetail['status'] == 'Return' ? 'active' : 'inactive'}">
                   <div class="icon-circle bg-success text-white mb-2">
-                    <i class="fas fa-shipping-fast"></i>
+                    <img src="https://cdn-icons-png.flaticon.com/512/10543/10543121.png" alt="Delivered Icon" class="icon-img">
                   </div>
-                  <p class="font-weight-bold">Đang giao</p>
-                  <p class="small">18:15:40 21/12/2023</p>
+                  <p class="font-weight-bold bg-success text-white">Delivered</p>
                 </div>
-                <!-- Step 4 -->
-                <div class="step text-center">
-                  <div class="icon-circle bg-warning text-white mb-2">
-                    <i class="fas fa-credit-card"></i>
-                  </div>
-                  <p class="font-weight-bold">Xác nhận thanh toán</p>
-                  <p class="small">18:15:57 21/12/2023</p>
-                </div>
-                <div class="step text-center">
+
+                <!-- Step 4: Return -->
+                <div class="step text-center" th:class="${orderDetail['status'] == 'Return' ? 'active' : 'inactive'}">
                   <div class="icon-circle bg-danger text-white mb-2">
-                    <i class="fas fa-credit-card"></i>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrjOkiN9fnnys6sbElbNZO9D22pDdBkGZ78w&s" alt="Return Icon" class="icon-img">
                   </div>
-                  <p class="font-weight-bold">Hủy</p>
-                  <p class="small">18:15:57 21/12/2023</p>
+                  <p class="font-weight-bold bg-danger text-white">Return</p>
                 </div>
               </div>
+
+
               <div class="buttons mt-4 text-right">
                 <button
                   class="btn btn-primary"
@@ -174,207 +139,180 @@
                 >
                   Hoàn thành
                 </button>
-                <button class="btn btn-info">In HD</button>
+                <button class="btn btn-info" onclick="fetchAndUseFont()">In Hóa Đơn</button>
               </div>
             </div>
           </div>
           <!-- Section: Thông Tin Đơn Hàng -->
           <div class="row">
-            <!-- Thông Tin Đơn Hàng -->
-            <div class="col-md-6">
-              <h5 class="text-primary">Thông Tin Đơn Hàng</h5>
-              <div class="border p-3 rounded">
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Trạng thái:</strong>
+              <!-- Thông Tin Đơn Hàng -->
+              <div class="col-md-6">
+                <h5 class="text-primary">Thông Tin Đơn Hàng</h5>
+                <div class="border p-3 rounded">
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Trạng thái:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="orderStatus" th:text="${orderDetail['status']}"></span>
+                    </div>
                   </div>
-                  <div class="col-6">
-                    <span id="orderStatus">Đang giao</span>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right"><strong>Mã đơn:</strong></div>
+                    <div class="col-6">
+                      <span id="orderID" th:text="${orderDetail['orderID']}"></span>
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right"><strong>Mã đơn:</strong></div>
-                  <div class="col-6">
-                    <span id="orderCode">HD15030032</span>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Phí vận chuyển:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="feeShip" th:text="${orderDetail['feeShip']}"></span>
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Phí vận chuyển:</strong>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right"><strong>Giảm giá:</strong></div>
+                    <div class="col-6">
+                      <span id="discount"
+                            th:text="${orderDetail['voucherType'] == 'Percentage'
+                                      ? orderDetail['voucher'] + ' %'
+                                      : orderDetail['voucher'] + ' VNĐ'}">
+                      </span>
+                    </div>
                   </div>
-                  <div class="col-6">
-                    <span id="shippingFee">38,501 đ</span>
-                  </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Tổng tiền:</strong>
-                  </div>
-                  <div class="col-6">
-                    <span id="totalAmount">500,000 đ</span>
-                  </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right"><strong>Giảm giá:</strong></div>
-                  <div class="col-6"><span id="discount">38,501 đ</span></div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Tổng tiền phải thanh toán:</strong>
-                  </div>
-                  <div class="col-6">
-                    <span id="totalPayable">461,499 đ</span>
-                  </div>
-                </div>
 
-                <div class="row mt-5">
-                  <div class="col-6 text-right">
-                    <strong>Nhân Viên thực hiện:</strong>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Tổng tiền phải thanh toán:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="totalPayable" th:text="${orderDetail['totalAmount']}"></span>
+                    </div>
                   </div>
-                  <div class="col-6">
-                    <span id="totalPayable">Nguyễn Thị Lâm</span>
+
+                  <div class="row mt-5">
+                    <div class="col-6 text-right">
+                      <strong>Nhân Viên thực hiện:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="employeeName">Nguyễn Thị Lâm</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Thông Tin Khách Hàng -->
+              <div class="col-md-6">
+                <h5 class="text-primary">Thông Tin Khách Hàng</h5>
+                <div class="border p-3 rounded">
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Tên khách hàng:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="customerName" th:text="${orderDetail['userName']}"></span>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Số điện thoại:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="customerPhone" th:text="${orderDetail['phoneNumber']}"></span>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Địa chỉ giao hàng:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="customerAddress" th:text="${orderDetail['address']}"></span
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Thông Tin Khách Hàng -->
-            <div class="col-md-6">
-              <h5 class="text-primary">Thông Tin Khách Hàng</h5>
-              <div class="border p-3 rounded">
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Tên khách hàng:</strong>
-                  </div>
-                  <div class="col-6">
-                    <span id="customerName">Nguyễn Văn A</span>
-                  </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Số điện thoại:</strong>
-                  </div>
-                  <div class="col-6">
-                    <span id="customerPhone">0123 456 789</span>
-                  </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-6 text-right">
-                    <strong>Địa chỉ giao hàng:</strong>
-                  </div>
-                  <div class="col-6">
-                    <span id="customerAddress"
-                      >123 Đường ABC, Phường DEF, Quận GHI, TP HCM</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="row mt-4">
-            <div
-              class="col-12 d-flex justify-content-between align-items-center"
-            >
-              <h5 class="text-primary">Danh Sách Sản Phẩm</h5>
-              <button
-                class="btn btn-success"
-                data-toggle="modal"
-                data-target="#addProductModal"
+              <div
+                class="col-12 d-flex justify-content-between align-items-center"
               >
-                + Thêm Sản Phẩm
-              </button>
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-12">
-              <div class="table-responsive">
-                <table class="table table-bordered text-center">
-                  <thead class="thead-light">
-                    <tr>
-                      <th>ID</th>
-                      <th>Hình Ảnh</th>
-                      <th>Tên Sản Phẩm và Đơn Giá</th>
-                      <th>Số Lượng</th>
-                      <th>Tổng Tiền</th>
-                    </tr>
-                  </thead>
-                  <tbody id="productList">
-                    <!-- Dòng sản phẩm mẫu -->
-                    <tr>
-                      <td>1</td>
-                      <td>
-                        <img
-                          src="https://via.placeholder.com/50"
-                          alt="Hình ảnh sản phẩm"
-                          class="img-thumbnail"
-                          style="max-width: 50px"
-                        />
-                      </td>
-                      <td>
-                        <p class="mb-0 font-weight-bold">Giày fake</p>
-                        <small>Đơn giá: 150,000 đ</small>
-                      </td>
-                      <td>
-                        <input
-                          type="number"
-                          class="form-control text-center"
-                          value="2"
-                          style="max-width: 70px; margin: 0 auto"
-                        />
-                      </td>
-                      <td>300,000 đ</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>
-                        <img
-                          src="https://via.placeholder.com/50"
-                          alt="Hình ảnh sản phẩm"
-                          class="img-thumbnail"
-                          style="max-width: 50px"
-                        />
-                      </td>
-                      <td>
-                        <p class="mb-0 font-weight-bold">Giày Real</p>
-                        <small>Đơn giá: 200,000 đ</small>
-                      </td>
-                      <td>
-                        <input
-                          type="number"
-                          class="form-control text-center"
-                          value="1"
-                          style="max-width: 70px; margin: 0 auto"
-                        />
-                      </td>
-                      <td>200,000 đ</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <h5 class="text-primary">Danh Sách Sản Phẩm</h5>
+                <button
+                  class="btn btn-success"
+                  data-toggle="modal"
+                  data-target="#addProductModal"
+                >
+                  + Thêm Sản Phẩm
+                </button>
               </div>
             </div>
-          </div>
+          <div class="row mt-3">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table class="table table-bordered text-center" id="productTable">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>ID</th>
+                        <th>Hình Ảnh</th>
+                        <th>Tên Sản Phẩm và Đơn Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Tổng Tiền</th>
+                      </tr>
+                    </thead>
+                    <tbody id="productList">
+                    <tr th:each="product, iterStat : ${orderDetail.orderDetails}">
+                      <td th:text="${iterStat.count}"></td>
+                      <td>
+                        <img src="https://vietjack.com/html/images/html.gif"
+                             alt="Hình ảnh sản phẩm"
+                             class="img-thumbnail"
+                             style="max-width: 50px" />
+                      </td>
+                      <td>
+                        <p class="mb-0 font-weight-bold" th:text="${product.productName}"></p>
+                        <small>Đơn giá: <span th:text="${product.price}"></span> đ</small>
+                      </td>
+                      <td style="display: none" data-product-id="${product.productID}"></td>  -->
+                      <td>
+                        <input type="number"
+                               class="form-control text-center quantity-input"
+                               th:value="${product.quantity}"
+                               style="max-width: 70px; margin: 0 auto"
+                               th:data-product-id="${product.productID}"
+                                onchange="updateQuantity(this)" />
+                        <button class="btn btn-danger btn-sm mt-2"
+                                onclick="deleteProduct()">Xóa</button>
+                      </td>
+                      <td th:text="${product.quantity * product.price} + ' VNĐ'"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
         </main>
       </div>
     </div>
 
-    <!-- Modal Structure -->
     <div
-      class="modal fade"
-      id="confirmModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="confirmModalLabel"
-      aria-hidden="true"
+            class="modal fade"
+            id="confirmModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="confirmModalLabel"
+            aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="confirmModalLabel">Nhập ghi chú</h5>
             <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -386,95 +324,50 @@
                 <div>
                   <div class="form-check">
                     <input
-                      class="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="option1"
-                      value="Đã xác nhận đơn hàng"
+                            class="form-check-input"
+                            type="radio"
+                            name="messageOption"
+                            id="optionShipped"
+                            value="Shipped"
                     />
-                    <label class="form-check-label" for="option1">
-                      Đã xác nhận đơn hàng
+                    <label class="form-check-label" for="optionShipped">
+                      Shipped
                     </label>
                   </div>
                   <div class="form-check">
                     <input
-                      class="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="option2"
-                      value="Đã bàn giao cho đơn vị vận chuyển"
+                            class="form-check-input"
+                            type="radio"
+                            name="messageOption"
+                            id="optionDelivered"
+                            value="Delivered"
                     />
-                    <label class="form-check-label" for="option2">
-                      Đã bàn giao cho đơn vị vận chuyển
+                    <label class="form-check-label" for="optionDelivered">
+                      Delivered
                     </label>
                   </div>
                   <div class="form-check">
                     <input
-                      class="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="option3"
-                      value="Đã xác nhận thông tin thanh toán"
+                            class="form-check-input"
+                            type="radio"
+                            name="messageOption"
+                            id="optionReturn"
+                            value="Return"
+                            checked
                     />
-                    <label class="form-check-label" for="option3">
-                      Đã xác nhận thông tin thanh toán
+                    <label class="form-check-label" for="optionReturn">
+                      Return
                     </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="option4"
-                      value="Đơn hàng đã được giao thành công"
-                      checked
-                    />
-                    <label class="form-check-label" for="option4">
-                      Đơn hàng đã được giao thành công
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="option5"
-                      value="Đã hủy đơn hàng"
-                    />
-                    <label class="form-check-label" for="option5">
-                      Đã hủy đơn hàng
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="option6"
-                      value="Khác"
-                    />
-                    <label class="form-check-label" for="option6">Khác</label>
                   </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="customMessage">Nhập ghi chú:</label>
-                <textarea
-                  class="form-control"
-                  id="customMessage"
-                  rows="3"
-                  placeholder="Nhập ghi chú của bạn..."
-                >
-Đơn hàng đã được giao thành công</textarea
-                >
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
             >
               Hủy
             </button>
@@ -485,25 +378,24 @@
         </div>
       </div>
     </div>
-
     <!-- Modal Thêm Sản Phẩm -->
     <div
-      class="modal fade"
-      id="addProductModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addProductModalLabel"
-      aria-hidden="true"
+            class="modal fade"
+            id="addProductModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="addProductModalLabel"
+            aria-hidden="true"
     >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="addProductModalLabel">Thêm Sản Phẩm</h5>
             <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -512,10 +404,10 @@
             <!-- Tìm kiếm sản phẩm -->
             <div class="form-group">
               <input
-                type="text"
-                class="form-control"
-                id="searchInput"
-                placeholder="Tìm kiếm sản phẩm..."
+                      type="text"
+                      class="form-control"
+                      id="searchInput"
+                      placeholder="Tìm kiếm sản phẩm..."
               />
             </div>
 
@@ -523,46 +415,23 @@
             <div class="table-responsive">
               <table class="table table-bordered text-center">
                 <thead class="thead-light">
-                  <tr>
-                    <th>ID</th>
-                    <th>Hình Ảnh</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Đơn Giá</th>
-                    <th>Thêm</th>
-                  </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>Tên Sản Phẩm</th>
+                  <th>Đơn Giá</th>
+                </tr>
                 </thead>
                 <tbody id="productSearchList">
-                  <!-- Dữ liệu mẫu -->
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <img
-                        src="https://via.placeholder.com/50"
-                        alt="Hình ảnh sản phẩm"
-                        class="img-thumbnail"
-                      />
-                    </td>
-                    <td>Giày fake</td>
-                    <td>150,000 đ</td>
-                    <td>
-                      <button class="btn btn-primary btn-sm">Thêm</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>
-                      <img
-                        src="https://via.placeholder.com/50"
-                        alt="Hình ảnh sản phẩm"
-                        class="img-thumbnail"
-                      />
-                    </td>
-                    <td>Giày Real</td>
-                    <td>200,000 đ</td>
-                    <td>
-                      <button class="btn btn-primary btn-sm">Thêm</button>
-                    </td>
-                  </tr>
+                <tr th:each="product : ${products}">
+                  <td th:text="${product.productID}"></td>
+                  <td th:text="${product.productName}"></td>
+                  <td th:text="${product.price}"></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" onclick="addProductToOrder(this)">
+                      Thêm
+                    </button>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -590,9 +459,9 @@
           </div>
           <div class="modal-footer">
             <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
             >
               Đóng
             </button>
@@ -600,127 +469,200 @@
         </div>
       </div>
     </div>
-    <style>
-      h5 {
-        font-weight: bold;
-      }
-      .border {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-      }
-      .p-3 {
-        padding: 1rem !important;
-      }
-      .rounded {
-        border-radius: 5px;
-      }
-      .modal-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-      }
-      .modal-title {
-        font-weight: bold;
-      }
-      .progress-steps {
-        border-top: 2px solid #ddd;
-        position: relative;
-      }
 
-      .step {
-        width: 24%;
-        position: relative;
-      }
 
-      .step .icon-circle {
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        border-radius: 50%;
-        background-color: #ddd;
-        display: inline-block;
-        font-size: 18px;
-      }
-
-      .progress-steps .step:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        top: 25px;
-        right: -50%;
-        width: 100%;
-        height: 4px;
-        background-color: #28a745;
-        z-index: -1;
-      }
-
-      .step .icon-circle.bg-primary {
-        background-color: #007bff;
-      }
-
-      .step .icon-circle.bg-success {
-        background-color: #28a745;
-      }
-
-      .step .icon-circle.bg-warning {
-        background-color: #ffc107;
-      }
-
-      .step p {
-        margin-bottom: 0;
-      }
-
-      .buttons button {
-        margin-left: 10px;
-      }
-      .table th,
-      .table td {
-        vertical-align: middle;
-      }
-
-      .table img {
-        display: block;
-        margin: 0 auto;
-      }
-
-      .font-weight-bold {
-        font-weight: bold;
-      }
-      .table th,
-      .table td {
-        vertical-align: middle;
-      }
-
-      .table img {
-        display: block;
-        margin: 0 auto;
-        max-width: 50px;
-      }
-    </style>
-    <!-- Bootstrap JS and dependencies -->
-    <script>
-      document
-        .getElementById("confirmButton")
-        .addEventListener("click", function () {
-          const selectedMessage = document.querySelector(
-            'input[name="messageOption"]:checked'
-          ).value;
-          const customMessage = document.getElementById("customMessage").value;
-          console.log("Selected Message:", selectedMessage);
-          console.log("Custom Message:", customMessage);
-          // Đóng modal sau khi xác nhận
-          $("#confirmModal").modal("hide");
-        });
-
-        document.getElementById("searchInput").addEventListener("input", function () {
-    const searchTerm = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#productSearchList tr");
-    rows.forEach((row) => {
-      const productName = row.cells[2].textContent.toLowerCase();
-      row.style.display = productName.includes(searchTerm) ? "" : "none";
-    });
-  });
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/OrderDetail.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script>
+      async function fetchAndUseFont() {
+        const { jsPDF } = window.jspdf;
+
+        // URL của font Roboto
+        const fontUrl = 'https://example.com/Roboto-Regular.ttf';
+
+        // Tải font từ URL
+        const response = await fetch(fontUrl);
+        const fontBlob = await response.blob();
+
+        // Chuyển font sang định dạng base64
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const fontBase64 = e.target.result.split(',')[1]; // Bỏ phần đầu "data:..."
+          const pdf = new jsPDF();
+
+          // Thêm font vào jsPDF
+          pdf.addFileToVFS('Roboto-Regular.ttf', fontBase64);
+          pdf.addFont('Roboto-Regular.ttf', 'Roboto', 'normal');
+          pdf.setFont('Roboto');
+
+          // Tạo nội dung PDF
+          pdf.setFontSize(20);
+          pdf.text('Hóa Đơn Mua Hàng', 10, 10);
+          pdf.setFontSize(12);
+          pdf.text('Tên khách hàng: Nguyễn Văn A', 10, 30);
+          pdf.text('Địa chỉ: 123 Nguyễn Trãi, Hà Nội', 10, 40);
+          pdf.text('Điện thoại: 0123 456 789', 10, 50);
+
+          // Lưu file PDF
+          pdf.save('invoice.pdf');
+        };
+
+        reader.readAsDataURL(fontBlob);
+      }
+
+      document.getElementById('confirmButton').addEventListener('click', () => {
+        const selectedOption = document.querySelector('input[name="messageOption"]:checked').value;
+        const orderId = document.getElementById('O_ID').innerText;
+        console.log(orderId)
+        console.log(selectedOption)
+        // Gửi request đến server
+        fetch('http://localhost:8080/Order/update-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: parseInt(orderId),
+            status: selectedOption
+          })
+        })
+                .then(response => {
+                  if (response.ok) {
+                    alert('Cập nhật trạng thái thành công!');
+                    $('#confirmModal').modal('hide');
+                    location.reload();
+                  } else {
+                    response.text().then(text => alert('Có lỗi xảy ra: ' + text));
+                  }
+                })
+                .catch(error => console.error('Lỗi:', error));
+      });
+
+      function addProductToOrder(button) {
+        // Lấy thông tin sản phẩm
+        const orderID = document.getElementById('O_ID').innerText
+        const productRow = button.closest("tr");
+        const productID = productRow.querySelector("td:first-child").innerText;
+        const productName = productRow.querySelector("td:nth-child(2)").innerText;
+        const productPrice = parseFloat(productRow.querySelector("td:nth-child(3)").innerText);
+
+        // Lấy số lượng từ input
+        const quantity = 1;
+        console.log(productID);
+        console.log(productName);
+        console.log(productPrice);
+
+        // Kiểm tra số lượng
+        if (!quantity || quantity <= 0) {
+          alert("Số lượng không hợp lệ!");
+          return;
+        }
+
+        // Tạo dữ liệu gửi đến backend
+        const orderDetail = {
+          productID: productID,
+          quantity: quantity,
+          price: productPrice * quantity,
+          productName: productName,
+          orderID: orderID
+        };
+
+        // Gửi yêu cầu POST đến server
+        fetch('http://localhost:8080/OrderDetail/addProductToOrder', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(orderDetail),
+        })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    alert('Sản phẩm đã được thêm vào đơn hàng!');
+                    location.reload();
+                  } else {
+                    alert('Có lỗi xảy ra khi thêm sản phẩm.');
+                  }
+                })
+                .catch(error => {
+                  console.error('Lỗi:', error);
+                });
+      }
+
+      function updateQuantity(input) {
+        const quantity = parseInt(input.value);
+        const productID = input.getAttribute('data-product-id');
+        const orderID = document.getElementById('O_ID').innerText;
+
+        console.log("productID: ", productID);
+        console.log("quantity: ", quantity);
+        console.log("orderID: ", orderID);
+
+        if (quantity === 0) {
+          if (confirm("Số lượng bằng 0. Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?")) {
+            deleteProduct(productID, input.closest('tr'));
+          } else {
+            input.value = 1;
+          }
+          return;
+        }
+
+        const data = {
+          productID: productID,
+          quantity: quantity,
+          orderID: orderID
+        };
+
+        fetch('http://localhost:8080/OrderDetail/updateQuantity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    alert('Cập nhật số lượng thành công!');
+                    location.reload();
+                  } else {
+                    alert('Cập nhật số lượng thất bại!');
+                  }
+                })
+                .catch(error => {
+                  console.error('Lỗi:', error);
+                });
+      }
+
+      function deleteProduct(productID, row) {
+        const orderID = document.getElementById('O_ID').innerText;
+
+        fetch(`http://localhost:8080/OrderDetail/deleteProduct/${productID}?orderID=${orderID}`, {
+          method: 'DELETE',
+        })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    alert('Xóa sản phẩm thành công!');
+                    row.remove();
+                    location.reload();
+                  } else {
+                    alert('Xóa sản phẩm thất bại!');
+                  }
+                })
+                .catch(error => {
+                  console.error('Lỗi:', error);
+                });
+      }
+
+
+
+
+
+
+    </script>
   </body>
 </html>

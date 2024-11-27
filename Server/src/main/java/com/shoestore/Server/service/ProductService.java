@@ -15,4 +15,6 @@ public interface ProductService {
 
     List<Product> getById(int id);
 
+    // nay cua hieu
+    public List<Product> getProductsNotInOrderDetail(int orderID);
 }

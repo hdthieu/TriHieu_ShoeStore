@@ -22,4 +22,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonBackReference("categoryReference")
     private List<Product> products;
+
+    public Category() {
+    }
+    public Category(int categoryID) {
+        this.categoryID = categoryID;
+    }
 }

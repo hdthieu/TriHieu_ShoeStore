@@ -181,12 +181,12 @@
 
                 <div class="form-group">
                     <label for="editProductImage">Hình ảnh sản phẩm</label>
-                    <input type="file" class="form-control-file" id="editProductImage" name="image" accept="image/*" onchange="previewEditImage(event)">
+                    <input type="file" class="form-control-file" id="editProductImage" name="imagee" accept="image/*" onchange="previewEditImage(event)">
                     <div id="editImageContainer">
                         <p>Hình ảnh hiện tại:</p>
                         <div id="">
                             <div th:each="image : ${product.imageURL}">
-                                <img id="editImagePreview" th:src="@{'/images/' + ${image}}" alt="Hình ảnh sản phẩm" class="image-preview" style="max-width: 300px; max-height: 300px; margin-right: 10px;" />
+                                <img id="editImagePreview" th:src="@{http://localhost:8080/images/{image}(image=${image})}" alt="Hình ảnh sản phẩm" class="image-preview" style="max-width: 300px; max-height: 300px; margin-right: 10px;" />
 
                             </div>
                         </div>
@@ -235,56 +235,31 @@
         // Tạo FormData từ form
         const formData = new FormData(this);
 
-        const productID = formData.get('productID');
-        // Tạo đối tượng dữ liệu gửi lên API
-        const data = {
-            productID: productID,
-            productName: formData.get('productName'),
-            price: formData.get('price'),
-            description: formData.get('description'),
-            status: "AVAILABLE",  // Giá trị này có thể thay đổi tùy thuộc vào yêu cầu của bạn
-            category: {
-                categoryID: formData.get('category')
-            },
-            supplier: {
-                supplierID: formData.get('supplier')
-            },
-            brand: {
-                brandID: formData.get('brand')
-            },
-            imageURL: [] // Mảng này sẽ chứa tên của các hình ảnh
-        };
+        // Thêm tham số 'status' vào FormData (nếu chưa có)
+        formData.append('status', 'AVAILABLE');
 
-        // Lấy các file hình ảnh (nếu có)
-        const imageFiles = formData.getAll('image'); // getAll để lấy tất cả các file hình ảnh
+        const imageFiles = document.getElementById("editProductImage").files;
+
+// Kiểm tra nếu có tệp hình ảnh nào được chọn
         if (imageFiles.length > 0) {
-            // Lặp qua tất cả các file hình ảnh và lấy tên file
+            // Lặp qua các tệp hình ảnh và thêm chúng vào FormData
             for (let i = 0; i < imageFiles.length; i++) {
-                data.imageURL.push(imageFiles[i].name); // Thêm tên file vào mảng imageURL
+                formData.append("image", imageFiles[i]);  // Thêm ảnh vào FormData
             }
-
-            // Gửi PUT request với dữ liệu đã có imageURL
-            sendPutRequest(data);
-        } else {
-            // Nếu không có hình ảnh, gửi PUT request mà không có imageURL
-            sendPutRequest(data);
         }
-    });
+        // Lấy ID sản phẩm từ trường ẩn (productID)
+        const productID = formData.get('productID');
 
-    // Hàm gửi PUT request để cập nhật sản phẩm
-    function sendPutRequest(data) {
-        fetch('http://localhost:8080/products/update/' + data.productID, {
+        // Gửi yêu cầu PUT với FormData
+        fetch('http://localhost:8080/products/update/' + productID, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data) // Chuyển dữ liệu sang JSON
+            body: formData  // Gửi FormData thay vì JSON
         })
-            .then(response => {
-                if (response.ok) {
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
                     alert('Cập nhật sản phẩm thành công!');
-                    window.location.href = 'http://localhost:3000/product';
-                    // Xử lý sau khi cập nhật thành công, ví dụ quay lại trang trước
+                    window.location.href = 'http://localhost:3000/product';  // Quay lại danh sách sản phẩm
                 } else {
                     alert('Cập nhật sản phẩm thất bại!');
                 }
@@ -293,7 +268,8 @@
                 console.error('Lỗi khi gửi PUT request:', error);
                 alert('Lỗi khi cập nhật sản phẩm');
             });
-    }
+    });
+
 
     document.getElementById("goBack").addEventListener("click", function () {
         window.history.back();
