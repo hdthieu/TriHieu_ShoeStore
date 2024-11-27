@@ -87,8 +87,9 @@ public class ProductServiceImpl implements ProductService {
                 case "Price: High-Low":
                     return productRepository.findAll(spec, Sort.by(Sort.Order.desc("price")));
                 case "Price: Low-High":
-                    return productRepository.findAll(spec, Sort.by(Sort.Order.asc("price"))); 
-
+                    return productRepository.findAll(spec, Sort.by(Sort.Order.asc("price")));
+                case "Newest":
+                    return productRepository.findAll(spec, Sort.by(Sort.Order.desc("createDate")));
                 default:
                     return productRepository.findAll(spec);
             }
@@ -100,29 +101,29 @@ public class ProductServiceImpl implements ProductService {
 
 
     // nay cua hieu
-    public List<Product> getProductsNotInOrderDetail(int orderID) {
-        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
-        if (productIDsInOrderDetail.isEmpty()) {
-            return productRepository.findAll();
-        } else {
-            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
-        }
-    }
-
-    @Override
-    public List<ProductDTO> getTop10BestSellers() {
-        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
-    }
-
-    @Override
-    public List<ProductDTO> getTop10NewArrivals() {
-        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
-    }
-
-    @Override
-    public List<ProductDTO> getTop10Trending() {
-        return productRepository.findTop10Trending(PageRequest.of(0, 10));
-    }
+//    public List<Product> getProductsNotInOrderDetail(int orderID) {
+//        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
+//        if (productIDsInOrderDetail.isEmpty()) {
+//            return productRepository.findAll();
+//        } else {
+//            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
+//        }
+//    }
+//
+//    @Override
+//    public List<ProductDTO> getTop10BestSellers() {
+//        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
+//    }
+//
+//    @Override
+//    public List<ProductDTO> getTop10NewArrivals() {
+//        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
+//    }
+//
+//    @Override
+//    public List<ProductDTO> getTop10Trending() {
+//        return productRepository.findTop10Trending(PageRequest.of(0, 10));
+//    }
 
 
 

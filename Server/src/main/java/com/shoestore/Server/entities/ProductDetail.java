@@ -1,8 +1,11 @@
 package com.shoestore.Server.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Table
 @Entity
@@ -22,4 +25,11 @@ public class ProductDetail {
     @JoinColumn(name = "productID")
     @JsonBackReference("productDetailsReference")
     private Product product;
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<CartItem> cartItems;
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderDetail> orderDetails;
+
 }

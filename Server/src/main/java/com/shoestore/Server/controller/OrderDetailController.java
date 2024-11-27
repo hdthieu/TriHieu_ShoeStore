@@ -69,91 +69,91 @@ public class OrderDetailController {
         return ResponseEntity.ok(orderDetail);
     }
 
-    @PostMapping("/addProductToOrder")
-    public ResponseEntity<?> addProductToOrder(@RequestBody Map<String, Object> requestData) {
-        try {
-            int orderID = Integer.parseInt(requestData.get("orderID").toString());
-            int productID = Integer.parseInt(requestData.get("productID").toString());
-            int quantity = Integer.parseInt(requestData.get("quantity").toString());
-            double price = Double.parseDouble(requestData.get("price").toString());
+//    @PostMapping("/addProductToOrder")
+//    public ResponseEntity<?> addProductToOrder(@RequestBody Map<String, Object> requestData) {
+//        try {
+//            int orderID = Integer.parseInt(requestData.get("orderID").toString());
+//            int productID = Integer.parseInt(requestData.get("productID").toString());
+//            int quantity = Integer.parseInt(requestData.get("quantity").toString());
+//            double price = Double.parseDouble(requestData.get("price").toString());
+//
+//            // Lấy thông tin sản phẩm
+//            List<Product> products = productService.getById(productID);
+//            if (products == null || products.isEmpty()) {
+//                Map<String, Object> response = new HashMap<>();
+//                response.put("message", "Sản phẩm không tồn tại.");
+//                response.put("success", false);
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//            }
+//
+//            Product product = products.get(0);
+//
+//            // Lấy danh sách ProductDetail liên quan đến sản phẩm
+//            List<ProductDetail> productDetails = product.getProductDetails();
+//            if (productDetails == null || productDetails.isEmpty()) {
+//                Map<String, Object> response = new HashMap<>();
+//                response.put("message", "Không tìm thấy thông tin chi tiết sản phẩm.");
+//                response.put("success", false);
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//            }
+//
+//            // Kiểm tra stockQuantity
+//            ProductDetail targetDetail = productDetails.get(0);
+//            if (targetDetail.getStockQuantity() < quantity) {
+//                Map<String, Object> response = new HashMap<>();
+//                response.put("message", "Số lượng sản phẩm trong kho không đủ.");
+//                response.put("success", false);
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//            }
+//
+//            // Trừ stockQuantity
+//            targetDetail.setStockQuantity(targetDetail.getStockQuantity() - quantity);
+//            productDetailService.save(targetDetail); // Cập nhật ProductDetail vào DB.
+//
+//            // Tìm kiếm Order từ cơ sở dữ liệu
+//            Order order = orderService.findById(orderID); // Sử dụng orderService để tìm Order theo ID
+//            if (order == null) {
+//                Map<String, Object> response = new HashMap<>();
+//                response.put("message", "Đơn hàng không tồn tại.");
+//                response.put("success", false);
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//            }
+//
+//            // Tạo OrderDetail mới
+//            OrderDetail orderDetail = new OrderDetail();
+//            orderDetail.setProduct(product);
+//            orderDetail.setQuantity(quantity);
+//            orderDetail.setPrice(price);
+//            orderDetail.setOrder(order); // Sử dụng đối tượng Order đã tìm thấy
+//
+//            // Lưu OrderDetail
+//            orderDetailService.save(orderDetail);
+//
+//            // Trả về phản hồi JSON
+//            Map<String, Object> response = new HashMap<>();
+//            response.put("message", "Sản phẩm đã được thêm vào đơn hàng.");
+//            response.put("success", true);
+//            return ResponseEntity.ok(response);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Map<String, Object> response = new HashMap<>();
+//            response.put("message", "Lỗi khi thêm sản phẩm vào đơn hàng.");
+//            response.put("success", false);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//        }
+//    }
 
-            // Lấy thông tin sản phẩm
-            List<Product> products = productService.getById(productID);
-            if (products == null || products.isEmpty()) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Sản phẩm không tồn tại.");
-                response.put("success", false);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
-
-            Product product = products.get(0);
-
-            // Lấy danh sách ProductDetail liên quan đến sản phẩm
-            List<ProductDetail> productDetails = product.getProductDetails();
-            if (productDetails == null || productDetails.isEmpty()) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Không tìm thấy thông tin chi tiết sản phẩm.");
-                response.put("success", false);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
-
-            // Kiểm tra stockQuantity
-            ProductDetail targetDetail = productDetails.get(0);
-            if (targetDetail.getStockQuantity() < quantity) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Số lượng sản phẩm trong kho không đủ.");
-                response.put("success", false);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
-
-            // Trừ stockQuantity
-            targetDetail.setStockQuantity(targetDetail.getStockQuantity() - quantity);
-            productDetailService.save(targetDetail); // Cập nhật ProductDetail vào DB.
-
-            // Tìm kiếm Order từ cơ sở dữ liệu
-            Order order = orderService.findById(orderID); // Sử dụng orderService để tìm Order theo ID
-            if (order == null) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Đơn hàng không tồn tại.");
-                response.put("success", false);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
-
-            // Tạo OrderDetail mới
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setProduct(product);
-            orderDetail.setQuantity(quantity);
-            orderDetail.setPrice(price);
-            orderDetail.setOrder(order); // Sử dụng đối tượng Order đã tìm thấy
-
-            // Lưu OrderDetail
-            orderDetailService.save(orderDetail);
-
-            // Trả về phản hồi JSON
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Sản phẩm đã được thêm vào đơn hàng.");
-            response.put("success", true);
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Lỗi khi thêm sản phẩm vào đơn hàng.");
-            response.put("success", false);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-    }
 
 
-
-    @GetMapping("/addProductToOrder/{orderID}")
-    public ResponseEntity<List<Product>> getAvailableProducts(@PathVariable int orderID) {
-        // Lấy danh sách sản phẩm chưa có trong OrderDetail
-        List<Product> availableProducts = productService.getProductsNotInOrderDetail(orderID);
-
-        // Trả về danh sách sản phẩm dưới dạng JSON
-        return ResponseEntity.ok(availableProducts);
-    }
+//    @GetMapping("/addProductToOrder/{orderID}")
+//    public ResponseEntity<List<Product>> getAvailableProducts(@PathVariable int orderID) {
+//        // Lấy danh sách sản phẩm chưa có trong OrderDetail
+//        List<Product> availableProducts = productService.getProductsNotInOrderDetail(orderID);
+//
+//        // Trả về danh sách sản phẩm dưới dạng JSON
+//        return ResponseEntity.ok(availableProducts);
+//    }
 
     @PostMapping("/updateQuantity")
     public ResponseEntity<?> updateQuantity(@RequestBody Map<String, Object> requestData) {

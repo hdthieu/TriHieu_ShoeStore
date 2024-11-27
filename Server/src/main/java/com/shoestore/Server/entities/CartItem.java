@@ -22,9 +22,9 @@ public class CartItem {
     private Cart cart;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("productId")
-    @JoinColumn(name = "productID")
-    private Product product;
+    @MapsId("productDetailId")
+    @JoinColumn(name = "productDetailID")
+    private ProductDetail productDetail;
 
     private int quantity;
     private double subTotal;

@@ -9,6 +9,6 @@ import java.io.Serializable;
 @Data
 public class CartItemKey implements Serializable {
     private int cartId;
-    private int productId;
+    private int productDetailId;
 
 }

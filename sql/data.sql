@@ -317,7 +317,7 @@ VALUES
 ('2024-11-19 10:20:00', 19),
 ('2024-11-20 11:30:00', 20);
 
-INSERT INTO CartItem (quantity, subTotal, cartID, productID)
+INSERT INTO CartItem (quantity, subTotal, cartID, productDetailID)
 VALUES
 (2, 180.00, 1, 1), -- Nike Air Max 270, $90.00 * 2
 (1, 120.00, 2, 2), -- Adidas Harden Vol. 5, $120.00 * 1
@@ -407,7 +407,7 @@ VALUES
 
 
 
-INSERT INTO OrderDetail (price, quantity, productID, orderID)
+INSERT INTO OrderDetail (price, quantity, productDetailID, orderID)
 VALUES
 (90.00, 2, 1, 1), -- Nike Air Max 270
 (120.00, 1, 2, 2), -- Adidas Harden Vol. 5

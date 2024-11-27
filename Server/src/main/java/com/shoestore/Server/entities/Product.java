@@ -49,10 +49,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<CartItem> cartItems;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Review> reviews;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

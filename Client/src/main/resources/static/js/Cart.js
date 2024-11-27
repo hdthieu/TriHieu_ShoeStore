@@ -13,7 +13,7 @@ document.querySelectorAll(".cart-item__quantity-btn").forEach((button) => {
     inputElement.value = quantity;
   });
 });
-fetch("breadcrumb.html")
+fetch("/breadcrumb.html")
     .then((response) => response.text())
     .then((data) => {
       document.getElementById("breadcrumb-container").innerHTML = data;

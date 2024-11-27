@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CartService {
   List<CartItem> getCartItemsByCartId(int cartId);
+  CartItem addCartItem(CartItem cartItem);
 }
 

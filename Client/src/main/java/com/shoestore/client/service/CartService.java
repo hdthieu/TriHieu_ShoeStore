@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface CartService {
   List<CartItemDTO> getCartItemsByCartId(int cartId);
+  CartItemDTO addCartItem(CartItemDTO cartItemDTO);
 }
