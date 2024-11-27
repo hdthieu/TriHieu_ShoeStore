@@ -22,7 +22,10 @@ public class BrandServiceImpl implements BrandService {
     public BrandServiceImpl(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     }
-
+    @Override
+    public Brand getBrand(int id) {
+        return brandRepository.findByBrandID(id);
+    }
     @Override
     public List<Brand> getAllBrand() {
 

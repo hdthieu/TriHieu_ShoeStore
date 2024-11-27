@@ -1,18 +1,18 @@
 document.querySelectorAll(".cart-item__quantity-btn").forEach((button) => {
   button.addEventListener("click", (e) => {
-    const isIncrement = e.target.textContent === "+";
-    const quantityElement = e.target.parentNode.querySelector(
-      ".cart-item__quantity-number"
-    );
-    let quantity = parseInt(quantityElement.textContent);
+      const isIncrement = e.target.classList.contains("cart-item__quantity-btn--increase");
+      const inputElement = e.target.parentNode.querySelector(".cart-item__quantity-input");
+      let quantity = parseInt(inputElement.value);
 
-    if (isIncrement) {
-      quantity += 1;
-    } else if (quantity > 1) {
-      quantity -= 1;
-    }
+      // Tăng hoặc giảm số lượng
+      if (isIncrement) {
+          quantity += 1;
+      } else if (quantity > 1) {
+          quantity -= 1;
+      }
 
-    quantityElement.textContent = quantity;
+      // Cập nhật giá trị input
+      inputElement.value = quantity;
   });
 });
 

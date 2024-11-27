@@ -1,6 +1,7 @@
 package com.shoestore.Server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shoestore.Server.dto.ProductDTO;
 import com.shoestore.Server.entities.*;
 import com.shoestore.Server.service.BrandService;
 import com.shoestore.Server.service.CategoryService;
@@ -23,13 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/products")
@@ -52,6 +53,37 @@ public class ProductController {
         this.categoryService = categoryService;
         this.brandService = brandService;
         this.supplierService = supplierService;
+    }
+    @GetMapping("/filtered")
+    public ResponseEntity<LinkedHashMap<String, Object>> getFilteredProducts(
+            @RequestParam(required = false) List<Integer> categoryIds,
+            @RequestParam(required = false) List<Integer> brandIds,
+            @RequestParam(required = false) List<String> colors,
+            @RequestParam(required = false) List<String> sizes,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String sortBy
+    ) {
+        // Giải mã tham số sortBy nếu cần
+        try {
+            if (sortBy != null) {
+                sortBy = URLDecoder.decode(sortBy, StandardCharsets.UTF_8.toString());
+                System.out.println("SortBy sau khi giải mã: " + sortBy);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  // Xử lý lỗi nếu giải mã thất bại
+        }
+
+        // Tiến hành lấy dữ liệu sản phẩm với các tham số đã giải mã
+        List<Product> products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice, sortBy);
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        // Debug dữ liệu trước khi trả về
+        System.out.println("Dữ liệu trước khi trả về: " + products);
+        System.out.println("Số lượng sản phẩm: " + products.size());
+
+        response.put("products", products);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping // Ánh xạ HTTP GET
@@ -246,8 +278,6 @@ public class ProductController {
         }
     }
 
-
-
     @GetMapping("/{id}") // Ánh xạ HTTP GET
     public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
         List<Product> products=productService.getById(id);
@@ -256,4 +286,34 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+
+    // API lấy danh sách Best Sellers
+//    @GetMapping("/best-sellers")
+//    public ResponseEntity<Map<String, Object>> getBestSellers() {
+//        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
+//        System.out.println(bestSellers);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("bestSellers", bestSellers);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    // API lấy danh sách New Arrivals
+//    @GetMapping("/new-arrivals")
+//    public ResponseEntity<Map<String, Object>> getNewArrivals() {
+//        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
+//        Map<String, Object> response = new HashMap<>();
+//        System.out.println(newArrivals);
+//        response.put("newArrivals", newArrivals);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    // API lấy danh sách Trending
+//    @GetMapping("/trending")
+//    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
+//        List<ProductDTO> trendingProducts = productService.getTop10Trending();
+//        System.out.println(trendingProducts);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("trendingProducts", trendingProducts);
+//        return ResponseEntity.ok(response);
+//    }
 }

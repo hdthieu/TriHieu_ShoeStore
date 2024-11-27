@@ -23,7 +23,10 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierServiceImpl(SupplierRepository supplierRepository) {
         this.supplierRepository = supplierRepository;
     }
-
+    @Override
+    public Supplier getSupplier(int id) {
+        return supplierRepository.findBySupplierID(id);
+    }
     @Override
     public List<Supplier> getAllSupplier() {
         return supplierRepository.findAll();

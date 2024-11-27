@@ -113,58 +113,58 @@ VALUES
     (8, '0915554564'),
     (9, '0916666846');
 
-INSERT INTO Product (description, price, productName, status, brandID, categoryID, promotionID, supplierID)
+INSERT INTO Product (description, price, productName, status, brandID, categoryID, promotionID, supplierID,createDate)
 VALUES
-('High-performance running shoes.', 90.00, 'Nike Air Max 270', 'Available', 1, 1, NULL, 1),
-('Lightweight basketball sneakers.', 120.00, 'Adidas Harden Vol. 5', 'Available', 2, 2, NULL, 2),
-('Stylish hiking boots.', 150.00, 'Timberland Premium', 'Available', 3, 3, NULL, 3),
-('Everyday wear sneakers.', 80.00, 'Converse Chuck Taylor', 'Available', 4, 4, NULL, 4),
-('Elegant leather loafers.', 100.00, 'Clarks Originals', 'Available', 5, 5, NULL, 5),
-('Performance tennis shoes.', 110.00, 'Asics Gel-Resolution', 'Available', 1, 6, NULL, 6),
-('Classic skate shoes.', 75.00, 'Vans Old Skool', 'Available', 2, 7, NULL, 7),
-('Premium long-distance runners.', 95.00, 'Brooks Ghost 14', 'Available', 3, 8, NULL, 8),
-('Breathable sports sandals.', 50.00, 'Teva Hurricane XLT2', 'Available', 4, 9, NULL, 9),
-('Luxury high heels.', 200.00, 'Jimmy Choo Romy 100', 'Available', 5, 10, NULL, 10),
-('Comfort-focused sneakers.', 85.00, 'New Balance 574', 'Available', 1, 1, NULL, 1),
-('High-performance trainers.', 120.00, 'Under Armour HOVR', 'Available', 2, 2, NULL, 2),
-('Waterproof outdoor boots.', 130.00, 'Columbia Bugaboot', 'Available', 3, 3, NULL, 3),
-('Athletic running shoes.', 100.00, 'Saucony Endorphin', 'Available', 4, 4, NULL, 4),
-('Modern casual loafers.', 90.00, 'Sperry Top-Sider', 'Available', 5, 5, NULL, 5),
-('Lightweight running shoes.', 75.00, 'Reebok Floatride', 'Available', 1, 6, NULL, 6),
-('Classic canvas shoes.', 55.00, 'Keds Champion', 'Available', 2, 7, NULL, 7),
-('Trail running shoes.', 110.00, 'Salomon Speedcross', 'Available', 3, 8, NULL, 8),
-('Minimalist sports sandals.', 60.00, 'Xero Shoes Z-Trail', 'Available', 4, 9, NULL, 9),
-('Luxury dress shoes.', 250.00, 'Gucci Ace Sneakers', 'Available', 5, 10, NULL, 10),
-('Casual slip-on sneakers.', 70.00, 'Skechers Go Walk', 'Available', 1, 1, NULL, 1),
-('Basketball performance shoes.', 140.00, 'Puma Clyde All-Pro', 'Available', 2, 2, NULL, 2),
-('Hiking boots with ankle support.', 160.00, 'North Face Vectiv', 'Available', 3, 3, NULL, 3),
-('Canvas skate shoes.', 75.00, 'DC Shoes Trase', 'Available', 4, 4, NULL, 4),
-('Formal leather oxford shoes.', 130.00, 'Allen Edmonds Park Ave', 'Available', 5, 5, NULL, 5),
-('Cushioned tennis shoes.', 115.00, 'Fila Axilus 2 Energized', 'Available', 1, 6, NULL, 6),
-('Classic low-top sneakers.', 90.00, 'Lacoste Carnaby Evo', 'Available', 2, 7, NULL, 7),
-('Trail running shoes for grip.', 125.00, 'Hoka Speedgoat', 'Available', 3, 8, NULL, 8),
-('Open-toe sports sandals.', 45.00, 'Merrell Hydro MOC', 'Available', 4, 9, NULL, 9),
-('Elegant party heels.', 220.00, 'Manolo Blahnik BB', 'Available', 5, 10, NULL, 10),
-('Everyday cushioned sneakers.', 100.00, 'On Cloud 5', 'Available', 1, 1, NULL, 1),
-('Durable basketball sneakers.', 150.00, 'Jordan Retro 1', 'Available', 2, 2, NULL, 2),
-('Warm insulated boots.', 180.00, 'Sorel Caribou', 'Available', 3, 3, NULL, 3),
-('Stylish slip-ons.', 70.00, 'Toms Alpargata', 'Available', 4, 4, NULL, 4),
-('Premium leather loafers.', 190.00, 'Tods Gommino', 'Available', 5, 5, NULL, 5),
-('High-traction trail runners.', 130.00, 'Arcteryx Norvan', 'Available', 1, 6, NULL, 6),
-('Skateboarding classics.', 75.00, 'Globe Sabre', 'Available', 2, 7, NULL, 7),
-('All-terrain shoes.', 140.00, 'Altra Lone Peak', 'Available', 3, 8, NULL, 8),
-('Quick-dry sandals.', 50.00, 'Chaco Z/Cloud', 'Available', 4, 9, NULL, 9),
-('Luxury red sole heels.', 800.00, 'Christian Louboutin So Kate', 'Available', 5, 10, NULL, 10),
-('Lightweight walking shoes.', 60.00, 'Skechers Flex Appeal', 'Available', 1, 1, NULL, 1),
-('Responsive basketball shoes.', 130.00, 'Nike Zoom Freak', 'Available', 2, 2, NULL, 2),
-('Rugged hiking boots.', 170.00, 'Scarpa Zodiac Plus', 'Available', 3, 3, NULL, 3),
-('Casual street sneakers.', 95.00, 'Adidas Superstar', 'Available', 4, 4, NULL, 4),
-('Italian leather dress shoes.', 250.00, 'Santoni Double Monk', 'Available', 5, 5, NULL, 5),
-('Lightweight walking shoes.', 60.00, 'Skechers Flex Appeal', 'Available', 1, 1, NULL, 1),
-('Responsive basketball shoes.', 130.00, 'Nike Zoom Freak', 'Available', 2, 2, NULL, 2),
-('Rugged hiking boots.', 170.00, 'Scarpa Zodiac Plus', 'Available', 3, 3, NULL, 3),
-('Casual street sneakers.', 95.00, 'Adidas Superstar', 'Available', 4, 4, NULL, 4),
-('Italian leather dress shoes.', 250.00, 'Santoni Double Monk', 'Available', 5, 5, NULL, 5);
+('High-performance running shoes.', 90.00, 'Nike Air Max 270', 'Available', 1, 1, NULL, 1,GETDATE()),
+('Lightweight basketball sneakers.', 120.00, 'Adidas Harden Vol. 5', 'Available', 2, 2, NULL, 2,GETDATE()),
+('Stylish hiking boots.', 150.00, 'Timberland Premium', 'Available', 3, 3, NULL, 3,GETDATE()),
+('Everyday wear sneakers.', 80.00, 'Converse Chuck Taylor', 'Available', 4, 4, NULL, 4,GETDATE()),
+('Elegant leather loafers.', 100.00, 'Clarks Originals', 'Available', 5, 5, NULL, 5,GETDATE()),
+('Performance tennis shoes.', 110.00, 'Asics Gel-Resolution', 'Available', 1, 6, NULL, 6,GETDATE()),
+('Classic skate shoes.', 75.00, 'Vans Old Skool', 'Available', 2, 7, NULL, 7,GETDATE()),
+('Premium long-distance runners.', 95.00, 'Brooks Ghost 14', 'Available', 3, 8, NULL, 8,GETDATE()),
+('Breathable sports sandals.', 50.00, 'Teva Hurricane XLT2', 'Available', 4, 9, NULL, 9,GETDATE()),
+('Luxury high heels.', 200.00, 'Jimmy Choo Romy 100', 'Available', 5, 10, NULL, 10,GETDATE()),
+('Comfort-focused sneakers.', 85.00, 'New Balance 574', 'Available', 1, 1, NULL, 1,GETDATE()),
+('High-performance trainers.', 120.00, 'Under Armour HOVR', 'Available', 2, 2, NULL, 2,GETDATE()),
+('Waterproof outdoor boots.', 130.00, 'Columbia Bugaboot', 'Available', 3, 3, NULL, 3,GETDATE()),
+('Athletic running shoes.', 100.00, 'Saucony Endorphin', 'Available', 4, 4, NULL, 4,GETDATE()),
+('Modern casual loafers.', 90.00, 'Sperry Top-Sider', 'Available', 5, 5, NULL, 5,GETDATE()),
+('Lightweight running shoes.', 75.00, 'Reebok Floatride', 'Available', 1, 6, NULL, 6,GETDATE()),
+('Classic canvas shoes.', 55.00, 'Keds Champion', 'Available', 2, 7, NULL, 7,GETDATE()),
+('Trail running shoes.', 110.00, 'Salomon Speedcross', 'Available', 3, 8, NULL, 8,GETDATE()),
+('Minimalist sports sandals.', 60.00, 'Xero Shoes Z-Trail', 'Available', 4, 9, NULL, 9,GETDATE()),
+('Luxury dress shoes.', 250.00, 'Gucci Ace Sneakers', 'Available', 5, 10, NULL, 10,GETDATE()),
+('Casual slip-on sneakers.', 70.00, 'Skechers Go Walk', 'Available', 1, 1, NULL, 1,GETDATE()),
+('Basketball performance shoes.', 140.00, 'Puma Clyde All-Pro', 'Available', 2, 2, NULL, 2,GETDATE()),
+('Hiking boots with ankle support.', 160.00, 'North Face Vectiv', 'Available', 3, 3, NULL, 3,GETDATE()),
+('Canvas skate shoes.', 75.00, 'DC Shoes Trase', 'Available', 4, 4, NULL, 4,GETDATE()),
+('Formal leather oxford shoes.', 130.00, 'Allen Edmonds Park Ave', 'Available', 5, 5, NULL, 5,GETDATE()),
+('Cushioned tennis shoes.', 115.00, 'Fila Axilus 2 Energized', 'Available', 1, 6, NULL, 6,GETDATE()),
+('Classic low-top sneakers.', 90.00, 'Lacoste Carnaby Evo', 'Available', 2, 7, NULL, 7,GETDATE()),
+('Trail running shoes for grip.', 125.00, 'Hoka Speedgoat', 'Available', 3, 8, NULL, 8,GETDATE()),
+('Open-toe sports sandals.', 45.00, 'Merrell Hydro MOC', 'Available', 4, 9, NULL, 9,GETDATE()),
+('Elegant party heels.', 220.00, 'Manolo Blahnik BB', 'Available', 5, 10, NULL, 10,GETDATE()),
+('Everyday cushioned sneakers.', 100.00, 'On Cloud 5', 'Available', 1, 1, NULL, 1,GETDATE()),
+('Durable basketball sneakers.', 150.00, 'Jordan Retro 1', 'Available', 2, 2, NULL, 2,GETDATE()),
+('Warm insulated boots.', 180.00, 'Sorel Caribou', 'Available', 3, 3, NULL, 3,GETDATE()),
+('Stylish slip-ons.', 70.00, 'Toms Alpargata', 'Available', 4, 4, NULL, 4,GETDATE()),
+('Premium leather loafers.', 190.00, 'Tods Gommino', 'Available', 5, 5, NULL, 5,GETDATE()),
+('High-traction trail runners.', 130.00, 'Arcteryx Norvan', 'Available', 1, 6, NULL, 6,GETDATE()),
+('Skateboarding classics.', 75.00, 'Globe Sabre', 'Available', 2, 7, NULL, 7,GETDATE()),
+('All-terrain shoes.', 140.00, 'Altra Lone Peak', 'Available', 3, 8, NULL, 8,GETDATE()),
+('Quick-dry sandals.', 50.00, 'Chaco Z/Cloud', 'Available', 4, 9, NULL, 9,GETDATE()),
+('Luxury red sole heels.', 800.00, 'Christian Louboutin So Kate', 'Available', 5, 10, NULL, 10,GETDATE()),
+('Lightweight walking shoes.', 60.00, 'Skechers Flex Appeal', 'Available', 1, 1, NULL, 1,GETDATE()),
+('Responsive basketball shoes.', 130.00, 'Nike Zoom Freak', 'Available', 2, 2, NULL, 2,GETDATE()),
+('Rugged hiking boots.', 170.00, 'Scarpa Zodiac Plus', 'Available', 3, 3, NULL, 3,GETDATE()),
+('Casual street sneakers.', 95.00, 'Adidas Superstar', 'Available', 4, 4, NULL, 4,GETDATE()),
+('Italian leather dress shoes.', 250.00, 'Santoni Double Monk', 'Available', 5, 5, NULL, 5,GETDATE()),
+('Lightweight walking shoes.', 60.00, 'Skechers Flex Appeal', 'Available', 1, 1, NULL, 1,GETDATE()),
+('Responsive basketball shoes.', 130.00, 'Nike Zoom Freak', 'Available', 2, 2, NULL, 2,GETDATE()),
+('Rugged hiking boots.', 170.00, 'Scarpa Zodiac Plus', 'Available', 3, 3, NULL, 3,GETDATE()),
+('Casual street sneakers.', 95.00, 'Adidas Superstar', 'Available', 4, 4, NULL, 4,GETDATE()),
+('Italian leather dress shoes.', 250.00, 'Santoni Double Monk', 'Available', 5, 5, NULL, 5,GETDATE());
 
 INSERT INTO ProductDetail (color, size, stockQuantity, productID)
 VALUES
@@ -317,7 +317,7 @@ VALUES
 ('2024-11-19 10:20:00', 19),
 ('2024-11-20 11:30:00', 20);
 
-INSERT INTO CartItem (quantity, subTotal, cartID, productID)
+INSERT INTO CartItem (quantity, subTotal, cartID, productDetailID)
 VALUES
 (2, 180.00, 1, 1), -- Nike Air Max 270, $90.00 * 2
 (1, 120.00, 2, 2), -- Adidas Harden Vol. 5, $120.00 * 1
@@ -374,15 +374,15 @@ VALUES
 
 INSERT INTO Orders (feeShip, orderDate, shippingAddress, status, userID, voucherID)
 VALUES
-    (5.00, '2024-11-01', '123 Le Loi, Hanoi', 'Shipped', 1, 1),
-    (10.00, '2024-11-02', '456 Hoang Hoa Tham, Hanoi', 'Processing', 2, 2),
-    (0.00, '2024-11-03', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 3, 3),
+    (5.00, '2024-11-01', '123 Le Loi, Hanoi', 'Shipped', 5, 1),
+    (10.00, '2024-11-02', '456 Hoang Hoa Tham, Hanoi', 'Processing', 4, 2),
+    (0.00, '2024-11-03', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 6, 3),
     (12.00, '2024-11-04', '12 Hai Ba Trung, Ho Chi Minh', 'Shipped', 4, 1),
     (15.00, '2024-11-05', '34 Nguyen Hue, Ho Chi Minh', 'Processing', 5, NULL),
     (8.00, '2024-11-06', '56 Tran Phu, Da Nang', 'Shipped', 6, 2),
     (6.50, '2024-11-07', '78 Dien Bien Phu, Da Nang', 'Delivered', 7, NULL),
     (9.00, '2024-11-08', '90 Vo Van Kiet, Can Tho', 'Processing', 8, 2),
-    (5.00, '2024-11-09', '11 Nguyen Trai, Hai Phong', 'Shipped', 3, NULL),
+    (5.00, '2024-11-09', '11 Nguyen Trai, Hai Phong', 'Shipped', 6, NULL),
     (10.00, '2024-11-10', '22 Hai Ba Trung, Hai Phong', 'Delivered', 10, 1),
     (7.50, '2024-11-11', '33 Nguyen Cong Tru, Hue', 'Processing', 11, NULL),
     (12.00, '2024-11-12', '44 Le Loi, Hue', 'Shipped', 12, 2),
@@ -394,9 +394,9 @@ VALUES
     (10.00, '2024-11-18', '10 Nguyen Van Cu, Da Lat', 'Processing', 18, NULL),
     (7.50, '2024-11-19', '20 Tran Hung Dao, Quy Nhon', 'Shipped', 19, 1),
     (12.00, '2024-11-20', '30 Vo Thi Sau, Quy Nhon', 'Delivered', 20, NULL),
-    (15.00, '2024-11-21', '123 Le Loi, Hanoi', 'Shipped', 1, 2),
-    (8.00, '2024-11-22', '456 Hoang Hoa Tham, Hanoi', 'Processing', 2, 3),
-    (6.50, '2024-11-23', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 3, NULL),
+    (15.00, '2024-11-21', '123 Le Loi, Hanoi', 'Shipped', 5, 2),
+    (8.00, '2024-11-22', '456 Hoang Hoa Tham, Hanoi', 'Processing', 10, 3),
+    (6.50, '2024-11-23', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 8, NULL),
     (9.00, '2024-11-24', '12 Hai Ba Trung, Ho Chi Minh', 'Processing', 4, 1),
     (0.00, '2024-11-25', '34 Nguyen Hue, Ho Chi Minh', 'Delivered', 5, 2),
     (0.00, '2024-11-26', '56 Tran Phu, Da Nang', 'Shipped', 6, NULL),
@@ -407,7 +407,7 @@ VALUES
 
 
 
-INSERT INTO OrderDetail (price, quantity, productID, orderID)
+INSERT INTO OrderDetail (price, quantity, productDetailID, orderID)
 VALUES
 (90.00, 2, 1, 1), -- Nike Air Max 270
 (120.00, 1, 2, 2), -- Adidas Harden Vol. 5

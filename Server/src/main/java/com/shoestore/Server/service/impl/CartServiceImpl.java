@@ -1,6 +1,7 @@
 package com.shoestore.Server.service.impl;
 
 import com.shoestore.Server.entities.CartItem;
+import com.shoestore.Server.entities.Product;
 import com.shoestore.Server.repositories.CartItemRepository;
 import com.shoestore.Server.service.CartService;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,12 @@ public class CartServiceImpl implements CartService {
   public List<CartItem> getCartItemsByCartId(int cartId) {
     return cartItemRepository.findCartItemsByCartId(cartId);
   }
+
+  public CartItem addCartItem(CartItem cartItem) {
+    return cartItemRepository.save(cartItem);
+  }
+
+
 }
 
 

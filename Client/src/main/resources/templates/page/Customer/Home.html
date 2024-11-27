@@ -111,85 +111,76 @@
         <i class="fas fa-chevron-left"></i>
       </button>
 
+      <!-- Bestsellers Tab -->
       <div class="tab-products__list" id="bestsellers">
-        <!-- Product 1 -->
-        <div class="tab-product-card">
+        <div th:each="product : ${top10BestSellers}" class="tab-product-card">
           <div class="tab-product-card__image-wrapper">
-            <img th:src="@{/images/products/product1.jpg}" alt="Product 1" class="tab-product-card__image" />
-            <span class="tab-product-card__discount-badge">-30%</span>
+<!--            <img th:src="@{/images/products/{imageName}(imageName=${product.image})}" alt="Product 1" class="tab-product-card__image" />-->
+<!--            <span th:if="${product.discount > 0}" class="tab-product-card__discount-badge" th:text="'-' + ${product.discount} + '%'"></span>-->
           </div>
           <div class="tab-product-card__info">
-            <h3 class="tab-product-card__name">Sneakers De Sport Running</h3>
-            <p class="tab-product-card__category">Shoes</p>
+            <h3 class="tab-product-card__name" th:text="${product.productName}"></h3>
+            <p class="tab-product-card__category" th:text="${product.categoryName}"></p>
             <p class="tab-product-card__price">
-              $70.00 <span class="tab-product-card__price--old">$100.00</span>
+              <span th:text="${product.price}"></span>
+<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price&#45;&#45;old" th:text="${product.oldPrice}"></span>-->
             </p>
           </div>
           <div class="tab-product-card__actions">
-            <button class="tab-product-card__add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Product 2 -->
-        <div class="tab-product-card">
-          <div class="tab-product-card__image-wrapper">
-            <img th:src="@{/images/products/product2.jpg}" alt="Product 2" class="tab-product-card__image" />
-            <span class="tab-product-card__discount-badge">-20%</span>
-          </div>
-          <div class="tab-product-card__info">
-            <h3 class="tab-product-card__name">Professional Sports Shoes</h3>
-            <p class="tab-product-card__category">Shoes</p>
-            <p class="tab-product-card__price">
-              $80.00 <span class="tab-product-card__price--old">$100.00</span>
-            </p>
-          </div>
-          <div class="tab-product-card__actions">
-            <button class="tab-product-card__add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Product 3 -->
-        <div class="tab-product-card">
-          <div class="tab-product-card__image-wrapper">
-            <img th:src="@{/images/products/product3.jpg}" alt="Product 3" class="tab-product-card__image" />
-            <span class="tab-product-card__discount-badge">-15%</span>
-          </div>
-          <div class="tab-product-card__info">
-            <h3 class="tab-product-card__name">Running Shoes</h3>
-            <p class="tab-product-card__category">Shoes</p>
-            <p class="tab-product-card__price">
-              $60.00 <span class="tab-product-card__price--old">$80.00</span>
-            </p>
-          </div>
-          <div class="tab-product-card__actions">
-            <button class="tab-product-card__add-to-cart">Add to Cart</button>
+            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.productID} + ')'">Add to Cart</button>
           </div>
         </div>
       </div>
 
-      <div class="tab-products__list" id="trending" style="display: none">
-        <!-- Product 1 -->
-        <div class="tab-product-card">
-          <div class="tab-product-card__image-wrapper">
-            <img th:src="@{/images/products/product2.jpg}" alt="Product 1" class="tab-product-card__image" />
-            <span class="tab-product-card__discount-badge">-30%</span>
-          </div>
-          <div class="tab-product-card__info">
-            <h3 class="tab-product-card__name">Sneakers De Sport Running</h3>
-            <p class="tab-product-card__category">Shoes</p>
-            <p class="tab-product-card__price">
-              $70.00 <span class="tab-product-card__price--old">$100.00</span>
-            </p>
-          </div>
-          <div class="tab-product-card__actions">
-            <button class="tab-product-card__add-to-cart">Add to Cart</button>
-          </div>
-        </div>
+<!--      &lt;!&ndash; New Arrivals Tab &ndash;&gt;-->
+<!--      <div class="tab-products__list" id="new-arrivals" style="display: none">-->
+<!--        <div th:each="product : ${top10NewArrivals}" class="tab-product-card">-->
+<!--          <div class="tab-product-card__image-wrapper">-->
+<!--&lt;!&ndash;            <img th:src="@{/images/products/{imageName}(imageName=${product.image})}" alt="Product 2" class="tab-product-card__image" />&ndash;&gt;-->
+<!--            <span th:if="${product.discount > 0}" class="tab-product-card__discount-badge" th:text="'-' + ${product.discount} + '%'"></span>-->
+<!--          </div>-->
+<!--          <div class="tab-product-card__info">-->
+<!--            <h3 class="tab-product-card__name" th:text="${product.name}"></h3>-->
+<!--            <p class="tab-product-card__category" th:text="${product.category}"></p>-->
+<!--            <p class="tab-product-card__price">-->
+<!--              <span th:text="${product.price}"></span>-->
+<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price&#45;&#45;old" th:text="${product.oldPrice}"></span>-->
+<!--            </p>-->
+<!--          </div>-->
+<!--          <div class="tab-product-card__actions">-->
+<!--            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Add to Cart</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Trending Tab &ndash;&gt;-->
+<!--      <div class="tab-products__list" id="trending" style="display: none">-->
+<!--        <div th:each="product : ${top10Trending}" class="tab-product-card">-->
+<!--          <div class="tab-product-card__image-wrapper">-->
+<!--&lt;!&ndash;            <img th:src="@{/images/products/{imageName}(imageName=${product.image})}" alt="Product 3" class="tab-product-card__image" />&ndash;&gt;-->
+<!--            <span th:if="${product.discount > 0}" class="tab-product-card__discount-badge" th:text="'-' + ${product.discount} + '%'"></span>-->
+<!--          </div>-->
+<!--          <div class="tab-product-card__info">-->
+<!--            <h3 class="tab-product-card__name" th:text="${product.name}"></h3>-->
+<!--            <p class="tab-product-card__category" th:text="${product.category}"></p>-->
+<!--            <p class="tab-product-card__price">-->
+<!--              <span th:text="${product.price}"></span>-->
+<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price&#45;&#45;old" th:text="${product.oldPrice}"></span>-->
+<!--            </p>-->
+<!--          </div>-->
+<!--          <div class="tab-product-card__actions">-->
+<!--            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Add to Cart</button>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
+
       <!-- Next Button -->
       <button class="tab-product-list__button tab-product-list__button--next" onclick="scrollProducts('next')">
         <i class="fas fa-chevron-right"></i>
       </button>
     </div>
   </div>
+
 
   <div class="feature-product-section">
     <div class="feature-product-container">
@@ -303,7 +294,7 @@
 
   <div id="footer"></div>
   <script th:src="@{/js/script.js}"></script>
-  <script th:src="@{/js//Home.js}"></script>
+  <script th:src="@{/js/Home.js}"></script>
 
   <!-- Bootstrap and FontAwesome Scripts -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

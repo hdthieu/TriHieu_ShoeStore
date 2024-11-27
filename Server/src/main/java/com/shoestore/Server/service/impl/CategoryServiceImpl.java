@@ -23,9 +23,17 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-
+    @Override
+    public Category getCategory(int id) {
+        return categoryRepository.findByCategoryID(id);
+    }
     @Override
     public List<Category> getAllCategory() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<Object[]> getCategoryWithCount() {
+        return categoryRepository.getAllCategoriesWithProductCount();
     }
 }
