@@ -1,5 +1,6 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class Address {
     private String district;
     @ManyToOne
     @JoinColumn(name = "userID")
+    @JsonBackReference
     private User user;
 
 

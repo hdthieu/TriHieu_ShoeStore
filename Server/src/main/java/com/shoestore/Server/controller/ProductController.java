@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +135,7 @@ public class ProductController {
             product.setCategory(new Category(categoryID));
             product.setSupplier(new Supplier(supplierID));
 
+            product.setCreateDate(LocalDateTime.now());
             // Cập nhật đường dẫn ảnh vào thông tin sản phẩm
             product.setImageURL(imageUrls);  // Lưu danh sách URL ảnh vào product
 
@@ -202,6 +205,7 @@ public class ProductController {
             existingProduct.setBrand(new Brand(brandID));
             existingProduct.setCategory(new Category(categoryID));
             existingProduct.setSupplier(new Supplier(supplierID));
+            existingProduct.setCreateDate(existingProduct.getCreateDate());
 
             // Nếu có ảnh được tải lên, lưu lại ảnh mới
             if (files != null && files.length > 0) {

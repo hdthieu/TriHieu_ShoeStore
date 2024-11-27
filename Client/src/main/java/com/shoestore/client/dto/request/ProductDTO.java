@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 @Getter
 @Setter
@@ -22,5 +24,6 @@ public class ProductDTO {
     private CategoryDTO category;
     private SupplierDTO supplier;
     private List<ProductDetailDTO> productDetails;
+    private LocalDateTime createDate;
 //    private PromotionDTO promotionDTO;
 }
