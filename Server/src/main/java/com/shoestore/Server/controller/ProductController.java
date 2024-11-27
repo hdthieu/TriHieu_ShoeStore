@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,7 +44,7 @@ public class ProductController {
         this.supplierService = supplierService;
     }
     @GetMapping("/filtered")
-    public ResponseEntity<LinkedHashMap<String,Object>> getFilteredProducts(
+    public ResponseEntity<LinkedHashMap<String, Object>> getFilteredProducts(
             @RequestParam(required = false) List<Integer> categoryIds,
             @RequestParam(required = false) List<Integer> brandIds,
             @RequestParam(required = false) List<String> colors,
@@ -50,16 +53,30 @@ public class ProductController {
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(required = false) String sortBy
     ) {
+        // Giải mã tham số sortBy nếu cần
+        try {
+            if (sortBy != null) {
+                sortBy = URLDecoder.decode(sortBy, StandardCharsets.UTF_8.toString());
+                System.out.println("SortBy sau khi giải mã: " + sortBy);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  // Xử lý lỗi nếu giải mã thất bại
+        }
+
+        // Tiến hành lấy dữ liệu sản phẩm với các tham số đã giải mã
         List<Product> products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice, sortBy);
-        LinkedHashMap<String,Object> response= new LinkedHashMap<>();
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
         // Debug dữ liệu trước khi trả về
         System.out.println("Dữ liệu trước khi trả về: " + products);
         System.out.println("Số lượng sản phẩm: " + products.size());
-        System.out.println("Reponse: " + ResponseEntity.ok(products));
+
         response.put("products", products);
-        // Trả về trực tiếp danh sách sản phẩm
         return ResponseEntity.ok(response);
     }
+
+    // Các phương thức khác vẫn giữ nguyên...
+
 
 
     @GetMapping // Ánh xạ HTTP GET

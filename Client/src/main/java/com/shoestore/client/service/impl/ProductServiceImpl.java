@@ -109,19 +109,17 @@ public class ProductServiceImpl implements ProductService {
         System.out.println(apiUrl);
         String rawJson = restTemplate.getForObject(apiUrl.toString(), String.class);
         System.out.println("Raw JSON from API (before parsing): " + rawJson);
-//        ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
-//                apiUrl.toString(),
-//                HttpMethod.GET,
-//                null,
-//                new ParameterizedTypeReference<List<ProductDTO>>() {}
-//        );
-//        List<ProductDTO> products = response.getBody();
-//        System.out.println(products.size());
-//        System.out.println("Dữ liệu từ API (trước khi xử lý): " + response.getBody());
+        ResponseEntity<ProductResponseDTO> response = restTemplate.exchange(
+                apiUrl.toString(),
+                HttpMethod.GET,
+                null,
+                ProductResponseDTO.class
+        );
+        System.out.println("Dữ liệu từ API (trước khi xử lý): " + response.getBody());
         // Trả về danh sách sản phẩm từ response body
-//        if (response.getBody() != null) {
-//            return response.getBody().getProductDTOs();
-//        }
+        if (response.getBody() != null) {
+            return response.getBody().getProductDTOs();
+        }
 
         // Trả về danh sách rỗng nếu không có sản phẩm nào
         return new LinkedList<>();

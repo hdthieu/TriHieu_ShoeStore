@@ -15,12 +15,13 @@
 <div class="container my-5" id="product-search">
     <form id="filter-form" action="/product-search/filtered" method="GET">
         <div class="filter-header">
-            <a href="#">Ẩn Bộ Lọc <i class="fas fa-sliders-h"></i></a>
+<!--            <a href="#">Ẩn Bộ Lọc <i class="fas fa-sliders-h"></i></a>-->
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle" id="sortByDropdown" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
                     Sort By
                 </a>
+                <span id="selected-sort-by" class="ml-2" style="display: none;"></span>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sortByDropdown">
                     <a class="dropdown-item" data-sort="Featured">Featured</a>
                     <a class="dropdown-item" data-sort="Newest">Newest</a>
@@ -272,8 +273,13 @@
             sortByInput.value = sortByValue;
 
         }
-        console.log(sortByDropdownItems)
-        console.log(sortByValue)
+        const selectedSortByElement = document.getElementById('selected-sort-by');
+        if (sortByValue) {
+            selectedSortByElement.textContent = `: ${sortByValue}`;
+            selectedSortByElement.style.display = 'inline';  // Hiển thị phần tử
+        } else {
+            selectedSortByElement.style.display = 'none';  // Ẩn phần tử nếu không có giá trị
+        }
         submitForm()
     }
 

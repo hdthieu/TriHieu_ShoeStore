@@ -78,10 +78,9 @@ public class SearchController {
             products = productService.getAllProduct();
             System.out.println("In tất cả:"+products);
         } else {
-
             // Nếu có filter, gọi service để lấy sản phẩm theo filters
             products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice,sortBy);
-            System.out.println("In lọc:"+products);
+
         }
         System.out.println(products);
         // Thêm danh sách sản phẩm vào model
