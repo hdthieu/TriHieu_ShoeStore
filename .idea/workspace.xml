@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c10e3fd-92fc-4f34-82a3-2e34fa76f9c7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/VoucherController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/ProductHomeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/response/ProductHomeResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/dto/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Customer/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Customer/Home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Brand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/ProductServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,14 +48,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ClientApplication.executor": "Run",
+    "Application.ServerApplication.executor": "Run",
     "JavaScript Debug.ThemMoiKhuyenMai.html.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.ClientApplication.executor": "Run",
     "Spring Boot.ServerApplication.executor": "Run",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/LapTrinhWWW_Java/BaiNhom/Project/TriHieu_ShoeStore/Client",
     "node.js.detected.package.eslint": "true",
@@ -60,10 +79,53 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\LapTrinhWWW_Java\BaiNhom\Project\TriHieu_ShoeStore\Client\src\main\java\com\shoestore\client" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.shoestore.client.dto.response" />
+    </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ServerApplication">
+  <component name="RunManager" selected="Spring Boot.ClientApplication">
+    <configuration name="ClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.shoestore.client.ClientApplication" />
+      <module name="Client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.shoestore.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.shoestore.Server.ServerApplication" />
+      <module name="Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.shoestore.Server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ThemMoiKhuyenMai.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/TriHieu_ShoeStore/Client/page/ThemMoiKhuyenMai.html" useBuiltInWebServerPort="true">
       <method v="2" />
+    </configuration>
+    <configuration name="ClientApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Client" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.shoestore.client.ClientApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.shoestore.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="ServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Server" />
@@ -80,6 +142,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ClientApplication" />
+        <item itemvalue="Application.ClientApplication" />
+        <item itemvalue="Application.ServerApplication" />
         <item itemvalue="Spring Boot.ServerApplication" />
         <item itemvalue="JavaScript Debug.ThemMoiKhuyenMai.html" />
       </list>
@@ -88,8 +153,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -105,6 +170,9 @@
       <workItem from="1731834037363" duration="1294000" />
       <workItem from="1731913992709" duration="6025000" />
       <workItem from="1732000508743" duration="2273000" />
+      <workItem from="1732680494245" duration="46000" />
+      <workItem from="1732680551674" duration="8539000" />
+      <workItem from="1732689183169" duration="3061000" />
     </task>
     <servers />
   </component>

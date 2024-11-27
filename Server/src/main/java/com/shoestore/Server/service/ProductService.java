@@ -1,5 +1,6 @@
 package com.shoestore.Server.service;
 
+import com.shoestore.Server.dto.ProductDTO;
 import com.shoestore.Server.entities.Product;
 
 import java.util.List;
@@ -17,4 +18,12 @@ public interface ProductService {
 
     // nay cua hieu
     public List<Product> getProductsNotInOrderDetail(int orderID);
+
+    //  Home
+    List<ProductDTO> getTop10BestSellers();
+
+    List<ProductDTO> getTop10NewArrivals();
+
+    List<ProductDTO> getTop10Trending();
+
 }

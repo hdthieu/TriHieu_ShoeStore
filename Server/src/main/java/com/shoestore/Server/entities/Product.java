@@ -32,6 +32,8 @@ public class Product {
     private double price;
     private String status;
 
+
+    //
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brandID")
     private Brand brand;
