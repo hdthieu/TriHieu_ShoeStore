@@ -1,10 +1,12 @@
 package com.shoestore.Server.service.impl;
 
+import com.shoestore.Server.dto.ProductDTO;
 import com.shoestore.Server.entities.Product;
 import com.shoestore.Server.repositories.OrderDetailRepository;
 import com.shoestore.Server.repositories.ProductRepository;
 import com.shoestore.Server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -56,6 +58,21 @@ public class ProductServiceImpl implements ProductService {
         } else {
             return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
         }
+    }
+
+    @Override
+    public List<ProductDTO> getTop10BestSellers() {
+        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10NewArrivals() {
+        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10Trending() {
+        return productRepository.findTop10Trending(PageRequest.of(0, 10));
     }
 
 

@@ -1,6 +1,7 @@
 package com.shoestore.Server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shoestore.Server.dto.ProductDTO;
 import com.shoestore.Server.entities.*;
 import com.shoestore.Server.service.BrandService;
 import com.shoestore.Server.service.CategoryService;
@@ -246,8 +247,6 @@ public class ProductController {
         }
     }
 
-
-
     @GetMapping("/{id}") // Ánh xạ HTTP GET
     public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
         List<Product> products=productService.getById(id);
@@ -256,4 +255,34 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+
+    // API lấy danh sách Best Sellers
+    @GetMapping("/best-sellers")
+    public ResponseEntity<Map<String, Object>> getBestSellers() {
+        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
+        System.out.println(bestSellers);
+        Map<String, Object> response = new HashMap<>();
+        response.put("bestSellers", bestSellers);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách New Arrivals
+    @GetMapping("/new-arrivals")
+    public ResponseEntity<Map<String, Object>> getNewArrivals() {
+        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
+        Map<String, Object> response = new HashMap<>();
+        System.out.println(newArrivals);
+        response.put("newArrivals", newArrivals);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách Trending
+    @GetMapping("/trending")
+    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
+        List<ProductDTO> trendingProducts = productService.getTop10Trending();
+        System.out.println(trendingProducts);
+        Map<String, Object> response = new HashMap<>();
+        response.put("trendingProducts", trendingProducts);
+        return ResponseEntity.ok(response);
+    }
 }
