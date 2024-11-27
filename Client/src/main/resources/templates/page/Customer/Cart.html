@@ -16,7 +16,11 @@
     <div class="cart">
         <div class="cart__items">
             <!-- Iterate over cart items -->
+
             <div th:each="cartItem : ${cartItems}" class="cart-item">
+                <div class="cart-item__checkbox">
+                    <input type="checkbox" class="cart-item__checkbox-input">
+                </div>
                 <div class="cart-item__image-wrapper">
                     <!-- Dynamically set image source -->
                     <img th:src="${cartItem.product.imageURL[0]}" alt="Product Image" class="cart-item__image">
@@ -62,9 +66,6 @@
             </div>
         </div>
 
-
-
-
         <div class="cart-summary">
             <h3 class="cart-summary__title">Delivery</h3>
             <div class="cart-summary__delivery-options">
@@ -83,7 +84,6 @@
                 <p class="cart-summary__subtotal">Subtotal <span>80.96VNĐ</span></p>
                 <p class="cart-summary__discount">Discount (20%) <span>-16.19VNĐ</span></p>
                 <p class="cart-summary__delivery">Delivery <span>$0.00</span></p>
-                <p class="cart-summary__tax">Tax <span>14.00VNĐ</span></p>
                 <h4 class="cart-summary__total">Total <span>78.76VNĐ</span></h4>
             </div>
 
@@ -92,7 +92,6 @@
         </div>
     </div>
     <div id="footer"></div>
-    <script src="/js/Cart.js"></script>
     <script th:src="@{/js/Cart.js}"></script>
     <script th:src="@{/js//script.js}"></script>
 </body>

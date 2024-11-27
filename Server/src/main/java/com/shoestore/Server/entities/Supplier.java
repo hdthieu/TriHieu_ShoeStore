@@ -25,4 +25,10 @@ public class Supplier {
     @CollectionTable(name = "Supplier_PhoneNumber", joinColumns = @JoinColumn(name = "supplierID"))
     @Column(name = "phoneNumbers")
     private List<String> phoneNumbers;
+
+    public Supplier() {
+    }
+    public Supplier(int supplierID) {
+        this.supplierID = supplierID;
+    }
 }

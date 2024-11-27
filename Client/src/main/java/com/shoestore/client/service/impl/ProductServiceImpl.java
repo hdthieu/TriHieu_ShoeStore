@@ -2,7 +2,9 @@ package com.shoestore.client.service.impl;
 
 
 import com.shoestore.client.dto.request.ProductDTO;
+import com.shoestore.client.dto.request.ProductHomeDTO;
 import com.shoestore.client.dto.response.ProductFindDTO;
+import com.shoestore.client.dto.response.ProductHomeResponseDTO;
 import com.shoestore.client.dto.response.ProductResponseDTO;
 import com.shoestore.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +117,34 @@ public class ProductServiceImpl implements ProductService {
 
 
 
+    // Lấy Top 10 sản phẩm bán chạy
+    @Override
+    public List<ProductHomeDTO> getTop10BestSellers() {
+        String apiUrl = "http://localhost:8080/products/best-sellers";
+        ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
+                apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
+        );
+        System.out.println("Response Body: " + response.getBody());
+        return response.getBody().getProductDTOs();
+    }
 
+    // Lấy Top 10 sản phẩm mới ra mắt
+    @Override
+    public List<ProductHomeDTO> getTop10NewArrivals() {
+        String apiUrl = "http://localhost:8080/products/new-arrivals";
+        ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
+                apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
+        );
+        return response.getBody().getProductDTOs();
+    }
+
+    // Lấy Top 10 sản phẩm thịnh hành
+    @Override
+    public List<ProductHomeDTO> getTop10Trending() {
+        String apiUrl = "http://localhost:8080/products/trending";
+        ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
+                apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
+        );
+        return response.getBody().getProductDTOs();
+    }
 }

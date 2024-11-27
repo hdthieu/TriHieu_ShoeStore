@@ -1,5 +1,6 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -33,4 +34,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
+
+    public Order(int orderID){
+        this.orderID = orderID;
+    }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Table
 @Data
-
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +20,11 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     @JsonBackReference("brandReference")
     private List<Product> products;
+
+    public Brand() {
+    }
+    public Brand(int brandID) {
+        this.brandID = brandID;
+    }
+
 }

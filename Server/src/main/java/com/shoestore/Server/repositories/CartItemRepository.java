@@ -18,5 +18,6 @@ public interface CartItemRepository extends JpaRepository<CartItem, CartItemKey>
           "JOIN FETCH p.productDetails pd " +
           "WHERE ci.cart.cartID = :cartId")
   List<CartItem> findCartItemsByCartId(@Param("cartId") int cartId);
+
 }
 

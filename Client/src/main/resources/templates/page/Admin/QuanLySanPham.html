@@ -141,9 +141,9 @@
                                 <td th:text="${product.productID}"></td>
                                 <td th:text="${product.productName}"></td>
                                 <td>
-                                    <!-- Hiển thị tất cả các ảnh trong cùng một cột -->
                                     <div th:each="image : ${product.imageURL}">
-                                        <img id="editImagePreview" th:src="@{'/images/' + ${image}}"
+                                        <!-- Hiển thị ảnh từ URL trả về -->
+                                        <img th:src="@{http://localhost:8080/images/{image}(image=${image})}"
                                              alt="Hình ảnh sản phẩm" class="image-preview"
                                              style="max-width: 50px; max-height: 50px; margin-right: 5px;" />
                                     </div>
@@ -166,7 +166,7 @@
                                     </form>
 
                                     <!-- Trash Button -->
-                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(this)">Trash</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(this)">Delete</button>
                                 </td>
                             </tr>
                         </tbody>

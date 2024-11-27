@@ -1,5 +1,8 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +19,7 @@ public class User {
     private String name;
     private String email;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Address> addresses;
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -28,9 +32,12 @@ public class User {
     @JoinColumn(name = "roleID")
     private Role role;
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Cart cart;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Order> orders;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Review> reviews;
 }

@@ -1,11 +1,13 @@
 package com.shoestore.Server.controller;
 
-import com.shoestore.Server.entities.Product;
-import com.shoestore.Server.entities.Voucher;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shoestore.Server.dto.ProductDTO;
+import com.shoestore.Server.entities.*;
 import com.shoestore.Server.service.BrandService;
 import com.shoestore.Server.service.CategoryService;
 import com.shoestore.Server.service.ProductService;
 import com.shoestore.Server.service.SupplierService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -18,7 +20,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +35,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+
+    @Value("${user.dir}")  // Lấy thư mục gốc của dự án
+    private String userDir;
+
+    @Value("${file.upload-dir:src/main/resources/static}")  // Đọc đường dẫn thư mục lưu ảnh từ application.properties
+    private String uploadDir;
 
     private final ProductService productService;
     private final CategoryService categoryService;
@@ -74,16 +89,91 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+    public ResponseEntity<?> addProduct(
+            @RequestParam("image") MultipartFile[] files,  // Nhận mảng ảnh từ client
+            @RequestParam("productName") String productName,  // Tên sản phẩm
+            @RequestParam("description") String description,  // Mô tả sản phẩm
+            @RequestParam("price") double price,  // Giá sản phẩm
+            @RequestParam("status") String status,  // Trạng thái sản phẩm
+            @RequestParam("brandID") int brandID,  // ID thương hiệu
+            @RequestParam("categoryID") int categoryID,  // ID danh mục
+            @RequestParam("supplierID") int supplierID  // ID nhà cung cấp
+    ) {
         try {
+            // Kiểm tra tham số đầu vào
+            if (productName == null || productName.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Tên sản phẩm không được để trống.");
+            }
+
+            if (files.length == 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Vui lòng tải lên ít nhất một ảnh sản phẩm.");
+            }
+
+            // Đường dẫn động cho thư mục lưu ảnh
+            String uploadDirPath = userDir + File.separator + uploadDir + File.separator + "images";
+            File directory = new File(uploadDirPath);
+            if (!directory.exists()) {
+                boolean dirsCreated = directory.mkdirs();
+                if (!dirsCreated) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Không thể tạo thư mục lưu ảnh.");
+                }
+            }
+
+            // Lưu các ảnh vào thư mục
+            List<String> imageUrls = new ArrayList<>();
+            for (MultipartFile file : files) {
+                // Lấy tên tệp ảnh và tạo đường dẫn lưu ảnh
+                String fileName = file.getOriginalFilename();  // Lấy tên ảnh từ MultipartFile
+                String filePath = uploadDirPath + File.separator + fileName;
+
+                System.out.println(filePath);
+
+                // Lưu ảnh vào thư mục
+                File destFile = new File(filePath);
+                file.transferTo(destFile);  // Lưu tệp vào thư mục
+
+                // Tạo URL cho ảnh
+                String imageUrl =  fileName;
+                imageUrls.add(imageUrl);  // Lưu URL ảnh vào danh sách
+            }
+
+            // Tạo đối tượng Product từ các tham số nhận được
+            Product product = new Product();
+            product.setProductName(productName);
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setStatus(status);
+
+            // Tạo đối tượng Brand, Category và Supplier từ ID
+            product.setBrand(new Brand(brandID));
+            product.setCategory(new Category(categoryID));
+            product.setSupplier(new Supplier(supplierID));
+
+            product.setCreateDate(LocalDateTime.now());
+            // Cập nhật đường dẫn ảnh vào thông tin sản phẩm
+            product.setImageURL(imageUrls);  // Lưu danh sách URL ảnh vào product
+
             // Lưu sản phẩm vào cơ sở dữ liệu
             Product savedProduct = productService.saveProduct(product);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại.");
         } catch (Exception e) {
-            // Xử lý lỗi nếu có
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Lỗi không xác định: " + e.getMessage());
         }
     }
+
+
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable int id) {
@@ -108,23 +198,70 @@ public class ProductController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable int id,
-            @RequestBody Product updatedProduct) {
+            @RequestParam(value = "image", required = false) MultipartFile[] files ,  // Tham số ảnh có thể có hoặc không
+            @RequestParam("productName") String productName,  // Tên sản phẩm
+            @RequestParam("description") String description,  // Mô tả sản phẩm
+            @RequestParam("price") double price,  // Giá sản phẩm
+            @RequestParam("status") String status,  // Trạng thái sản phẩm
+            @RequestParam("brand") int brandID,  // ID thương hiệu
+            @RequestParam("category") int categoryID,  // ID danh mục
+            @RequestParam("supplier") int supplierID  // ID nhà cung cấp
+    ) {
         try {
-            // Đảm bảo ID của sản phẩm được gán đúng
-            updatedProduct.setProductID(id);
+            // Tìm sản phẩm hiện tại từ ID
+            Product existingProduct = productService.getProductById(id);
+            if (existingProduct == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Nếu không tìm thấy sản phẩm
+            }
 
-            // Lưu trực tiếp sản phẩm đã chỉnh sửa
-            Product savedProduct = productService.saveProduct(updatedProduct);
+            // Cập nhật các thông tin của sản phẩm
+            existingProduct.setProductName(productName);
+            existingProduct.setDescription(description);
+            existingProduct.setPrice(price);
+            existingProduct.setStatus(status);
+            existingProduct.setBrand(new Brand(brandID));
+            existingProduct.setCategory(new Category(categoryID));
+            existingProduct.setSupplier(new Supplier(supplierID));
+            existingProduct.setCreateDate(existingProduct.getCreateDate());
+
+            // Nếu có ảnh được tải lên, lưu lại ảnh mới
+            if (files != null && files.length > 0) {
+                List<String> imageUrls = new ArrayList<>();
+                // Đường dẫn lưu ảnh
+                String uploadDirPath = userDir + File.separator + uploadDir + File.separator + "images";
+
+                // Lưu ảnh vào thư mục và tạo URL
+                for (MultipartFile file : files) {
+                    String fileName = file.getOriginalFilename();
+                    String filePath = uploadDirPath + File.separator + fileName;
+                    File destFile = new File(filePath);
+                    file.transferTo(destFile);
+
+                    // Tạo URL cho ảnh
+                    String imageUrl =  fileName;
+                    imageUrls.add(imageUrl);
+                }
+                existingProduct.setImageURL(imageUrls);  // Cập nhật đường dẫn ảnh
+            }else {
+                // Nếu không có ảnh tải lên, giữ nguyên danh sách ảnh cũ
+                existingProduct.setImageURL(existingProduct.getImageURL());
+            }
+
+            // Lưu sản phẩm đã cập nhật vào cơ sở dữ liệu
+            Product savedProduct = productService.saveProduct(existingProduct);
 
             // Trả về sản phẩm đã cập nhật
             return ResponseEntity.ok(savedProduct);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         } catch (Exception e) {
-            // Xử lý lỗi nếu có
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
-
-
 
     @GetMapping("/{id}") // Ánh xạ HTTP GET
     public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
@@ -134,4 +271,34 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+
+    // API lấy danh sách Best Sellers
+    @GetMapping("/best-sellers")
+    public ResponseEntity<Map<String, Object>> getBestSellers() {
+        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
+        System.out.println(bestSellers);
+        Map<String, Object> response = new HashMap<>();
+        response.put("bestSellers", bestSellers);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách New Arrivals
+    @GetMapping("/new-arrivals")
+    public ResponseEntity<Map<String, Object>> getNewArrivals() {
+        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
+        Map<String, Object> response = new HashMap<>();
+        System.out.println(newArrivals);
+        response.put("newArrivals", newArrivals);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách Trending
+    @GetMapping("/trending")
+    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
+        List<ProductDTO> trendingProducts = productService.getTop10Trending();
+        System.out.println(trendingProducts);
+        Map<String, Object> response = new HashMap<>();
+        response.put("trendingProducts", trendingProducts);
+        return ResponseEntity.ok(response);
+    }
 }

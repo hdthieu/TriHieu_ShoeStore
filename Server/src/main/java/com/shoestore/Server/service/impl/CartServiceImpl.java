@@ -20,6 +20,8 @@ public class CartServiceImpl implements CartService {
   public List<CartItem> getCartItemsByCartId(int cartId) {
     return cartItemRepository.findCartItemsByCartId(cartId);
   }
+
+
 }
 
 

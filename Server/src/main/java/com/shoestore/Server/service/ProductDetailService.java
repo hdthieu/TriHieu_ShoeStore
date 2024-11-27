@@ -12,4 +12,7 @@ public interface ProductDetailService {
 
     List<ProductDetail> getByProductId(int productId);
 
+
+    ProductDetail save(ProductDetail productDetail);
+
 }

@@ -1,11 +1,13 @@
 package com.shoestore.Server.service.impl;
 
-import com.shoestore.Server.entities.Color;
+import com.shoestore.Server.dto.ProductDTO;
 import com.shoestore.Server.entities.Product;
-import com.shoestore.Server.entities.Size;
+import com.shoestore.Server.repositories.OrderDetailRepository;
 import com.shoestore.Server.repositories.ProductRepository;
 import com.shoestore.Server.service.ProductService;
 import com.shoestore.Server.specifications.ProductSpecification;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,12 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+
+    // này của hiếu
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -70,5 +78,32 @@ public class ProductServiceImpl implements ProductService {
 
         return productRepository.findAll(spec);
     }
+
+
+    // nay cua hieu
+    public List<Product> getProductsNotInOrderDetail(int orderID) {
+        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
+        if (productIDsInOrderDetail.isEmpty()) {
+            return productRepository.findAll();
+        } else {
+            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
+        }
+    }
+
+    @Override
+    public List<ProductDTO> getTop10BestSellers() {
+        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10NewArrivals() {
+        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10Trending() {
+        return productRepository.findTop10Trending(PageRequest.of(0, 10));
+    }
+
 
 }

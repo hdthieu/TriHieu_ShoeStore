@@ -38,6 +38,19 @@
     transition: background-color 0.2s ease;
 }
 
+.cart-item__checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.cart-item__checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #007bff;
+}
 .cart-item:hover {
     background-color: #f9f9f9;
 }
@@ -51,7 +64,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;    
+    border-radius: 8px;
 }
 
 .cart-item__details {
@@ -76,7 +89,6 @@
 .cart-item__stock {
     font-size: 0.9rem;
     font-weight: bold;
-    margin-left: 10px;
 }
 
 .cart-item__stock--in {

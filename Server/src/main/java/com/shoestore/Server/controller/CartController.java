@@ -26,5 +26,7 @@ public class CartController {
     List<CartItem> cartItems = cartService.getCartItemsByCartId(cartId);
     return ResponseEntity.ok(cartItems);
   }
+
+
 }
 

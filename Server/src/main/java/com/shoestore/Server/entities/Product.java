@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -53,12 +55,14 @@ public class Product {
     @JsonIgnore
     private List<Review> reviews;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDate;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "promotionID", nullable = true)
     @JsonIgnore
     private Promotion promotion;
 
-    public Product(int productID, String productName, List<String> imageURL, String description, double price, String status, Brand brand, Supplier supplier, Category category, Promotion promotion) {
+    public Product(int productID, String productName, List<String> imageURL, String description, double price, String status, Brand brand, Supplier supplier, Category category, Promotion promotion, LocalDateTime createDate) {
         this.productID = productID;
         this.productName = productName;
         this.imageURL = imageURL;
@@ -69,5 +73,16 @@ public class Product {
         this.supplier = supplier;
         this.category = category;
         this.promotion = promotion;
+        this.createDate = createDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productID=" + productID +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
