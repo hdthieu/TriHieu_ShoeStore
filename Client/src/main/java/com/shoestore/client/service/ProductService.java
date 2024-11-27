@@ -5,6 +5,7 @@ package com.shoestore.client.service;
 import com.shoestore.client.dto.request.ProductDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 @Service
 public interface ProductService {
@@ -14,5 +15,5 @@ public interface ProductService {
     public ProductDTO getProductByIdForDetail(int id);
 
     public ProductDTO getProductById(int id);
-    List<ProductDTO> getFilteredProducts(List<Integer> category, List<Integer> brand, List<String> color, List<String> size, Double minPrice, Double maxPrice);
+    List<ProductDTO> getFilteredProducts(List<Integer> category, List<Integer> brand, List<String> color, List<String> size, Double minPrice, Double maxPrice, String sortBy);
 }

@@ -6,11 +6,16 @@ import com.shoestore.client.dto.response.ProductFindDTO;
 import com.shoestore.client.dto.response.ProductResponseDTO;
 import com.shoestore.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -60,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> color, List<String> size, Double minPrice, Double maxPrice) {
+    public List<ProductDTO> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> color, List<String> size, Double minPrice, Double maxPrice, String sortBy) {
         StringBuilder apiUrl = new StringBuilder("http://localhost:8080/products/filtered");
 
         // Thêm các tham số vào URL nếu không null
@@ -76,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
             hasParam = true;
         }
         if (color != null && !color.isEmpty()) {
-            apiUrl.append(hasParam ? "&" : "?").append("color=")
+            apiUrl.append(hasParam ? "&" : "?").append("colors=")
                     .append(String.join(",", color));
             hasParam = true;
         }
@@ -92,22 +97,34 @@ public class ProductServiceImpl implements ProductService {
         if (maxPrice != null) {
             apiUrl.append(hasParam ? "&" : "?").append("maxPrice=").append(maxPrice);
         }
-
-        // Gửi request đến BE
-        ResponseEntity<ProductResponseDTO> response = restTemplate.exchange(
-                apiUrl.toString(),
-                HttpMethod.GET,
-                null,
-                ProductResponseDTO.class
-        );
-
-        // Trả về danh sách sản phẩm từ response body
-        if (response.getBody() != null) {
-            return response.getBody().getProductDTOs();
+        if (sortBy != null) {
+            try {
+                // URL encode the sortBy parameter to handle special characters
+                String encodedSortBy = URLEncoder.encode(sortBy, StandardCharsets.UTF_8.toString());
+                apiUrl.append(hasParam ? "&" : "?").append("sortBy=").append(encodedSortBy);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();  // Handle exception if encoding fails
+            }
         }
+        System.out.println(apiUrl);
+        String rawJson = restTemplate.getForObject(apiUrl.toString(), String.class);
+        System.out.println("Raw JSON from API (before parsing): " + rawJson);
+//        ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
+//                apiUrl.toString(),
+//                HttpMethod.GET,
+//                null,
+//                new ParameterizedTypeReference<List<ProductDTO>>() {}
+//        );
+//        List<ProductDTO> products = response.getBody();
+//        System.out.println(products.size());
+//        System.out.println("Dữ liệu từ API (trước khi xử lý): " + response.getBody());
+        // Trả về danh sách sản phẩm từ response body
+//        if (response.getBody() != null) {
+//            return response.getBody().getProductDTOs();
+//        }
 
         // Trả về danh sách rỗng nếu không có sản phẩm nào
-        return List.of();
+        return new LinkedList<>();
     }
 
 

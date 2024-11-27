@@ -6,6 +6,7 @@ import com.shoestore.Server.entities.Size;
 import com.shoestore.Server.repositories.ProductRepository;
 import com.shoestore.Server.service.ProductService;
 import com.shoestore.Server.specifications.ProductSpecification;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice) {
+    public List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice, String sortBy) {
         Specification<Product> spec = Specification.where(null);
 
         if (categoryIds != null && !categoryIds.isEmpty()) {
@@ -55,20 +56,37 @@ public class ProductServiceImpl implements ProductService {
         if (brandIds != null && !brandIds.isEmpty()) {
             spec = spec.and(ProductSpecification.hasBrands(brandIds));
         }
+
         if (colors != null && !colors.isEmpty()) {
             spec = spec.and(ProductSpecification.hasColors(colors));
         }
+
         if (sizes != null && !sizes.isEmpty()) {
             spec = spec.and(ProductSpecification.hasSizes(sizes));
         }
+
         if (minPrice != null) {
             spec = spec.and(ProductSpecification.hasMinPrice(minPrice));
         }
+
         if (maxPrice != null) {
             spec = spec.and(ProductSpecification.hasMaxPrice(maxPrice));
         }
 
+        if (sortBy != null) {
+            switch (sortBy) {
+                case "Price: High-Low":
+                    return productRepository.findAll(spec, Sort.by(Sort.Order.desc("price")));
+                case "Price: Low-High":
+                    return productRepository.findAll(spec, Sort.by(Sort.Order.asc("price"))); 
+
+                default:
+                    return productRepository.findAll(spec);
+            }
+        }
+
         return productRepository.findAll(spec);
     }
+
 
 }

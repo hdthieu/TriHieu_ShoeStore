@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -31,6 +32,7 @@ public class SearchController {
             @RequestParam(required = false) List<String> colors,         // List colors
             @RequestParam(required = false) List<String> sizes,          // List sizes
             @RequestParam(required = false) String  price,
+            @RequestParam(required = false) String  sortBy,
             Model model) {
         Double minPrice = null;
         Double maxPrice = null;
@@ -70,16 +72,18 @@ public class SearchController {
                 (brandIds == null || brandIds.isEmpty()) &&
                 (colors == null || colors.isEmpty()) &&
                 (sizes == null || sizes.isEmpty()) &&
-                minPrice == null && maxPrice == null){
+                minPrice == null && maxPrice == null && sortBy ==null)
+        {
             // Nếu không có filter, lấy toàn bộ sản phẩm
             products = productService.getAllProduct();
+            System.out.println("In tất cả:"+products);
         } else {
 
             // Nếu có filter, gọi service để lấy sản phẩm theo filters
-            products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice);
-
+            products = productService.getFilteredProducts(categoryIds, brandIds, colors, sizes, minPrice, maxPrice,sortBy);
+            System.out.println("In lọc:"+products);
         }
-
+        System.out.println(products);
         // Thêm danh sách sản phẩm vào model
         model.addAttribute("products", products);
 

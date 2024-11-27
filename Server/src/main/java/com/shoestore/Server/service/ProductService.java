@@ -12,5 +12,5 @@ public interface ProductService {
 
     public Product getProductById(int id);
     List<Product> getById(int id);
-    List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice);
+    List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice,String sortBy);
 }
