@@ -10,4 +10,5 @@ import java.io.Serializable;
 public class CartItemKey implements Serializable {
     private int cartId;
     private int productId;
+
 }
