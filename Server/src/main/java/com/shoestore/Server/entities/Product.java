@@ -76,14 +76,8 @@ public class Product {
         return "Product{" +
                 "productID=" + productID +
                 ", productName='" + productName + '\'' +
-                ", imageURL=" + imageURL +
-                ", description='" + description + '\'' +
                 ", price=" + price +
                 ", status='" + status + '\'' +
-                ", brand=" + brand +
-                ", category=" + category +
-                ", supplier=" + supplier +
-                ", promotion=" + promotion +
                 '}';
     }
 }

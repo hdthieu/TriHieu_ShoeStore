@@ -12,10 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/vouchers")
@@ -26,6 +28,38 @@ public class VoucherController {
 
     @Autowired
     private VoucherService voucherService;
+
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, Object>> searchVouchers(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate
+    ) {
+        LocalDate start = null;
+        LocalDate end = null;
+        try {
+            if (startDate != null && !startDate.isEmpty()) {
+                start = LocalDate.parse(startDate);  // Chuyển đổi startDate
+            }
+            if (endDate != null && !endDate.isEmpty()) {
+                end = LocalDate.parse(endDate);  // Chuyển đổi endDate
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi khi chuyển đổi ngày: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Ngày không hợp lệ"));
+        }
+        List<Voucher> vouchers = voucherService.findVoucherByCodeOrDate(start, end);
+
+        if (vouchers.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(Map.of("message", "Không có voucher nào trong khoảng thời gian này"));
+        }
+
+        // Chuẩn bị response trả về cho client
+        Map<String, Object> response = new HashMap<>();
+        response.put("vouchers", vouchers);
+
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Voucher> addVoucher(@RequestBody Voucher voucherDTO) {
@@ -66,22 +100,27 @@ public class VoucherController {
             @RequestParam(required = false, defaultValue = "all") String status,
             @RequestParam(required = false, defaultValue = "") String search
     ) {
-        // Lấy danh sách Voucher mà không phân trang
+        // Lấy danh sách Voucher từ service
         List<Voucher> vouchers;
 
-        // Kiểm tra trạng thái voucher và tìm kiếm theo tên
+        // Nếu trạng thái là "all", gọi phương thức getAllVouchers từ service
         if ("all".equals(status)) {
-            vouchers = voucherRepository.findByNameContainingIgnoreCase(search);
+            // Lấy tất cả các voucher và lọc theo search (nếu có)
+            vouchers = voucherService.getAllVouchers().stream()
+                    .filter(v -> v.getName().toLowerCase().contains(search.toLowerCase()))
+                    .collect(Collectors.toList());
         } else {
+            // Nếu trạng thái không phải "all", gọi phương thức từ voucherRepository với status và search
             vouchers = voucherRepository.findByStatusAndNameContainingIgnoreCase(status, search);
         }
 
         // Chuẩn bị response trả về cho client
         Map<String, Object> response = new HashMap<>();
-        response.put("vouchers", vouchers);  // Danh sách voucher không phân trang
+        response.put("vouchers", vouchers);  // Danh sách voucher đã lọc
 
         return ResponseEntity.ok(response);
     }
+
 
 
 

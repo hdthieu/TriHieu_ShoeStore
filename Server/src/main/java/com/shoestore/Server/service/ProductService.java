@@ -7,4 +7,7 @@ import java.util.List;
 public interface ProductService {
     List<Product> getAllProduct();
     List<Product> getById(int id);
+
+    // nay cua hieu
+    public List<Product> getProductsNotInOrderDetail(int orderID);
 }

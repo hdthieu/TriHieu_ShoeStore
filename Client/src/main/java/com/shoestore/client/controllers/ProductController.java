@@ -22,4 +22,5 @@ public class ProductController {
         System.out.println(products);
         return "page/Customer/Search";
     }
+
 }

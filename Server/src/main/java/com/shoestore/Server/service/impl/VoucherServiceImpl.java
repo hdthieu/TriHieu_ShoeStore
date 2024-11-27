@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -19,6 +21,18 @@ public class VoucherServiceImpl implements VoucherService {
     public VoucherServiceImpl(VoucherRepository voucherRepository) {
         this.voucherRepository = voucherRepository;
     }
+
+    @Override
+    public List<Voucher> findVoucherByCodeOrDate(LocalDate startDate, LocalDate endDate) {
+        // Nếu cả hai ngày đều null, trả về tất cả các voucher từ cơ sở dữ liệu
+        if (startDate == null && endDate == null) {
+            return voucherRepository.findAll();  // Trả về tất cả voucher từ cơ sở dữ liệu
+        }
+
+        // Nếu có ngày bắt đầu và ngày kết thúc, tìm các voucher trong phạm vi ngày
+        return voucherRepository.findByStartDateBeforeAndEndDateAfter(startDate, endDate);
+    }
+
     @Override
     public Voucher updateVoucher(int id, Voucher voucher) {
         // Kiểm tra xem voucher có tồn tại không
@@ -33,7 +47,7 @@ public class VoucherServiceImpl implements VoucherService {
             entityVoucher.setEndDate(voucher.getEndDate());
             entityVoucher.setDiscountType(voucher.getDiscountType());
             entityVoucher.setDiscountValue(voucher.getDiscountValue());
-            entityVoucher.setGiaTriDonToiThieu(voucher.getGiaTriDonToiThieu());
+            entityVoucher.setMinValueOrder(voucher.getMinValueOrder());
 
             // Cập nhật trạng thái
             LocalDate today = LocalDate.now();
@@ -51,6 +65,17 @@ public class VoucherServiceImpl implements VoucherService {
             return null;  // Trả về null nếu không tìm thấy voucher để cập nhật
         }
     }
+
+//    @Override
+//    public List<Voucher> findVoucherByNameOrCode(String keyword) {
+//        return List.of();
+//    }
+
+    @Override
+    public List<Voucher> getAllVouchers() {
+        return voucherRepository.findAll();
+    }
+
     @Override
     public Voucher addVoucher(Voucher voucher) {
         Voucher entityVoucher = new Voucher();
@@ -82,6 +107,9 @@ public class VoucherServiceImpl implements VoucherService {
     public void deleteVoucher(int voucherID) {
         voucherRepository.deleteById(voucherID);  // Xóa khuyến mãi theo voucherID
     }
+
+
+
 
 
 

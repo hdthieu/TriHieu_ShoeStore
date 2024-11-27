@@ -19,4 +19,14 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public List<ProductDetail> getByProductId(int productID) {
         return productDetailRepository.findByProduct_ProductID(productID);
     }
+
+    @Override
+    public ProductDetail save(ProductDetail productDetail) {
+        // Kiểm tra tính hợp lệ (nếu cần)
+        if (productDetail == null) {
+            throw new IllegalArgumentException("ProductDetail không được để trống.");
+        }
+        // Lưu ProductDetail vào database
+        return productDetailRepository.save(productDetail);
+    }
 }
