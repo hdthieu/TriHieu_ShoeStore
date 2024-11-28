@@ -5,11 +5,11 @@ import com.shoestore.client.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseEntity<UserDTO> authenticateUser(UserDTO userDTO) {
@@ -25,41 +27,27 @@ public class UserServiceImpl implements UserService {
         return restTemplate.postForEntity(apiUrl, null, UserDTO.class);
     }
 
-    @Override
     public void save(UserDTO userDTO) {
-        // Lưu người dùng mới (trong trường hợp đăng ký)
-        String apiUrl = SERVER_BASE_URL + "auth/register";
-        restTemplate.postForEntity(apiUrl, userDTO, Void.class);
+        // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
+        String emailCheckUrl = SERVER_BASE_URL + "auth/findByEmail?email=" + userDTO.getEmail();
+        ResponseEntity<UserDTO> response = restTemplate.exchange(emailCheckUrl, HttpMethod.GET, null, UserDTO.class);
+        if (response.getBody() == null) {
+            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+            userDTO.setPassword(encodedPassword);
+            String apiUrl = SERVER_BASE_URL + "auth/register";
+            restTemplate.postForEntity(apiUrl, userDTO, Void.class);
+        } else {
+            // Nếu email đã tồn tại, trả về thông báo lỗi
+            throw new IllegalArgumentException("Email already exists");
+        }
     }
-
-//    @Override
-//    public UserDTO findByEmail(String email) {
-//        String url = SERVER_BASE_URL + "auth/findByEmail?email=" + email;
-//        System.out.println(url);
-//        System.out.println(restTemplate.getForObject(url, UserDTO.class));
-//        return restTemplate.getForObject(url, UserDTO.class);
-//    }
 
     @Override
     public UserDTO findByEmail(String email) {
-        // In ra URL request để kiểm tra
-        System.out.println("Request URL: " + "http://localhost:8080/auth/findByEmail?email=" + email);
-
-        // Tạo URL với tham số email từ đầu vào
-        String url = "http://localhost:8080/auth/findByEmail?email=" + email;
-
-        // Gửi yêu cầu GET đến API và nhận kết quả dưới dạng UserDTO
-        ResponseEntity<UserDTO> response = restTemplate.exchange(
-                url, HttpMethod.GET, null, UserDTO.class
-        );
-
-        // In kết quả trả về từ API
-        System.out.println("Response from API: " + response.getBody());
-
-        // Trả về đối tượng UserDTO nhận được từ API
+        String url = SERVER_BASE_URL + "auth/findByEmail?email=" + email;
+        ResponseEntity<UserDTO> response = restTemplate.exchange(url, HttpMethod.GET, null, UserDTO.class);
         return response.getBody();
     }
-
 
     @Override
     public List<UserDTO> findAll() {

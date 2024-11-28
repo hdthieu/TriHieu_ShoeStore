@@ -2,6 +2,8 @@ package com.shoestore.Server.controller;
 
 import com.shoestore.Server.entities.User;
 import com.shoestore.Server.service.UserService;
+import com.shoestore.client.dto.request.UserDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class UserController {
   @Autowired
   private UserService userService;
+  @Autowired
+  private ModelMapper modelMapper;
+
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
     User user = userService.findByEmail(email);
@@ -21,17 +26,19 @@ public class LoginController {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body("Invalid email or password");
   }
-  // Đăng ký người dùng mới
+
   @PostMapping("/register")
-  public ResponseEntity<?> register(@RequestBody User user) {
-    // Kiểm tra nếu email đã tồn tại trong hệ thống
+  public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+    User user = modelMapper.map(userDTO, User.class);
+
     if (userService.findByEmail(user.getEmail()) != null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-              .body("Email already exists"); // Trả về thông báo nếu email đã tồn tại
+              .body("Email already exists");
     }
-    userService.save(user); // Lưu người dùng mới vào cơ sở dữ liệu
+    userService.save(user);
+
     return ResponseEntity.status(HttpStatus.CREATED)
-            .body("User registered successfully"); // Trả về thông báo thành công
+            .body("User registered successfully");
   }
 
   // Tìm người dùng theo email
@@ -39,10 +46,10 @@ public class LoginController {
   public ResponseEntity<?> findByEmail(@RequestParam String email) {
     User user = userService.findByEmail(email);
     if (user != null) {
-      return ResponseEntity.ok(user); // Trả về thông tin người dùng nếu tìm thấy
+      return ResponseEntity.ok(user);
+
     }
-    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body("User not found"); // Trả về thông báo lỗi nếu không tìm thấy người dùng
+    return ResponseEntity.ok().body(null);
   }
 
   // Lấy danh sách tất cả người dùng
