@@ -11,12 +11,12 @@ VALUES
 INSERT INTO Users (CI, email, name, password, phoneNumber, status, userName, roleID)
 VALUES
 -- Admins
-('1234567890', 'admin1@example.com', 'Admin User 1', 'securepassword1', '1234567890', 'Active', 'admin1', 1),
+('1234567890', 'admin1@example.com', 'Admin User 1', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '1234567890', 'Active', 'admin1', 1),
 ('0987654321', 'admin2@example.com', 'Admin User 2', 'securepassword2', '0987654321', 'Active', 'admin2', 1),
 ('1122334455', 'admin3@example.com', 'Admin User 3', 'securepassword3', '1122334455', 'Active', 'admin3', 1),
 
 -- Customers
-('2233445566', 'customer1@example.com', 'John Doe', 'password123', '2233445566', 'Active', 'johndoe1', 2),
+('2233445566', 'customer1@example.com', 'John Doe', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '2233445566', 'Active', 'johndoe1', 2),
 ('3344556677', 'customer2@example.com', 'Jane Smith', 'password456', '3344556677', 'Active', 'janesmith2', 2),
 ('4455667788', 'customer3@example.com', 'Alice Johnson', 'password789', '4455667788', 'Active', 'alicejohnson3', 2),
 ('5566778899', 'customer4@example.com', 'Bob Brown', 'password101', '5566778899', 'Active', 'bobbrown4', 2),
@@ -35,7 +35,7 @@ VALUES
 ('1819202122', 'customer17@example.com', 'Oscar Isaac', 'password444', '1819202122', 'Active', 'oscarisaac17', 2),
 ('1920212223', 'customer18@example.com', 'Peter Parker', 'password555', '1920212223', 'Active', 'peterparker18', 2),
 ('2021222324', 'customer19@example.com', 'Quinn Fabray', 'password666', '2021222324', 'Active', 'quinnfabray19', 2),
-('2122232425', 'customer20@example.com', 'Rachel Green', 'password777', '2122232425', 'Active', 'rachelgreen20', 2);
+('2122232425', 'customer20@example.com', 'Rachel Green', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '2122232425', 'Active', 'rachelgreen20', 2);
 
 
 INSERT INTO Address (city, district, street, ward, userID)

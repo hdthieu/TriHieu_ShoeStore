@@ -7,14 +7,16 @@ import java.util.List;
 
 public interface ProductService {
     List<Product> getAllProduct();
-
+    Product findByProductDetailsId(int id);
     public Product saveProduct(Product product);
     public boolean deleteProduct(int id);
 
     public Product getProductById(int id);
-    List<Product> getById(int id);
+
     // nay cua hieu
     public List<Product> getProductsNotInOrderDetail(int orderID);
+//    // nay cua hieu
+//    public List<Product> getProductsNotInOrderDetail(int orderID);
 //
 //    //  Home
 //    List<ProductDTO> getTop10BestSellers();

@@ -33,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product findByProductDetailsId(int id) {
+        return productRepository.findProductByProductDetailId(id);
+    }
+
+    @Override
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -49,10 +54,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).orElse(null);
 
     }
-    public List<Product> getById(int id) {
-        return productRepository.findByProductID(id);
 
-    }
 
     @Override
     public List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice, String sortBy) {

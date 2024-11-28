@@ -20,7 +20,7 @@ public class ProductDetailController {
     private ProductDetailService productDetailService;
     @GetMapping("/product-details/{id}")
     public String showProductDetails(@PathVariable("id") int id, Model model) {
-        ProductDTO product =productService.getProductById(id);
+        ProductDTO product =productService.getProductByIdForDetail(id);
         List<ProductDetailDTO> productDetails=productDetailService.getProductDetailByProduct(id);
         model.addAttribute("product", product);
         model.addAttribute("productDetail", productDetails);

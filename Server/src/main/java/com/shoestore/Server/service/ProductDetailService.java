@@ -2,6 +2,7 @@ package com.shoestore.Server.service;
 
 
 import com.shoestore.Server.entities.ProductDetail;
+import com.shoestore.Server.repositories.ProductRepository;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface ProductDetailService {
 
 
     ProductDetail save(ProductDetail productDetail);
-
+    ProductDetail getProductDetailById(int id);
 }

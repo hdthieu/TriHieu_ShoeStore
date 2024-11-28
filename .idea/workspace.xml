@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c10e3fd-92fc-4f34-82a3-2e34fa76f9c7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/ProductHomeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/response/ProductHomeResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Customer/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Customer/Home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Brand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Client/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +23,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/LoginController.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -61,12 +50,16 @@
     "Spring Boot.ServerApplication.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/LapTrinhWWW_Java/BaiNhom/Project/TriHieu_ShoeStore/Client",
+    "last_opened_file_path": "C:/Users/Binh/Desktop/BTL_WWW/ShoeStore/Server",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -76,10 +69,24 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\java\com\shoestore\client" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\static\images\misc" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page\Customer" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Server\src\main\java\com\shoestore\Server" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page\Auth" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\sql" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page" />
       <recent name="D:\LapTrinhWWW_Java\BaiNhom\Project\TriHieu_ShoeStore\Client\src\main\java\com\shoestore\client" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.shoestore.client.configs" />
+      <recent name="com.shoestore.Server.config" />
+      <recent name="com.shoestore.client.service.impl" />
+      <recent name="com.shoestore.client.service" />
       <recent name="com.shoestore.client.dto.response" />
     </key>
   </component>
@@ -143,9 +150,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ClientApplication" />
+        <item itemvalue="Spring Boot.ServerApplication" />
         <item itemvalue="Application.ClientApplication" />
         <item itemvalue="Application.ServerApplication" />
-        <item itemvalue="Spring Boot.ServerApplication" />
         <item itemvalue="JavaScript Debug.ThemMoiKhuyenMai.html" />
       </list>
     </recent_temporary>
@@ -173,10 +180,38 @@
       <workItem from="1732680494245" duration="46000" />
       <workItem from="1732680551674" duration="8539000" />
       <workItem from="1732689183169" duration="3061000" />
+      <workItem from="1732715487995" duration="6029000" />
+      <workItem from="1732758709181" duration="9098000" />
+      <workItem from="1732767871335" duration="2215000" />
+      <workItem from="1732770653915" duration="4946000" />
+      <workItem from="1732775665125" duration="834000" />
+      <workItem from="1732778139853" duration="2468000" />
+      <workItem from="1732780632226" duration="306000" />
+      <workItem from="1732781315313" duration="380000" />
+      <workItem from="1732783580883" duration="2420000" />
+      <workItem from="1732786036005" duration="1532000" />
+      <workItem from="1732792244297" duration="2711000" />
+      <workItem from="1732796648428" duration="201000" />
+      <workItem from="1732797039113" duration="2528000" />
+      <workItem from="1732799651650" duration="1700000" />
+      <workItem from="1732801370284" duration="1658000" />
+      <workItem from="1732803115500" duration="1786000" />
+      <workItem from="1732805024038" duration="2160000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

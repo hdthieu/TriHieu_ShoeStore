@@ -1,5 +1,6 @@
 package com.shoestore.client.service.impl;
 
+import com.shoestore.client.dto.request.ProductDTO;
 import com.shoestore.client.dto.request.ProductDetailDTO;
 import com.shoestore.client.dto.response.ProductDetailResponseDTO;
 import com.shoestore.client.service.ProductDetailService;
@@ -22,5 +23,15 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         );
         System.out.println("Response Body: " + response.getBody());
         return response.getBody().getProductDetailDTOs();
+    }
+
+    @Override
+    public ProductDetailDTO getProductDetailById(int id) {
+        String apiUrl="http://localhost:8080/products-details/productDetailId/"+id;
+        ResponseEntity<ProductDetailDTO> response= restTemplate.exchange(
+                apiUrl, HttpMethod.GET,null, ProductDetailDTO.class
+        );
+//        System.out.println("Response Body: " + response.getBody());
+        return response.getBody();
     }
 }

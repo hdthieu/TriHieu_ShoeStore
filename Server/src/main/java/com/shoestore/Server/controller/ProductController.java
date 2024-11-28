@@ -209,7 +209,16 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+    @GetMapping("/detailsId/{id}") // Ánh xạ HTTP GET
+    public ResponseEntity<Product>  getProductsByProductDetails(@PathVariable int id){
+        Product product=productService.findByProductDetailsId(id);
+        System.out.println("Id:"+id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
     @PutMapping("/update/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable int id,
@@ -278,13 +287,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{id}") // Ánh xạ HTTP GET
-    public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
-        List<Product> products=productService.getById(id);
-        Map<String,Object> response= new HashMap<>();
-        response.put("product",products);
-        return ResponseEntity.ok(response);
-    }
+
 
 
     // API lấy danh sách Best Sellers
