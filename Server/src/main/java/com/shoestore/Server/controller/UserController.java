@@ -1,8 +1,8 @@
 package com.shoestore.Server.controller;
 
+import com.shoestore.Server.dto.UserDTO;
 import com.shoestore.Server.entities.User;
 import com.shoestore.Server.service.UserService;
-//import com.shoestore.client.dto.request.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,19 +27,19 @@ public class UserController {
             .body("Invalid email or password");
   }
 
-//  @PostMapping("/register")
-//  public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
-//    User user = modelMapper.map(userDTO, User.class);
-//
-//    if (userService.findByEmail(user.getEmail()) != null) {
-//      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//              .body("Email already exists");
-//    }
-//    userService.save(user);
-//
-//    return ResponseEntity.status(HttpStatus.CREATED)
-//            .body("User registered successfully");
-//  }
+  @PostMapping("/register")
+  public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+    User user = modelMapper.map(userDTO, User.class);
+
+    if (userService.findByEmail(user.getEmail()) != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body("Email already exists");
+    }
+    userService.save(user);
+
+    return ResponseEntity.status(HttpStatus.CREATED)
+            .body("User registered successfully");
+  }
 
   // Tìm người dùng theo email
   @GetMapping("/findByEmail")
