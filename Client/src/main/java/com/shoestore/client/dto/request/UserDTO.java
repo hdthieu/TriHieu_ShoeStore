@@ -22,5 +22,6 @@ public class UserDTO {
   private List<AddressDTO> addresses;
   private CartDTO cart;
   private String ci;
+
 }
 

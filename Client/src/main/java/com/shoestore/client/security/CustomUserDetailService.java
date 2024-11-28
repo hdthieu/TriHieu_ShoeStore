@@ -7,32 +7,38 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
 	@Autowired
-	private UserService userService; // Sử dụng UserService để truy xuất thông tin người dùng
+	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		System.out.println(email);
 		UserDTO user = userService.findByEmail(email);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with email: " + email);
 		}
 
-		// Tạo đối tượng UserDetails từ thông tin người dùng
+		String roleName = (user.getRole() != null) ? "ROLE_" + user.getRole().getName() : "ROLE_Customer";
 		return new org.springframework.security.core.userdetails.User(
 						user.getEmail(),
 						user.getPassword(),
-						Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName())) // Gán quyền cho user
+						Collections.singletonList(new SimpleGrantedAuthority(roleName))
 		);
+	}
+
+	public boolean checkPassword(String inputPassword, String storedPassword) {
+		return passwordEncoder.matches(inputPassword, storedPassword);
 	}
 }
