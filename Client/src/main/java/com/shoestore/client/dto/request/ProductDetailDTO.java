@@ -26,4 +26,7 @@ public class ProductDetailDTO {
     private int stockQuantity;
 //    private ProductDTO product;
 
+    public ProductDetailDTO(int productDetailID) {
+        this.productDetailID = productDetailID;
+    }
 }

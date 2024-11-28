@@ -11,7 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class CartDTO {
   private int cartID;
-  private LocalDateTime createAt;
-  private List<CartItemResponseDTO> cartItems;
-  private UserDTO user;
+//  private LocalDateTime createAt;
+//  private List<CartItemResponseDTO> cartItems;
+//  private UserDTO user;
+
+  public CartDTO(int cartID) {
+    this.cartID = cartID;
+  }
 }

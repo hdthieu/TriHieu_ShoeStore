@@ -1,17 +1,23 @@
 package com.shoestore.client.controllers;
 
+import com.shoestore.client.dto.request.CartDTO;
+import com.shoestore.client.dto.request.CartItemDTO;
 import com.shoestore.client.dto.request.ProductDTO;
 import com.shoestore.client.dto.request.ProductDetailDTO;
 import com.shoestore.client.dto.response.CartItemResponseDTO;
 import com.shoestore.client.service.CartItemService;
+import com.shoestore.client.service.CartService;
 import com.shoestore.client.service.ProductDetailService;
 import com.shoestore.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,6 +28,8 @@ public class CartController {
     private CartItemService cartItemService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CartService cartService;
     @Autowired
     private ProductDetailService productDetailService;
     @GetMapping("/cart/{id}")
@@ -36,28 +44,39 @@ public class CartController {
             item.setColor(productDetailDTO.getColor());
             item.setSize(productDetailDTO.getSize());
             item.setStockQuantity(productDetailDTO.getStockQuantity());
-//            item.set
-//            System.out.println(productDetailDTOS);
-            System.out.println(item);
-
         });
         model.addAttribute("cartItems", cartItems);
-//        return "Chào";
         return "page/Customer/Cart";
     }
 
-//    @PostMapping("/cart/add")
-//    public String addCartItem(CartItemResponseDTO cartItemDTO, Model model) {
-//        try {
-//            // Gửi sản phẩm mới đến server để lưu
-//            CartItemResponseDTO cartSave = cartService.addCartItem(cartItemDTO);
-//            model.addAttribute("message", "Sản phẩm đã được thêm thành công vào giỏ hàng!");
-//            return "Thêm thành công"; //Chỗ này k chuyển mà hiện modal nè
-//        } catch (Exception e) {
-//            model.addAttribute("error", "Có lỗi xảy ra khi thêm sản phẩm: " + e.getMessage());
-//            return "page/Customer/ProductDetail";
-//        }
-//    }
+    @PostMapping("/cart/add")
+    public ResponseEntity<CartItemDTO> addCartItem(@RequestParam("productDetailID") int productDetailID,
+                              @RequestParam("quantity") int quantity,
+//                              CartItemResponseDTO cartItemDTO,
+                              Model model) {
+            CartItemDTO cartItemDTO=new CartItemDTO();
+
+            CartItemDTO.IdDTO idDTO=new CartItemDTO.IdDTO(1,productDetailID);
+            cartItemDTO.setId(idDTO);
+            cartItemDTO.setQuantity(quantity);
+            ProductDTO productDTO = productService.getProductByProductDetail(productDetailID);
+            double price=productDTO.getPrice();
+            double subTotal= price*quantity;
+            cartItemDTO.setSubTotal(subTotal);
+            CartDTO cartDTO=cartService.getCartById(1);
+            ProductDetailDTO productDetailDTO = productDetailService.getProductDetailById(productDetailID);
+            cartItemDTO.setCart(cartDTO);
+            cartItemDTO.setProductDetailDTO(productDetailDTO);
+            CartItemDTO cartItemSave=cartItemService.addCartItem(cartItemDTO);
+            if(cartItemSave!=null){
+                return ResponseEntity.status(HttpStatus.CREATED).body(cartItemSave);
+
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
+
+    }
 }
 
 

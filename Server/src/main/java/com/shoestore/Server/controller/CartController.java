@@ -19,8 +19,12 @@ private final ProductDetailService productDetailService;
       this.cartItemService = cartItemService;
       this.productDetailService = productDetailService;
   }
-
   @GetMapping("/{id}")
+  public ResponseEntity<Cart> getCartByCartId(@PathVariable int id) {
+    Cart cart= cartItemService.getCartById(id);
+    return ResponseEntity.ok(cart);
+  }
+  @GetMapping("/cart-item/{id}")
   public ResponseEntity<List<CartItem>> getCartItemsByCartId(@PathVariable int id) {
     List<CartItem> cartItems = cartItemService.getCartItemsByCartId(id);
     return ResponseEntity.ok(cartItems);

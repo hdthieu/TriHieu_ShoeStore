@@ -1,5 +1,6 @@
 package com.shoestore.client.service.impl;
 
+import com.shoestore.client.dto.request.CartItemDTO;
 import com.shoestore.client.dto.response.CartItemResponseDTO;
 import com.shoestore.client.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,17 @@ public class CartItemServiceImpl implements CartItemService {
 
   @Override
   public List<CartItemResponseDTO> getCartItemsByCartId(int cartId) {
-    String url = SERVER_BASE_URL + cartId;
+    String url = SERVER_BASE_URL+"cart-item/" + cartId;
 
     CartItemResponseDTO[] cartItems = restTemplate.getForObject(url, CartItemResponseDTO[].class);
     return cartItems != null ? Arrays.asList(cartItems) : List.of();
   }
 
   @Override
-  public CartItemResponseDTO addCartItem(CartItemResponseDTO cartItemDTO) {
+  public CartItemDTO addCartItem(CartItemDTO cartItemDTO) {
     String apiUrl = "http://localhost:8080/cart/add";
-    ResponseEntity<CartItemResponseDTO> response=restTemplate.postForEntity(
-            apiUrl,cartItemDTO, CartItemResponseDTO.class
+    ResponseEntity<CartItemDTO> response=restTemplate.postForEntity(
+            apiUrl,cartItemDTO, CartItemDTO.class
     );
     return response.getBody();
   }
