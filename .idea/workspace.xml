@@ -5,22 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c10e3fd-92fc-4f34-82a3-2e34fa76f9c7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/ProductHomeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/response/ProductHomeResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/configs/SecurityBeansConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/configs/SpringSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/AddressDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/RoleDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/response/AddressResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/response/UserResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/security/CustomUserDetailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/resources/static/css/Login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/resources/static/images/misc/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/config/SecurityBeansConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/config/SpringSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/controllers/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Customer/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/resources/templates/page/Customer/Home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Brand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/CartDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/CartDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/shoestore/client/dto/request/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/entities/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/shoestore/Server/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,40 +56,58 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ClientApplication.executor": "Run",
-    "Application.ServerApplication.executor": "Run",
-    "JavaScript Debug.ThemMoiKhuyenMai.html.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ClientApplication.executor": "Run",
-    "Spring Boot.ServerApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/LapTrinhWWW_Java/BaiNhom/Project/TriHieu_ShoeStore/Client",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ClientApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.ThemMoiKhuyenMai.html.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ClientApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Binh/Desktop/BTL_WWW/ShoeStore/Client/src/main/java/com/shoestore/client&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\java\com\shoestore\client" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\static\images\misc" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page\Customer" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Server\src\main\java\com\shoestore\Server" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Server\src\main\java\com\shoestore\Server\config" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page\Auth" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\sql" />
+      <recent name="C:\Users\Binh\Desktop\BTL_WWW\ShoeStore\Client\src\main\resources\templates\page" />
       <recent name="D:\LapTrinhWWW_Java\BaiNhom\Project\TriHieu_ShoeStore\Client\src\main\java\com\shoestore\client" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.shoestore.client.configs" />
+      <recent name="com.shoestore.Server.config" />
+      <recent name="com.shoestore.client.service.impl" />
+      <recent name="com.shoestore.client.service" />
       <recent name="com.shoestore.client.dto.response" />
     </key>
   </component>
@@ -143,9 +171,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ClientApplication" />
+        <item itemvalue="Spring Boot.ServerApplication" />
         <item itemvalue="Application.ClientApplication" />
         <item itemvalue="Application.ServerApplication" />
-        <item itemvalue="Spring Boot.ServerApplication" />
         <item itemvalue="JavaScript Debug.ThemMoiKhuyenMai.html" />
       </list>
     </recent_temporary>
@@ -173,6 +201,13 @@
       <workItem from="1732680494245" duration="46000" />
       <workItem from="1732680551674" duration="8539000" />
       <workItem from="1732689183169" duration="3061000" />
+      <workItem from="1732715487995" duration="6029000" />
+      <workItem from="1732758709181" duration="9098000" />
+      <workItem from="1732767871335" duration="2215000" />
+      <workItem from="1732770653915" duration="4946000" />
+      <workItem from="1732775665125" duration="834000" />
+      <workItem from="1732778139853" duration="2468000" />
+      <workItem from="1732780632226" duration="306000" />
     </task>
     <servers />
   </component>
