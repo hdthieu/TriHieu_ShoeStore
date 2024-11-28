@@ -1,8 +1,8 @@
 package com.shoestore.Server.controller;
 
+import com.shoestore.Server.dto.UserDTO;
 import com.shoestore.Server.entities.User;
 import com.shoestore.Server.service.UserService;
-import com.shoestore.client.dto.request.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
