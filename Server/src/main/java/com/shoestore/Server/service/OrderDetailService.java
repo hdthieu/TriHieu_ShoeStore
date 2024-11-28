@@ -1,5 +1,6 @@
 package com.shoestore.Server.service;
 
+import com.shoestore.Server.dto.OrderDetailDTO;
 import com.shoestore.Server.entities.OrderDetail;
 import com.shoestore.Server.entities.Product;
 
@@ -16,4 +17,6 @@ public interface OrderDetailService {
     public List<OrderDetail> findByProductIDAndOrderID(int productID, int orderID) ;
 //    public Optional<OrderDetail> findByProductIDAndOrderIDDelete(int productID, int orderID) ;
 //    public void deleteByProductIDAndOrderID(int productID, int orderID) ;
+
+
 }
