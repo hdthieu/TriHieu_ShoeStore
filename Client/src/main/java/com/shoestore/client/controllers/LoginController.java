@@ -1,22 +1,22 @@
 package com.shoestore.client.controllers;
 
+import com.shoestore.client.dto.request.CartDTO;
 import com.shoestore.client.dto.request.UserDTO;
+import com.shoestore.client.security.CustomUserDetailService;
 import com.shoestore.client.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 @Controller
 public class LoginController {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  private CustomUserDetailService customUserDetailService;
 
   // Đăng nhập
   @GetMapping("/login")
@@ -27,13 +27,16 @@ public class LoginController {
   @PostMapping("/login/auth")
   public String login(@ModelAttribute UserDTO userDTO, Model model) {
     UserDTO user = userService.findByEmail(userDTO.getEmail());
-    if (user != null && userDTO.getPassword().equals(user.getPassword())) {
-//      model.addAttribute("user", user);
+    System.out.println(user);
+
+    // Kiểm tra xem người dùng có tồn tại và mật khẩu có khớp không
+    if (user != null && customUserDetailService.checkPassword(userDTO.getPassword(), user.getPassword())) {
+      System.out.println(1232);
 
       if ("Admin".equals(user.getRole().getName())) {
-        System.out.println(user.getRole().getName());
         return "page/Admin/TrangChuQuanLy";
       } else if ("Customer".equals(user.getRole().getName())) {
+        System.out.println(user.getRole().getName());
         return "page/Customer/Home";
       }
     }
@@ -41,19 +44,20 @@ public class LoginController {
   }
 
 
-  // Trang chính của admin
-  @GetMapping("/page/Admin/TrangChuQuanLy")
-  public String adminPage(Model model) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    model.addAttribute("userRole", auth.getAuthorities());  // Thêm vai trò vào Model
-    return "page/Admin/TrangChuQuanLy";  // Trang dành cho Admin
+  @GetMapping("/register")
+  public String showSignUpForm() {
+    return "page/Register";
+  }
+  @PostMapping("/register/auth")
+  public String registerUser(@ModelAttribute UserDTO userDTO, Model model) {
+    try {
+      userService.save(userDTO);
+      return "redirect:/login";
+    } catch (IllegalArgumentException e) {
+      model.addAttribute("error", e.getMessage());
+      return "page/Register";
+    }
   }
 
-  // Trang chính của customer
-  @GetMapping("/page/Customer/Home")
-  public String customerPage(Model model) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    model.addAttribute("userRole", auth.getAuthorities());  // Thêm vai trò vào Model
-    return "page/Customer/Home";  // Trang dành cho Customer
-  }
+
 }
