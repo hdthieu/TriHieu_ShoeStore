@@ -39,4 +39,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         // Lưu ProductDetail vào database
         return productDetailRepository.save(productDetail);
     }
+
+    @Override
+    public ProductDetail getProductDetailById(int id) {
+        return productDetailRepository.findById(id).orElse(null);
+    }
 }

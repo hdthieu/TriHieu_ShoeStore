@@ -4,12 +4,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Table
 @Entity
 @Data
+@NoArgsConstructor
+@ToString
 public class ProductDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +36,17 @@ public class ProductDetail {
     @JsonIgnore
     private List<OrderDetail> orderDetails;
 
+    public ProductDetail(int productDetailID) {
+        this.productDetailID = productDetailID;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDetail{" +
+                "productDetailID=" + productDetailID +
+                ", color=" + color +
+                ", size=" + size +
+                ", stockQuantity=" + stockQuantity +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.shoestore.Server.controller;
 
 
+import com.shoestore.Server.entities.Product;
 import com.shoestore.Server.entities.ProductDetail;
 import com.shoestore.Server.service.ProductDetailService;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,14 @@ public class ProductDetailController {
         response.put("productDetails",productDetails);
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/productDetailId/{id}")
+    public ResponseEntity<ProductDetail> getProductDetailsById(@PathVariable int id) {
+        ProductDetail productDetail=productDetailService.getProductDetailById(id);
+        if (productDetail != null) {
+            return ResponseEntity.ok(productDetail);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
