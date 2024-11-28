@@ -13,8 +13,8 @@ public interface ProductService {
 
     public Product getProductById(int id);
     List<Product> getById(int id);
-//    // nay cua hieu
-//    public List<Product> getProductsNotInOrderDetail(int orderID);
+    // nay cua hieu
+    public List<Product> getProductsNotInOrderDetail(int orderID);
 //
 //    //  Home
 //    List<ProductDTO> getTop10BestSellers();

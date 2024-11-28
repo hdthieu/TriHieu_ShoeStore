@@ -28,8 +28,6 @@ public class OrderServiceImpl implements OrderService {
         if (optionalOrder.isEmpty()) {
             throw new IllegalArgumentException("Không tìm thấy đơn hàng với ID: " + orderId);
         }
-
-        // Cập nhật trạng thái
         Order order = optionalOrder.get();
         order.setStatus(status);
         orderRepository.save(order);
@@ -43,31 +41,43 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> findAll() {
         String jpql = """
-        SELECT o 
-        FROM Order o
-        JOIN FETCH o.user u
-        JOIN FETCH o.orderDetails od
-        JOIN FETCH od.product p
-        ORDER BY o.orderDate ASC
+            SELECT o 
+            FROM Order o
+            JOIN FETCH o.user u
+            JOIN FETCH o.orderDetails od
+            JOIN FETCH od.productDetail pd
+            JOIN FETCH pd.product p
+            ORDER BY o.orderDate ASC
         """;
 
-        // Thực thi truy vấn JPQL
         return entityManager.createQuery(jpql, Order.class).getResultList();
     }
 
-    @Override
-    public Map<String, Object> getRevenueStatistics(LocalDate startDate, LocalDate endDate){
-        List<Order> orders = orderRepository.findByOrderDateBetween(startDate, endDate);
-        double totalRevenue = orders.stream()
-                .mapToDouble(order -> order.getOrderDetails().stream()
-                        .mapToDouble(detail -> detail.getPrice() * detail.getQuantity())
-                        .sum() + order.getFeeShip())
-                .sum();
-        Map<String, Object> stats = new HashMap<>();
-        stats.put("totalRevenue", totalRevenue);
-        stats.put("totalOrders", orders.size());
-        return stats;
+
+    public Map<String, Object> getRevenueStatistics(LocalDate startDate, LocalDate endDate) {
+        // Thực hiện truy vấn để lấy tổng số đơn hàng, tổng doanh thu và doanh thu đã giảm
+        List<Object[]> result = orderRepository.findRevenueAndDiscountedRevenueBetweenDates(startDate, endDate);
+
+        Map<String, Object> data = new HashMap<>();
+
+        if (result != null && !result.isEmpty()) {
+            Object[] row = result.get(0);
+
+            data.put("totalOrders", row[0] != null ? row[0] : 0);
+            data.put("totalQuantity", row[1] != null ? row[1] : 0);
+            data.put("totalRevenueNotComplete", row[2] != null ? row[2] : 0);
+            data.put("totalRevenue", row[3] != null ? row[3] : 0);
+        } else {
+            // Nếu không có dữ liệu, gán tất cả giá trị là 0
+            data.put("totalOrders", 0);
+            data.put("totalQuantity", 0);
+            data.put("totalRevenue", 0);
+            data.put("totalDiscountedRevenue", 0);
+        }
+
+        return data;
     }
+
 
     // lấy doanh thu 1 năm và số sản phẩm
     @Override
