@@ -40,4 +40,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviews;
+
+    @ManyToMany
+    @JoinTable(
+            name = "Wishlist",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "productID")
+    )
+    @JsonManagedReference
+    private List<Product> wishlist;
 }

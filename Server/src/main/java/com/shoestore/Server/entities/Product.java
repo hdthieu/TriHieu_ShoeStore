@@ -58,6 +58,11 @@ public class Product {
     @JsonIgnore
     private Promotion promotion;
 
+    @ManyToMany(mappedBy = "wishlist")
+    @JsonBackReference
+    private List<User> users;
+
+
     public Product(int productID, String productName, List<String> imageURL, String description, double price, String status, Brand brand, Supplier supplier, Category category, Promotion promotion, LocalDateTime createDate) {
         this.productID = productID;
         this.productName = productName;
