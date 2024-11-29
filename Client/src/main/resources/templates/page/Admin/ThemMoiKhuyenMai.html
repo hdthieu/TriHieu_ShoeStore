@@ -82,10 +82,8 @@
           <li class="nav-item mt-3">
             <a
                     class="nav-link text-light"
-                    href="http://localhost:3000/orders/Home"
-                    onclick="setActive(this)"
-            >Home</a
-            >
+                    href="http://localhost:3000/admin/orders/Home"
+                    onclick="setActive(this)">Home</a>
           </li>
           <li class="nav-item mt-3">
             <a
@@ -122,7 +120,7 @@
           <li class="nav-item mt-3">
             <a
                     class="nav-link text-light"
-                    href="#"
+                    href="http://localhost:3000/admin/vouchers/view"
                     onclick="setActive(this)"
             >Đơn hàng</a
             >
@@ -187,6 +185,7 @@
             />
           </div>
           <button class="btn btn-info ml-3" onclick="handleSearch()">Tìm kiếm</button>
+          <button class="btn btn-info ml-3" onclick="location.reload()">Refresh</button>
         </div>
         <div class="col-md-6 d-flex align-items-center">
           <label class="mr-3">Trạng thái:</label>
@@ -231,36 +230,38 @@
       <!-- Table -->
       <table  class="table table-bordered">
         <thead class="thead-light">
-          <tr>
-            <th>Mã</th>
-            <th>Tên</th>
-            <th>Giá trị</th>
-            <th>Ngày bắt đầu</th>
-            <th>Ngày kết thúc</th>
-            <th>Trạng thái</th>
-            <th>Giá trị đơn tối thiểu</th>
-            <th>Thao tác</th>
-          </tr>
+        <tr>
+          <th>Mã</th>
+          <th>Tên</th>
+          <th>Giá trị</th>
+          <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th>
+          <th>Trạng thái</th>
+          <th>Giá trị đơn tối thiểu</th>
+          <th>Thao tác</th>
+        </tr>
         </thead>
         <tbody id="voucher-list">
-          <tr th:each="voucher : ${vouchers}">
-            <td th:text="${voucher.voucherID}"></td>
-            <td th:text="${voucher.name}"></td>
-            <td th:text="${voucher.discountValue}"></td>
-            <td th:text="${voucher.startDate}"></td>
-            <td th:text="${voucher.endDate}"></td>
-            <td th:text="${voucher.status}"></td>
-            <td th:text="${voucher.minValueOrder}"></td>
-            <td>
-              <button class="btn btn-primary btn-sm">Edit</button>
-              <button
-                      class="btn btn-danger btn-sm delete-btn"
-                      th:data-id="${voucher.voucherID}">
-                Delete
-              </button>
-            </td>
-          </tr>
+        <tr th:each="voucher : ${vouchers}">
+          <td th:text="${voucher.voucherID}"></td>
+          <td th:text="${voucher.name}"></td>
+          <td>
+            <span th:if="${voucher.discountType == 'Flat'}"
+                  class="currency" th:text="${voucher.discountValue}"></span>
+            <span th:if="${voucher.discountType == 'Percentage'}"
+                  th:text="${voucher.discountValue + ' %'}"></span>
+          </td>
+          <td th:text="${voucher.startDate}"></td>
+          <td th:text="${voucher.endDate}"></td>
+          <td th:text="${voucher.status}"></td>
+          <td class="currency" th:text="${voucher.minValueOrder}"></td>
+          <td>
+            <button class="btn btn-primary btn-sm edit-btn">Edit</button>
+            <button class="btn btn-danger btn-sm delete-btn" th:data-id="${voucher.voucherID}">Delete</button>
+          </td>
+        </tr>
         </tbody>
+
       </table>
     </main>
     <main class="main-content col-md-10 ml-sm-auto px-4">
@@ -508,7 +509,7 @@
         <!-- Nút hành động -->
         <div class="form-group text-right">
           <button type="reset" class="btn btn-secondary">Làm mới</button>
-          <button type="submit" class="btn btn-success">Lưu</button>
+          <button type="submit" class="btn btn-info">Cập nhật</button>
         </div>
       </form>
     </main>

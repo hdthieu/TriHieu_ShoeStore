@@ -48,6 +48,7 @@ public class VoucherController {
         VoucherDTO addedVoucher = voucherService.addVoucher(voucherDTO);
 
         if (addedVoucher != null) {
+            System.out.println("add dc");
             return ResponseEntity.status(HttpStatus.CREATED).body(addedVoucher);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

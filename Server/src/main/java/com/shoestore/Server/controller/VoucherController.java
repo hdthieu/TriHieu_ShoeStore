@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,37 +30,37 @@ public class VoucherController {
     @Autowired
     private VoucherService voucherService;
 
-    @GetMapping("/search")
-    public ResponseEntity<Map<String, Object>> searchVouchers(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate
-    ) {
-        LocalDate start = null;
-        LocalDate end = null;
-        try {
-            if (startDate != null && !startDate.isEmpty()) {
-                start = LocalDate.parse(startDate);  // Chuyển đổi startDate
-            }
-            if (endDate != null && !endDate.isEmpty()) {
-                end = LocalDate.parse(endDate);  // Chuyển đổi endDate
-            }
-        } catch (Exception e) {
-            System.out.println("Lỗi khi chuyển đổi ngày: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Ngày không hợp lệ"));
-        }
-        List<Voucher> vouchers = voucherService.findVoucherByCodeOrDate(start, end);
-
-        if (vouchers.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(Map.of("message", "Không có voucher nào trong khoảng thời gian này"));
-        }
-
-        // Chuẩn bị response trả về cho client
-        Map<String, Object> response = new HashMap<>();
-        response.put("vouchers", vouchers);
-
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<Map<String, Object>> searchVouchers(
+//            @RequestParam(required = false) String startDate,
+//            @RequestParam(required = false) String endDate
+//    ) {
+//        LocalDate start = null;
+//        LocalDate end = null;
+//        try {
+//            if (startDate != null && !startDate.isEmpty()) {
+//                start = LocalDate.parse(startDate);
+//            }
+//            if (endDate != null && !endDate.isEmpty()) {
+//                end = LocalDate.parse(endDate);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Lỗi khi chuyển đổi ngày: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Ngày không hợp lệ"));
+//        }
+//        List<Voucher> vouchers = voucherService.findVoucherByCodeOrDate(start, end);
+//
+//        if (vouchers.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.OK)
+//                    .body(Map.of("message", "Không có voucher nào trong khoảng thời gian này"));
+//        }
+//
+//        // Chuẩn bị response trả về cho client
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("vouchers", vouchers);
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     @PostMapping("/add")
     public ResponseEntity<Voucher> addVoucher(@RequestBody Voucher voucherDTO) {
@@ -74,7 +75,7 @@ public class VoucherController {
         if (voucher.isPresent()) {
             return ResponseEntity.ok(voucher.get());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Trả về lỗi 404 nếu không tìm thấy voucher
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
@@ -82,9 +83,9 @@ public class VoucherController {
     public ResponseEntity<Voucher> updateVoucher(@PathVariable int id, @RequestBody Voucher voucher) {
         Voucher updatedVoucher = voucherService.updateVoucher(id, voucher);
         if (updatedVoucher != null) {
-            return ResponseEntity.ok(updatedVoucher);  // Trả về voucher đã được cập nhật
+            return ResponseEntity.ok(updatedVoucher);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Nếu không tìm thấy voucher
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
@@ -121,6 +122,15 @@ public class VoucherController {
         return ResponseEntity.ok(response);
     }
 
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Voucher>> searchVouchers(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+
+        List<Voucher> vouchers = voucherService.searchVouchers(startDate, endDate);
+        return new ResponseEntity<>(vouchers, HttpStatus.OK);
+    }
 
 
 

@@ -105,9 +105,12 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public void deleteVoucher(int voucherID) {
-        voucherRepository.deleteById(voucherID);  // Xóa khuyến mãi theo voucherID
+        voucherRepository.deleteById(voucherID);
     }
 
+    public List<Voucher> searchVouchers(LocalDate startDate, LocalDate endDate) {
+        return voucherRepository.findVouchersByDateRange(startDate, endDate);
+    }
 
 
 

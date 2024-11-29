@@ -14,4 +14,6 @@ public interface VoucherService{
     public void deleteVoucher(int voucherID);
     public Voucher updateVoucher(int id, Voucher voucher);
     public List<Voucher> findVoucherByCodeOrDate(LocalDate startDate, LocalDate endDate);
+
+    public List<Voucher> searchVouchers(LocalDate startDate, LocalDate endDate);
 }
