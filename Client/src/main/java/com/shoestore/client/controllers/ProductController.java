@@ -28,7 +28,7 @@ public class ProductController {
     @Autowired
     private BrandService brandService;
 
-    @GetMapping("/product")
+    @GetMapping("/admin/product")
     public String listProductsAdmin(Model model){
         List<ProductDTO> products= productService.getAllProduct();
         model.addAttribute("products",products);
