@@ -361,13 +361,13 @@ public class ProductController {
 
 
 
-    @GetMapping("/{id}") // Ánh xạ HTTP GET
-    public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
-        List<Product> products=productService.getById(id);
-        Map<String,Object> response= new HashMap<>();
-        response.put("product",products);
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/{id}") // Ánh xạ HTTP GET
+//    public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
+//        List<Product> products=productService.getById(id);
+//        Map<String,Object> response= new HashMap<>();
+//        response.put("product",products);
+//        return ResponseEntity.ok(response);
+//    }
 
 
 
