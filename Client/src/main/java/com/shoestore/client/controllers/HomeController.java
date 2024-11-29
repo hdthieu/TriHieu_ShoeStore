@@ -18,14 +18,16 @@ public class HomeController {
   @GetMapping("/customer/home")
   public String home(Model model) {
     // Fetch Top 10 Best Sellers, New Arrivals, and Trending Products
-//    List<ProductHomeDTO> top10BestSellers = productService.getTop10BestSellers();
-//    List<ProductHomeDTO> top10NewArrivals = productService.getTop10NewArrivals();
-//    List<ProductHomeDTO> top10Trending = productService.getTop10Trending();
-//    System.out.println(top10BestSellers);
-//    // Add the data to the model to pass to the Thymeleaf template
-//    model.addAttribute("top10BestSellers", top10BestSellers);
-//    model.addAttribute("top10NewArrivals", top10NewArrivals);
-//    model.addAttribute("top10Trending", top10Trending);
+    List<ProductHomeDTO> top10BestSellers = productService.getTop10BestSellers();
+    List<ProductHomeDTO> top10NewArrivals = productService.getTop10NewArrivals();
+    List<ProductHomeDTO> top10Trending = productService.getTop10Trending();
+    System.out.println(top10BestSellers);
+    System.out.println(top10NewArrivals);
+    System.out.println(top10Trending);
+    // Add the data to the model to pass to the Thymeleaf template
+    model.addAttribute("top10BestSellers", top10BestSellers);
+    model.addAttribute("top10NewArrivals", top10NewArrivals);
+    model.addAttribute("top10Trending", top10Trending);
 
     return "page/Customer/Home"; // Return the home page view
   }

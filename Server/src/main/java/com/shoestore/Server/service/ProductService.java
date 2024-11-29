@@ -18,12 +18,11 @@ public interface ProductService {
 //    // nay cua hieu
 //    public List<Product> getProductsNotInOrderDetail(int orderID);
 //
-//    //  Home
-//    List<ProductDTO> getTop10BestSellers();
-//
-//    List<ProductDTO> getTop10NewArrivals();
-//
-//    List<ProductDTO> getTop10Trending();
 
+    List<String> getImageUrlsByProductID(int id);
+    //  Home
+    List<ProductDTO> getTop10BestSellers();
+    List<ProductDTO> getTop10NewArrivals();
+    List<ProductDTO> getTop10Trending();
     List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice,String sortBy);
 }
