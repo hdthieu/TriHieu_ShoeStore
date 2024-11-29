@@ -38,6 +38,7 @@ public class CustomUserDetailService implements UserDetailsService {
 		);
 	}
 
+
 	public boolean checkPassword(String inputPassword, String storedPassword) {
 		return passwordEncoder.matches(inputPassword, storedPassword);
 	}
