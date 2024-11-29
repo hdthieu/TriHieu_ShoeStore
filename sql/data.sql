@@ -69,6 +69,7 @@ VALUES
 ('Adidas', 'adidas.png'),
 ('Puma', 'puma.png'),
 ('Reebok', 'reebok.png'),
+('Converse', 'converse.png'),
 ('Under Armour', 'under_armour.png');
 
 -- Thêm dữ liệu cho bảng Category

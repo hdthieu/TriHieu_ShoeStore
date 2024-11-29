@@ -17,4 +17,7 @@ public class BrandResponseDTO {
     private int totalPages;
     @JsonProperty("brands")
     private List<BrandDTO> brandDTOs;
+
+    @JsonProperty("brandss")
+    private List<BrandDTO> brandDTOss;
 }
