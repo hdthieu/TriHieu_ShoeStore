@@ -1,12 +1,7 @@
 package com.shoestore.client.service;
 
-import com.shoestore.client.dto.request.CartItemDTO;
-import org.springframework.stereotype.Service;
+import com.shoestore.client.dto.request.CartDTO;
 
-import java.util.List;
-
-@Service
 public interface CartService {
-  List<CartItemDTO> getCartItemsByCartId(int cartId);
-  CartItemDTO addCartItem(CartItemDTO cartItemDTO);
+    CartDTO getCartById(int id);
 }

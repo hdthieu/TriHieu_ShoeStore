@@ -17,6 +17,7 @@ public class Brand {
     @Column(name = "brandID")
     private int brandID;
     private String name;
+    private String image;
     @OneToMany(mappedBy = "brand")
     @JsonBackReference("brandReference")
     private List<Product> products;

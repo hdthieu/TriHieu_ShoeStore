@@ -21,9 +21,12 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ProductDetailDTO {
     private int productDetailID;
-    private String color;
-    private String size;
+    private ColorDTO color;
+    private SizeDTO size;
     private int stockQuantity;
 //    private ProductDTO product;
 
+    public ProductDetailDTO(int productDetailID) {
+        this.productDetailID = productDetailID;
+    }
 }

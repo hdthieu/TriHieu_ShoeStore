@@ -3,12 +3,10 @@ package com.shoestore.client.service.impl;
 
 import com.shoestore.client.dto.request.ProductDTO;
 import com.shoestore.client.dto.request.ProductHomeDTO;
-import com.shoestore.client.dto.response.ProductFindDTO;
 import com.shoestore.client.dto.response.ProductHomeResponseDTO;
 import com.shoestore.client.dto.response.ProductResponseDTO;
 import com.shoestore.client.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -53,19 +51,15 @@ public class ProductServiceImpl implements ProductService {
         System.out.println("Response Body: " + response.getBody());
         return response.getBody();
     }
-
-    public ProductDTO getProductById(int id) {
-        String apiUrl = "http://localhost:8080/products/{id}";
-        ResponseEntity<ProductFindDTO> response = restTemplate.exchange(
-                apiUrl, HttpMethod.GET, null, ProductFindDTO.class, id
+    @Override
+    public ProductDTO getProductByProductDetail(int id) {
+        String apiUrl="http://localhost:8080/products/detailsId/"+id;
+        ResponseEntity<ProductDTO> response= restTemplate.exchange(
+                apiUrl, HttpMethod.GET,null, ProductDTO.class
         );
-        System.out.println("Response Body: " + response.getBody());
-
-        if (response.getBody() != null && response.getBody().getProductDTOs() != null && !response.getBody().getProductDTOs().isEmpty()) {
-            return response.getBody().getProductDTOs().get(0);
-        }
-        return null;
+        return response.getBody();
     }
+
 
     @Override
     public List<ProductDTO> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> color, List<String> size, Double minPrice, Double maxPrice, String sortBy) {
@@ -138,8 +132,7 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        System.out.println("Response Body: " + response.getBody());
-        return response.getBody().getProductDTOs();
+        return response.getBody().getBestSellers();
     }
 
     // Lấy Top 10 sản phẩm mới ra mắt
@@ -149,7 +142,7 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getProductDTOs();
+        return response.getBody().getNewArrivals();
     }
 
     // Lấy Top 10 sản phẩm thịnh hành
@@ -159,7 +152,7 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getProductDTOs();
+        return response.getBody().getTrendingProducts();
     }
 
     @Override

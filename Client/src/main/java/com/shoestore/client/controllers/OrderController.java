@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/admin/orders")
 public class OrderController {
 
     @Autowired
@@ -69,7 +69,7 @@ public class OrderController {
     @ResponseBody
     public Map<String, Object> getRevenueStatistics(@RequestParam String startDate, @RequestParam String endDate) {
         Map<String, Object> revenueStats = orderService.getRevenueStatistics(startDate, endDate);
-        return revenueStats;  // Trả về dữ liệu JSON
+        return revenueStats;
     }
 
     // hiển thị danh sách đơn hàng
@@ -77,15 +77,10 @@ public class OrderController {
     public String showOrderList(Model model,
                                 @RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "5") int size) {
-
         Pageable pageable = PageRequest.of(page, size);
         Page<OrderDTO> ordersPage = orderService.getOrdersWithPagination(pageable);
-
         model.addAttribute("ordersPage", ordersPage);
         return "page/Admin/QuanLyDonHang";
     }
-
-
-
 
 }

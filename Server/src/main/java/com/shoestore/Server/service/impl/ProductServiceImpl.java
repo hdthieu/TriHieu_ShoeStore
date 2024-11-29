@@ -35,6 +35,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product findByProductDetailsId(int id) {
+        return productRepository.findProductByProductDetailId(id);
+    }
+
+    @Override
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -51,11 +56,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).orElse(null);
 
     }
+
+    @Override
     public List<Product> getById(int id) {
-        return productRepository.findByProductID(id);
-
+        return null;
     }
-
 
 
     @Override
@@ -136,29 +141,43 @@ public class ProductServiceImpl implements ProductService {
 
 
     // nay cua hieu
-//    public List<Product> getProductsNotInOrderDetail(int orderID) {
-//        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
-//        if (productIDsInOrderDetail.isEmpty()) {
-//            return productRepository.findAll();
-//        } else {
-//            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
-//        }
-//    }
-//
-//    @Override
-//    public List<ProductDTO> getTop10BestSellers() {
-//        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
-//    }
-//
-//    @Override
-//    public List<ProductDTO> getTop10NewArrivals() {
-//        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
-//    }
-//
-//    @Override
-//    public List<ProductDTO> getTop10Trending() {
-//        return productRepository.findTop10Trending(PageRequest.of(0, 10));
-//    }
+    public List<Product> getProductsNotInOrderDetail(int orderID) {
+        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
+        if (productIDsInOrderDetail.isEmpty()) {
+            return productRepository.findAll();
+        } else {
+
+            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
+        }
+    }
+
+    private List<ProductDTO> setImageURLs(List<ProductDTO> productDTOList) {
+        productDTOList.forEach(productDTO -> {
+            List<String> imageUrls = getImageUrlsByProductID(productDTO.getProductID());
+            productDTO.setImageURL(imageUrls);
+        });
+        return productDTOList;
+    }
+
+    @Override
+    public List<String> getImageUrlsByProductID(int id) {
+        return productRepository.findImageUrlsByProductID(id);
+    }
+
+    @Override
+    public List<ProductDTO> getTop10BestSellers() {
+        return setImageURLs(productRepository.findTop10BestSellers(PageRequest.of(0, 10)));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10NewArrivals() {
+        return setImageURLs(productRepository.findTop10NewArrivals(PageRequest.of(0, 10)));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10Trending() {
+        return setImageURLs(productRepository.findTop10Trending(PageRequest.of(0, 10)));
+    }
 
 
 

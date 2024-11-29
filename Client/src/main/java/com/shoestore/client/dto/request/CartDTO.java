@@ -1,5 +1,6 @@
 package com.shoestore.client.dto.request;
 
+import com.shoestore.client.dto.response.CartItemResponseDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class CartDTO {
   private int cartID;
-  private LocalDateTime createAt;
-  private List<CartItemDTO> cartItems;
+//  private LocalDateTime createAt;
+//  private List<CartItemResponseDTO> cartItems;
 //  private UserDTO user;
+
+  public CartDTO(int cartID) {
+    this.cartID = cartID;
+  }
 }

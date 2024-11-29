@@ -12,10 +12,9 @@ import java.util.List;
 @Service
 public interface ProductService {
     List<ProductDTO> getAllProduct();
-
+    ProductDTO getProductByProductDetail(int id);
     public ProductDTO addProduct(ProductDTO productDTO);
     public ProductDTO getProductByIdForDetail(int id);
-    public ProductDTO getProductById(int id);
     //  Home
     public List<ProductHomeDTO> getTop10BestSellers();
 

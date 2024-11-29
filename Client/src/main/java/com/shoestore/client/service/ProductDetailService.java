@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface ProductDetailService {
     List<ProductDetailDTO> getProductDetailByProduct(int id);
+    ProductDetailDTO getProductDetailById(int id);
 }

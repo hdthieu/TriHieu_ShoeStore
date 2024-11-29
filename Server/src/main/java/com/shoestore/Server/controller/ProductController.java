@@ -228,7 +228,16 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+    @GetMapping("/detailsId/{id}") // Ánh xạ HTTP GET
+    public ResponseEntity<Product>  getProductsByProductDetails(@PathVariable int id){
+        Product product=productService.findByProductDetailsId(id);
+        System.out.println("Id:"+id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateProduct(
             @PathVariable int id,
@@ -318,6 +327,7 @@ public class ProductController {
         }
     }
 
+
     @GetMapping("/findproducts")
     public ResponseEntity<Map<String, Object>> findProducts(
             @RequestParam(required = false) String keyword, // Cho phép null
@@ -360,33 +370,35 @@ public class ProductController {
     }
 
 
+
     // API lấy danh sách Best Sellers
-//    @GetMapping("/best-sellers")
-//    public ResponseEntity<Map<String, Object>> getBestSellers() {
-//        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
-//        System.out.println(bestSellers);
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("bestSellers", bestSellers);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    // API lấy danh sách New Arrivals
-//    @GetMapping("/new-arrivals")
-//    public ResponseEntity<Map<String, Object>> getNewArrivals() {
-//        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
-//        Map<String, Object> response = new HashMap<>();
-//        System.out.println(newArrivals);
-//        response.put("newArrivals", newArrivals);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    // API lấy danh sách Trending
-//    @GetMapping("/trending")
-//    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
-//        List<ProductDTO> trendingProducts = productService.getTop10Trending();
-//        System.out.println(trendingProducts);
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("trendingProducts", trendingProducts);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/best-sellers")
+    public ResponseEntity<Map<String, Object>> getBestSellers() {
+        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
+        System.out.println(bestSellers);
+        Map<String, Object> response = new HashMap<>();
+        response.put("bestSellers", bestSellers);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách New Arrivals
+    @GetMapping("/new-arrivals")
+    public ResponseEntity<Map<String, Object>> getNewArrivals() {
+        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
+        Map<String, Object> response = new HashMap<>();
+        System.out.println(newArrivals);
+        response.put("newArrivals", newArrivals);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách Trending
+    @GetMapping("/trending")
+    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
+        List<ProductDTO> trendingProducts = productService.getTop10Trending();
+        System.out.println(trendingProducts);
+        Map<String, Object> response = new HashMap<>();
+        response.put("trendingProducts", trendingProducts);
+        return ResponseEntity.ok(response);
+    }
+
 }
