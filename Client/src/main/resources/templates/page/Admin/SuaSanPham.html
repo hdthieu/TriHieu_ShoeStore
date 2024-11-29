@@ -121,7 +121,9 @@
 <div id="editProduct" class="container mt-5">
     <h1 class="text-center mb-4">Chỉnh sửa sản phẩm</h1>
     <div class="card form-container">
-        <div class="card-header">Thông tin sản phẩm</div>
+        <div class="card-header">Thông tin sản phẩm
+            <div id="error-message" style="color: red; display: none;"></div>
+        </div>
         <div class="card-body">
             <form id="editProductForm" enctype="multipart/form-data">
                 <!-- Trường ẩn chứa ID sản phẩm -->
@@ -130,7 +132,7 @@
                 <div class="form-group row">
                     <div class="col-md-4">
                         <label for="editProductName">Tên sản phẩm</label>
-                        <input type="text" class="form-control form-control-sm" id="editProductName" name="productName" th:value="${product.productName}" required />
+                        <input type="text" class="form-control form-control-sm" id="editProductName" name="productName" th:value="${product.productName}" />
                     </div>
                     <div class="col-md-4">
                         <label for="editProductPrice">Giá sản phẩm</label>
@@ -176,7 +178,7 @@
 
                 <div class="form-group">
                     <label for="editProductDescription">Mô tả sản phẩm</label>
-                    <textarea class="form-control form-control-sm" id="editProductDescription" name="description" rows="2" th:text="${product.description}" required></textarea>
+                    <textarea class="form-control form-control-sm" id="editProductDescription" name="description" rows="2" th:text="${product.description}"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -255,23 +257,41 @@
             method: 'PUT',
             body: formData  // Gửi FormData thay vì JSON
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errorText => {
+                        try {
+                            const errorData = JSON.parse(errorText);  // Cố gắng parse lại nếu có thể
+                            throw new Error(errorData.message || errorData.join(", "));   // Thông báo lỗi từ server
+                        } catch (e) {
+                            throw new Error("Lỗi: " + errorText);  // Nếu không parse được, hiển thị lỗi dưới dạng văn bản
+                        }
+                    });
+                }
+                return response.json();  // Nếu thành công, trả về dữ liệu
+            })
             .then(data => {
                 if (data) {
                     alert('Cập nhật sản phẩm thành công!');
-                    window.location.href = 'http://localhost:3000/product';  // Quay lại danh sách sản phẩm
+                    window.location.href = 'http://localhost:3000/admin/products';  // Quay lại danh sách sản phẩm
                 } else {
                     alert('Cập nhật sản phẩm thất bại!');
                 }
             })
             .catch(error => {
-                console.error('Lỗi khi gửi PUT request:', error);
-                alert('Lỗi khi cập nhật sản phẩm');
+                // Hiển thị lỗi từ phía server
+                console.error('Lỗi khi gửi PUT request:', error.message);
+
+                // Hiển thị lỗi lên giao diện
+                const errorMessageElement = document.getElementById('error-message');
+                errorMessageElement.textContent = error.message;  // Cập nhật thông báo lỗi
+                errorMessageElement.style.display = 'block';  // Hiển thị phần tử lỗi
             });
+
     });
 
 
-    document.getElementById("goBack").addEventListener("click", function () {
+        document.getElementById("goBack").addEventListener("click", function () {
         window.history.back();
     });
 

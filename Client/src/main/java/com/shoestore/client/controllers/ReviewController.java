@@ -27,51 +27,35 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @GetMapping("/product/reviewqqqq")
-    public String listReviewForAdmin(Model model,
-                                     @RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "8") int size, HttpServletRequest request) {
-        // Gọi service để lấy dữ liệu phân trang
-        ReviewResponseDTO reviews = reviewService.getAllReview(page, size);
-        model.addAttribute("reviews", reviews.getReviewDTOs());
-
-        // Thêm các thông tin phân trang vào model
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", reviews.getTotalPages());
-        model.addAttribute("totalItems", reviews.getTotalItems());
-        model.addAttribute("requestURI", request.getRequestURI());
-
-        System.out.println(reviews);
-        return "page/Admin/QuanLyBaiDanhGia";
-    }
 
 
-    @GetMapping("/product/review/{rating}")
-    public String listReviewByRating(Model model,
-                                     @PathVariable int rating,
-                                     @RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "8") int size, HttpServletRequest request) {
 
-        // Gọi service để lấy dữ liệu phân trang theo rating
-        ReviewResponseDTO reviews = reviewService.getReviewByRating(rating, page, size);
+//    @GetMapping("/product/review/{rating}")
+//    public String listReviewByRating(Model model,
+//                                     @PathVariable int rating,
+//                                     @RequestParam(defaultValue = "0") int page,
+//                                     @RequestParam(defaultValue = "8") int size, HttpServletRequest request) {
+//
+//        // Gọi service để lấy dữ liệu phân trang theo rating
+//        ReviewResponseDTO reviews = reviewService.getReviewByRating(rating, page, size);
+//
+//        // Thêm danh sách đánh giá vào model
+//        model.addAttribute("reviews", reviews.getReviewDTOs());
+//
+//        // Thêm các thông tin phân trang vào model
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", reviews.getTotalPages());
+//        model.addAttribute("totalItems", reviews.getTotalItems());
+//        model.addAttribute("requestURI", request.getRequestURI());
+//
+//        // Kiểm tra kết quả trong console
+//        System.out.println("Total Reviews: " + reviews.getTotalItems());
+//        System.out.println("Total Pages: " + reviews.getTotalPages());
+//
+//        return "page/Admin/QuanLyBaiDanhGia";
+//    }
 
-        // Thêm danh sách đánh giá vào model
-        model.addAttribute("reviews", reviews.getReviewDTOs());
-
-        // Thêm các thông tin phân trang vào model
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", reviews.getTotalPages());
-        model.addAttribute("totalItems", reviews.getTotalItems());
-        model.addAttribute("requestURI", request.getRequestURI());
-
-        // Kiểm tra kết quả trong console
-        System.out.println("Total Reviews: " + reviews.getTotalItems());
-        System.out.println("Total Pages: " + reviews.getTotalPages());
-
-        return "page/Admin/QuanLyBaiDanhGia";
-    }
-
-    @GetMapping("/reviews/findreviews")
+    @GetMapping("/admin/reviews")
     public String findReviews(Model model,
                               @RequestParam(required = false) Integer rating, // Rating có thể null
                               @RequestParam(defaultValue = "0") int page,

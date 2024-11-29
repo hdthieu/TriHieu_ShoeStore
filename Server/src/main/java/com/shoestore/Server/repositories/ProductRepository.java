@@ -5,6 +5,7 @@ import com.shoestore.Server.entities.Color;
 import com.shoestore.Server.entities.Product;
 import com.shoestore.Server.entities.ProductDetail;
 import com.shoestore.Server.entities.Size;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -33,6 +34,24 @@ public interface ProductRepository extends JpaRepository<Product, Integer> , Jpa
             @Param("minPrice") Double minPrice,
             @Param("maxPrice") Double maxPrice
     );
+
+
+
+    @Query("SELECT p FROM Product p " +
+            "LEFT JOIN p.brand b " +
+            "LEFT JOIN p.supplier s " +
+            "LEFT JOIN p.category c " +
+            "WHERE (:keyword IS NULL OR " +
+            "LOWER(p.productName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(b.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(s.supplierName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))) ")
+    Page<Product> findProducts(
+            @Param("keyword") String keyword,
+            Pageable pageable);
+
+
 
     // này của hieu
 //    @Query("SELECT p FROM Product p WHERE p.productID NOT IN :productIDs")
