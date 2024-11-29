@@ -11,6 +11,7 @@ import com.shoestore.Server.service.CartItemService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
@@ -47,9 +48,22 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public Cart getCartById(int id) {
-        return cartRepository.findById(id).orElse(null);
+    public CartItem getCartItemById(CartItemKey cartItemKey) {
+        return cartItemRepository.findById(cartItemKey).orElse(null);
     }
+
+    @Override
+    public CartItem updateQuantity(CartItemKey id, CartItem cartItem) {
+        Optional<CartItem> existCartItem= cartItemRepository.findById(id);
+        if(existCartItem.isPresent()){
+            CartItem cartItemUpdate=new CartItem();
+            cartItemUpdate.setQuantity(cartItem.getQuantity());
+
+            return cartItemRepository.save(cartItemUpdate);
+        }
+        return null;
+    }
+
 
 
 }

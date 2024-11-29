@@ -2,7 +2,9 @@ package com.shoestore.Server.controller;
 
 import com.shoestore.Server.entities.*;
 import com.shoestore.Server.service.CartItemService;
+import com.shoestore.Server.service.CartService;
 import com.shoestore.Server.service.ProductDetailService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +15,41 @@ import java.util.List;
 public class CartController {
 
   private final CartItemService cartItemService;
+  private final CartService cartService;
 private final ProductDetailService productDetailService;
 
-  public CartController(CartItemService cartService, CartItemService cartItemService, ProductDetailService productDetailService) {
+  public CartController(CartItemService cartService, CartItemService cartItemService, CartService cartService1, ProductDetailService productDetailService) {
       this.cartItemService = cartItemService;
+      this.cartService = cartService1;
       this.productDetailService = productDetailService;
+  }
+  @PutMapping("/update-quantity/{cartId}/{productDetailId}")
+  public ResponseEntity<CartItem> updateCartItem(@PathVariable("cartId") int cartId,
+                                                 @PathVariable("productDetailId") int productDetailId,
+                                                 @RequestBody CartItem cartItem) {
+    CartItemKey cartItemKey = new CartItemKey(cartId, productDetailId);
+    CartItem cartItemUpdate= cartItemService.updateQuantity(cartItemKey,cartItem);
+    if (cartItemUpdate != null) {
+      return ResponseEntity.ok(cartItemUpdate);  // Trả về voucher đã được cập nhật
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Nếu không tìm thấy voucher
+    }
+  }
+  @GetMapping("/{cartId}/{productDetailId}")
+  public ResponseEntity<CartItem> getCartItemById(@PathVariable("cartId") int cartId,
+                                                  @PathVariable("productDetailId") int productDetailId) {
+    CartItemKey cartItemKey = new CartItemKey(cartId, productDetailId);
+    CartItem cartItem = cartItemService.getCartItemById(cartItemKey);
+
+    if (cartItem != null) {
+      return ResponseEntity.ok(cartItem);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
   }
   @GetMapping("/{id}")
   public ResponseEntity<Cart> getCartByCartId(@PathVariable int id) {
-    Cart cart= cartItemService.getCartById(id);
+    Cart cart= cartService.getCartById(id);
     return ResponseEntity.ok(cart);
   }
   @GetMapping("/cart-item/{id}")
