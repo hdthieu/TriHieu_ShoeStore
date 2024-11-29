@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping("/admin/orders")
 public class OrderController {
 
     @Autowired

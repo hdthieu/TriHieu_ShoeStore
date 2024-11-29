@@ -39,7 +39,7 @@ public class LoginController {
         session.setAttribute("user", user);
         String roleName = user.getRole().getName();
         if ("Admin".equals(roleName)) {
-          return "redirect:/orders/Home";  // Admin
+          return "redirect:/admin/orders/Home";  // Admin
         } else if ("Customer".equals(roleName)) {
           return "redirect:/customer/home";  // Customer
         }
