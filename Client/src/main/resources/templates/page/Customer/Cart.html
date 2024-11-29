@@ -123,7 +123,7 @@
         expressDeliveryButton.addEventListener("click", function () {
             fastDeliveryButton.classList.remove("cart-summary__delivery-btn--active");
             expressDeliveryButton.classList.add("cart-summary__delivery-btn--active");
-            document.getElementById("delivery-fee").textContent = "30.00 VNĐ";
+            document.getElementById("delivery-fee").textContent = "30000 VNĐ";
             updateTotal();
         });
 
@@ -214,7 +214,6 @@
             const delivery = document.getElementById("delivery-fee").textContent
             const subToTal = document.getElementById("subtotal").textContent
             const total = document.getElementById("total").textContent
-            console.log()
             return {
                 id: checkbox.value,
                 quantity: parseInt(quantity),

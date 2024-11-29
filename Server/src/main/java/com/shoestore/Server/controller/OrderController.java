@@ -4,6 +4,7 @@ package com.shoestore.Server.controller;
 import com.shoestore.Server.entities.Order;
 import com.shoestore.Server.entities.User;
 import com.shoestore.Server.service.OrderService;
+import com.shoestore.Server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,24 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/add")
+    public ResponseEntity<Order> createBasicOrder(@RequestBody Order order) {
+        User user = userService.findById(order.getUser().getUserID());
+        order.setUser(user);
+        Order newOrder = orderService.addOrder(order);
+        return ResponseEntity.ok(newOrder);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getAll(@PathVariable("id") int id) {
+        // Lấy danh sách đơn hàng với chi tiết sản phẩm đã được tải
+       Order order=orderService.findById(id);
+        return ResponseEntity.ok(order);
+    }
+
     @PostMapping("/update-status")
     public ResponseEntity<?> updateOrderStatus(@RequestBody Map<String, Object> payload) {
 //        System.out.println("Payload received: " + payload);
@@ -122,8 +141,6 @@ public class OrderController {
     public Map<String, Long> getOrderStatistics() {
         return orderService.getOrderStatistics();
     }
-
-
 
 
 }

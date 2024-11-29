@@ -15,9 +15,9 @@ public class CartServiceImpl implements CartService {
     private RestTemplate restTemplate;
 
     @Override
-    public CartDTO getCartById(int id) {
+    public CartDTO getCartByUserId(int id) {
 
-        String apiUrl = "http://localhost:8080/cart/" + id;
+        String apiUrl = "http://localhost:8080/cart/userid/" + id;
         ResponseEntity<CartDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, CartDTO.class
         );

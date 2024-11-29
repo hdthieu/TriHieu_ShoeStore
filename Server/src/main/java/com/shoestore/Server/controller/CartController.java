@@ -47,9 +47,9 @@ private final ProductDetailService productDetailService;
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
   }
-  @GetMapping("/{id}")
+  @GetMapping("userid/{id}")
   public ResponseEntity<Cart> getCartByCartId(@PathVariable int id) {
-    Cart cart= cartService.getCartById(id);
+    Cart cart= cartService.getCartByUserId(id);
     return ResponseEntity.ok(cart);
   }
   @GetMapping("/cart-item/{id}")

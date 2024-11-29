@@ -15,6 +15,6 @@ public interface OrderService {
     public List<Object[]> getTop10LoyalCustomers(int minOrders);
     public Map<String, Long> getOrderStatistics();
     public void updateOrderStatus(int orderId, String status) ;
-    public Order findById(int orderID);
-
+    Order findById(int orderID);
+    Order addOrder(Order order);
 }

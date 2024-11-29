@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,4 +26,15 @@ public class OrderDetail {
 
     private int quantity;
     private double price;
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id=" + id +
+                ", order=" + order +
+                ", productDetail=" + productDetail +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }

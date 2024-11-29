@@ -32,12 +32,34 @@ public class User {
     @JoinColumn(name = "roleID")
     private Role role;
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private Cart cart;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
+    @JsonIgnore
     private List<Order> orders;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviews;
+
+    public User(int userID) {
+        this.userID = userID;
+    }
+
+    public User() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", userName='" + userName + '\'' +
+                ", status='" + status + '\'' +
+                ", CI='" + CI + '\'' +
+                '}';
+    }
 }
