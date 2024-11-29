@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin/vouchers")
+@RequestMapping("/vouchers")
 public class VoucherController {
 
     @Autowired

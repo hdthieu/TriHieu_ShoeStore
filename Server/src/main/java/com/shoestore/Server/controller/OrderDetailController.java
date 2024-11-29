@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin/OrderDetail")
+@RequestMapping("/OrderDetail")
 public class OrderDetailController {
 
     @Autowired

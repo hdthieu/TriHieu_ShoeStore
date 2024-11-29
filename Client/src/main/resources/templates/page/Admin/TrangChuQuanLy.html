@@ -132,7 +132,7 @@
         <h4 class="text-light text-center mt-4">AdminAD</h4>
         <ul class="nav flex-column mt-3">
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/orders/Home" onclick="setActive(this)">Home</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
           </li>
           <li class="nav-item mt-3">
             <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
@@ -147,7 +147,7 @@
             <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/orders/view" onclick="setActive(this)">Đơn hàng</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
           </li>
           <li class="nav-item mt-3">
             <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
@@ -156,7 +156,7 @@
             <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
           </li>
         </ul>
         <div class="styleUser text-center " >
@@ -395,7 +395,7 @@
   function loadTopSellingProducts() {
     const timeType = document.getElementById('timeType').value;
     $.ajax({
-      url: '/orders/top-selling',
+      url: '/admin/orders/top-selling',
       method: 'GET',
       data: {
         type: timeType,

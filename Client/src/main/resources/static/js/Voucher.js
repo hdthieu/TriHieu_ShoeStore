@@ -452,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const voucherId = row.querySelector("td:first-child").textContent;
 
             // Gọi API để lấy thông tin voucher
-            fetch(`/vouchers/${voucherId}`)
+            fetch(`/admin/vouchers/${voucherId}`)
                 .then((response) => {
                     if (response.ok) {
                         return response.json();
@@ -542,7 +542,7 @@ document.getElementById("voucher-form-edit").addEventListener("submit", function
         startDate: startDate,
         endDate: endDate,
     };
-    fetch(`/vouchers/${voucherId}`, {
+    fetch(`/admin/vouchers/${voucherId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

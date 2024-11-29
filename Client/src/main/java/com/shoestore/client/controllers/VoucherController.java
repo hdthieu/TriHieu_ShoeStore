@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/vouchers")
+@RequestMapping("/admin/vouchers")
 public class VoucherController {
 
     @Autowired
