@@ -1,10 +1,10 @@
 package com.shoestore.Server.service.impl;
 
-import com.shoestore.Server.entities.Address;
-import com.shoestore.Server.entities.OrderDetail;
-import com.shoestore.Server.entities.Product;
-import com.shoestore.Server.entities.Voucher;
+import com.shoestore.Server.dto.OrderDetailDTO;
+import com.shoestore.Server.entities.*;
 import com.shoestore.Server.repositories.OrderDetailRepository;
+import com.shoestore.Server.repositories.OrderRepository;
+import com.shoestore.Server.repositories.ProductDetailRepository;
 import com.shoestore.Server.repositories.ProductRepository;
 import com.shoestore.Server.service.OrderDetailService;
 import jakarta.persistence.EntityManager;
@@ -24,27 +24,33 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final ProductDetailRepository productDetailRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
-    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository, ProductRepository productRepository) {
+    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository, ProductRepository productRepository, OrderRepository orderRepository, ProductDetailRepository productDetailRepository) {
         this.orderDetailRepository = orderDetailRepository;
         this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
+        this.productDetailRepository = productDetailRepository;
     }
+
 
     public Map<String, Object> fetchOrderDetailByOrderID(Long orderID) {
         // Lệnh Native SQL để lấy thông tin đơn hàng và chi tiết sản phẩm
         String sql = """
-        SELECT o.status, o.feeShip, o.shippingAddress, v.discountValue AS voucherDiscount, v.discountType AS voucherType,
-               od.quantity, od.price, p.productName, u.name AS userName, u.phoneNumber, a.street AS userAddress, o.orderDate, p.productID
-        FROM OrderDetail od
-        JOIN Product p ON od.productID = p.productID
-        JOIN Orders o ON od.orderID = o.orderID
-        LEFT JOIN Voucher v ON o.voucherID = v.voucherID
-        LEFT JOIN Users u ON o.userID = u.userID
-        LEFT JOIN Address a ON u.userID = a.userID
-        WHERE o.orderID = ?1
-    """;
+            SELECT o.status, o.feeShip, o.shippingAddress, v.discountValue AS voucherDiscount, v.discountType AS voucherType,
+                   od.quantity, od.price, p.productName, u.name AS userName, u.phoneNumber, a.street AS userAddress, o.orderDate, pd.productID, u.email
+            FROM OrderDetail od
+            JOIN ProductDetail pd ON od.productDetailID = pd.productDetailID
+            JOIN Product p ON pd.productID = p.productID
+            JOIN Orders o ON od.orderID = o.orderID
+            LEFT JOIN Voucher v ON o.voucherID = v.voucherID
+            LEFT JOIN Users u ON o.userID = u.userID
+            LEFT JOIN Address a ON u.userID = a.userID
+            WHERE o.orderID = ?1
+        """;
 
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter(1, orderID);  // Thay ?1 bằng tham số 'orderID'
@@ -86,8 +92,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             String phoneNumber = (String) result[9];
 
             String addressStr = (String) result[10];
-            java.sql.Date sqlDate = (java.sql.Date) result[11]; // Cast to java.sql.Date
+            java.sql.Date sqlDate = (java.sql.Date) result[11];
             int productID = (int) result[12];
+            String email = (String) result[13];
             LocalDate orderDate = sqlDate.toLocalDate();
 
             totalProductValue += quantity * price;
@@ -103,6 +110,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             response.put("phoneNumber", phoneNumber);
             response.put("address", addressStr);
             response.put("orderDate", orderDate);
+            response.put("email", email);
         }
 
         // Tính toán tổng tiền
@@ -164,6 +172,50 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 //    public void deleteByProductIDAndOrderID(int productID, int orderID) {
 //        orderDetailRepository.deleteByProductProductIDAndOrderOrderID(productID, orderID);
 //    }
+
+    public OrderDetail addProductToOrder(OrderDetailDTO orderDetailDTO) {
+        // Lấy Order hiện tại
+        Order order = orderRepository.findById(orderDetailDTO.getOrderID())
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        // Tìm hoặc tạo ProductDetail từ DTO
+        ProductDetail productDetail = productDetailRepository.findByProductIdAndColorAndSize(
+                        orderDetailDTO.getProductID(),
+                        orderDetailDTO.getColor(),
+                        orderDetailDTO.getSize())
+                .orElseGet(() -> {
+                    Product product = productRepository.findById(orderDetailDTO.getProductID())
+                            .orElseThrow(() -> new RuntimeException("Product not found"));
+                    ProductDetail newProductDetail = new ProductDetail();
+                    newProductDetail.setProduct(product);
+                    newProductDetail.setColor(orderDetailDTO.getColor());
+                    newProductDetail.setSize(orderDetailDTO.getSize());
+                    newProductDetail.setStockQuantity(10); // Hoặc lấy từ dữ liệu khác
+                    productDetailRepository.save(newProductDetail);
+                    return newProductDetail;
+                });
+
+        // Kiểm tra số lượng tồn kho
+        if (productDetail.getStockQuantity() < orderDetailDTO.getQuantity()) {
+            throw new RuntimeException("Not enough stock for this product");
+        }
+
+        // Tạo OrderDetail mới
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetail.setProductDetail(productDetail);
+        orderDetail.setQuantity(orderDetailDTO.getQuantity());
+        orderDetail.setPrice(orderDetailDTO.getPrice());
+
+        // Giảm số lượng tồn kho
+        productDetail.setStockQuantity(productDetail.getStockQuantity() - orderDetailDTO.getQuantity());
+        productDetailRepository.save(productDetail);
+
+        // Lưu OrderDetail
+        return orderDetailRepository.save(orderDetail);
+    }
+
+
 }
 
 

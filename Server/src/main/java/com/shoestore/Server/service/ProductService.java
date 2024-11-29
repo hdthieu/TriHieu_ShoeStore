@@ -12,6 +12,9 @@ public interface ProductService {
     public boolean deleteProduct(int id);
 
     public Product getProductById(int id);
+
+    // nay cua hieu
+    public List<Product> getProductsNotInOrderDetail(int orderID);
 //    // nay cua hieu
 //    public List<Product> getProductsNotInOrderDetail(int orderID);
 //

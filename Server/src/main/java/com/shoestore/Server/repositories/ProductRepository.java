@@ -22,8 +22,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> , Jpa
 
 
     // này của hieu
-//    @Query("SELECT p FROM Product p WHERE p.productID NOT IN :productIDs")
-//    List<Product> findByProductIDNotIn(@Param("productIDs") List<Integer> productIDs);
+    @Query("SELECT p FROM Product p WHERE p.productID NOT IN :productIDs")
+    List<Product> findByProductIDNotIn(@Param("productIDs") List<Integer> productIDs);
 //
 //    // Best Sellers: Top 10 products sorted by total sales quantity
 //        @Query("SELECT new com.shoestore.Server.dto.ProductDTO(p.productID, p.productName, p.price, p.status, " +
@@ -48,5 +48,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> , Jpa
 //            "p.description, p.createDate " +
 //            "ORDER BY COUNT(ci.id) DESC")
 //    List<ProductDTO> findTop10Trending(Pageable pageable);
+
 
 }

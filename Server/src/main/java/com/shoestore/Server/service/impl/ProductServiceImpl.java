@@ -103,14 +103,15 @@ public class ProductServiceImpl implements ProductService {
 
 
     // nay cua hieu
-//    public List<Product> getProductsNotInOrderDetail(int orderID) {
-//        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
-//        if (productIDsInOrderDetail.isEmpty()) {
-//            return productRepository.findAll();
-//        } else {
-//            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
-//        }
-//    }
+    public List<Product> getProductsNotInOrderDetail(int orderID) {
+        List<Integer> productIDsInOrderDetail = orderDetailRepository.findProductIDsByOrderID(orderID);
+        if (productIDsInOrderDetail.isEmpty()) {
+            return productRepository.findAll();
+        } else {
+
+            return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
+        }
+    }
 //
 //    @Override
 //    public List<ProductDTO> getTop10BestSellers() {

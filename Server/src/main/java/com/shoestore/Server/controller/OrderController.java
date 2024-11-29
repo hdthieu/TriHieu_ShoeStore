@@ -25,8 +25,7 @@ public class OrderController {
     private OrderService orderService;
     @PostMapping("/update-status")
     public ResponseEntity<?> updateOrderStatus(@RequestBody Map<String, Object> payload) {
-        System.out.println("Payload received: " + payload);
-
+//        System.out.println("Payload received: " + payload);
         try {
             // Kiểm tra và chuyển đổi kiểu dữ liệu
             int orderId;
@@ -38,17 +37,12 @@ public class OrderController {
             } else {
                 return ResponseEntity.badRequest().body("orderId không hợp lệ!");
             }
-
             String status = (String) payload.get("status");
             if (status == null || status.isEmpty()) {
                 return ResponseEntity.badRequest().body("status không hợp lệ!");
             }
-
-            System.out.println("OrderId: " + orderId + ", Status: " + status);
-
-            // Gọi service để cập nhật
+//            System.out.println("OrderId: " + orderId + ", Status: " + status);
             orderService.updateOrderStatus(orderId, status);
-
             return ResponseEntity.ok("Cập nhật trạng thái thành công!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,14 +54,17 @@ public class OrderController {
     public ResponseEntity<Map<String, Object>> getRevenueStatistics(
             @RequestParam String startDate,
             @RequestParam String endDate) {
-        // Chuyển đổi String thành LocalDate
+        // Parse the date strings to LocalDate
         LocalDate start = LocalDate.parse(startDate);
         LocalDate end = LocalDate.parse(endDate);
 
-        // Lấy dữ liệu thống kê từ service
+        // Get the revenue statistics from the service
         Map<String, Object> stats = orderService.getRevenueStatistics(start, end);
+
+        // Return the statistics in the response
         return ResponseEntity.ok(stats);
     }
+
 
     // Tính tổng tiền cho đơn hàng
     private double calculateTotalPrice(Order order) {
@@ -93,6 +90,7 @@ public class OrderController {
                 })
                 .collect(Collectors.toList());
     }
+
     @GetMapping("/yearly-revenue")
     public ResponseEntity<Map<String, Object>> getYearlyRevenue() {
         Map<String, Object> data = orderService.getRevenueAndQuantityForCurrentYear();
