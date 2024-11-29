@@ -32,6 +32,8 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private ProductDetailService productDetailService;
+
+
     @GetMapping("/cart/{id}")
     public String showCart(@PathVariable("id") int id, Model model) {
         List<CartItemResponseDTO> cartItems = cartItemService.getCartItemsByCartId(id);
