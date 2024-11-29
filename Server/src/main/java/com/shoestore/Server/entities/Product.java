@@ -72,7 +72,7 @@ public class Product {
     private Promotion promotion;
 
     @ManyToMany(mappedBy = "wishlist")
-    @JsonBackReference
+    @JsonIgnore
     private List<User> users;
 
 
