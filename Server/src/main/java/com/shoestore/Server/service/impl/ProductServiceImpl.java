@@ -57,10 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    @Override
-    public List<Product> getById(int id) {
-        return null;
-    }
+
 
 
     @Override

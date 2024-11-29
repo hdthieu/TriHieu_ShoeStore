@@ -16,7 +16,7 @@ public interface ProductService {
 
     public Product getProductById(int id);
 
-    List<Product> getById(int id);
+
 
     public Page<Product> findProducts(String keyword, String sortBy, String order, Pageable pageable);
 
