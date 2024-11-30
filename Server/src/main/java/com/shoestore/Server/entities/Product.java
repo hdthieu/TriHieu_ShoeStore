@@ -58,9 +58,9 @@ public class Product {
     @JsonIgnore
     private Promotion promotion;
 
-    @ManyToMany(mappedBy = "wishlist")
-    @JsonBackReference
-    private List<User> users;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Wishlist> wishlists;
 
 
     public Product(int productID, String productName, List<String> imageURL, String description, double price, String status, Brand brand, Supplier supplier, Category category, Promotion promotion, LocalDateTime createDate) {
