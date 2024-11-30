@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/client/orderDetail")
+@RequestMapping("/admin/orderDetail")
 public class OrderDetailController{
     @Autowired
     private OrderDetailService orderDetailService;

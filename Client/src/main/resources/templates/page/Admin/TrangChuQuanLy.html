@@ -132,34 +132,25 @@
         <h4 class="text-light text-center mt-4">AdminAD</h4>
         <ul class="nav flex-column mt-3">
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/orders/Home" onclick="setActive(this)">Home</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/users/list" onclick="setActive(this)">Thành viên</a>
           </li>
           <li class="nav-item mt-3">
             <a class="nav-link text-light" href="#" onclick="setActive(this)">Bài viết</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh mục</a>
-          </li>
-          <li class="nav-item mt-3">
             <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/orders/view" onclick="setActive(this)">Đơn hàng</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
-          </li>
-          <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
-          </li>
-          <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
+            <a class="nav-link text-light" href="http://localhost:3000/admin/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
           </li>
         </ul>
-        <div class="styleUser text-center " >
+        <div class="styleUser text-center" style="margin-top: 110%">
           <h6>Hồ Đức Trí Hiếu</h6>
           <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
         </div>
@@ -223,13 +214,13 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <h4 th:text="${totalOrdersYear}"></h4>
-                  <p>Sản Phẩm</p>
+                  <p>Đơn Hàng</p>
                 </div>
                 <i class="fas fa-chart-pie icon"></i>
               </div>
               <div class="section-title">DOANH THU NĂM</div>
               <h5>
-                <span id="revenueDTYear" th:text="${totalRevenueYear}"></span>
+                <span id="revenueDTYear" th:text="${revenueYear['totalRevenueYear']}"></span>
               </h5>
             </div>
           </div>
@@ -237,7 +228,7 @@
       </div>
     </div>
     <div class="main-content col-md-10">
-      <h2>Thống Kê Đoanh Thu Dựa Trên Số Đơn Hàng</h2>
+      <h2>Thống Kê Doanh Thu Dựa Trên Số Đơn Hàng</h2>
       <form id="revenueForm" class="mb-4">
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -395,7 +386,7 @@
   function loadTopSellingProducts() {
     const timeType = document.getElementById('timeType').value;
     $.ajax({
-      url: '/orders/top-selling',
+      url: '/admin/orders/top-selling',
       method: 'GET',
       data: {
         type: timeType,
@@ -447,8 +438,7 @@
 
   loadTopSellingProducts();
 
-
-  const revenueIds = ['revenue', 'revenueDTYear'];
+  const revenueIds = ['revenue'];
   revenueIds.forEach(id => {
     const element = document.getElementById(id);
 
@@ -544,7 +534,7 @@
 
       // Gửi AJAX để lấy dữ liệu thống kê
       $.ajax({
-        url: '/orders/thong-ke',
+        url: '/admin/orders/thong-ke',
         method: 'GET',
         data: {
           startDate: startDate,
@@ -569,7 +559,11 @@
       });
     });
   });
-
+  // const revenueElement = document.getElementById('revenueDTYear');
+  // const revenue = parseInt(revenueElement.getAttribute('data-revenue'), 10);
+  //
+  // // Định dạng số với dấu phẩy
+  // revenueElement.innerText = revenue.toLocaleString();
 
 
 </script>

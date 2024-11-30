@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thêm Mới Người Dùng</title>
+    <title>Chỉnh Sửa Người Dùng</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <style>
         .sidebar {
@@ -73,9 +73,10 @@
         <!-- Main Content -->
         <main class="main-content col-md-10 ml-sm-auto px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h2 id="form-title">Thêm mới thành viên</h2> <!-- Tiêu đề động -->
+                <h2 id="form-title">Chỉnh sửa thành viên</h2> <!-- Tiêu đề động -->
             </div>
-            <form class="styleForm" id="user-form">
+            <form class="styleForm" id='update-user-form'>
+                <input type="hidden" id="userId" name="userId" value=""/>
                 <!-- CI -->
                 <div class="mb-3">
                     <label for="ci" class="form-label">CI <span class="required">(*)</span></label>
@@ -132,13 +133,11 @@
                     </select>
                 </div>
 
-                <!-- Submit and Reset Buttons -->
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary" id="form-submit-button">Thêm mới</button>
-                    <button type="reset" class="btn btn-secondary" onclick="cancelEdit()">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="reset" class="btn btn-secondary">Cancel</button>
                 </div>
             </form>
-
         </main>
 
     </div>
@@ -148,54 +147,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    const apiAddUrl = 'http://localhost:8080/auth/users/add';
-
-    // Xử lý form thêm mới
-    document.addEventListener('DOMContentLoaded', function () {
-        const userForm = document.getElementById('user-form');
-
-        if (userForm) {
-            userForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-
-                const userData = {
-                    name: document.getElementById('name').value.trim(),
-                    userName: document.getElementById('username').value.trim(),
-                    password: document.getElementById('password').value.trim(),
-                    phoneNumber: document.getElementById('phone').value.trim(),
-                    status: document.getElementById('status').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    ci: document.getElementById('ci').value.trim(),
-                    role: {
-                        roleID: parseInt(document.getElementById('role').value.trim()),
-                    },
-                };
-
-                try {
-                    const response = await fetch(apiAddUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(userData),
-                    });
-
-                    if (response.ok) {
-                        alert('Thêm user thành công!');
-                        window.location.href = 'http://localhost:3000/admin/users/list';
-                    } else {
-                        const errorData = await response.json().catch(() => null);
-                        alert(`Thêm user thất bại: ${errorData?.message || 'Lỗi không xác định.'}`);
-                    }
-                } catch (error) {
-                    console.error('Có lỗi xảy ra khi thêm user:', error);
-                    alert('Có lỗi xảy ra khi thêm user. Vui lòng thử lại sau!');
-                }
-            });
-        } else {
-            console.error("Form không tồn tại trong DOM.");
-        }
-    });
-
-</script>
+<script src="/js/User.js"></script>
 </body>
 </html>

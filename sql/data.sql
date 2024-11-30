@@ -11,30 +11,30 @@ VALUES
 INSERT INTO Users (CI, email, name, password, phoneNumber, status, userName, roleID)
 VALUES
 -- Admins
-('1234567890', 'admin1@example.com', 'Admin User 1', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '1234567890', 'Active', 'admin1', 1),
+('1234567890', 'admin1@example.com', 'Admin User 1', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '0334567890', 'Active', 'admin1', 1),
 ('0987654321', 'admin2@example.com', 'Admin User 2', 'securepassword2', '0987654321', 'Active', 'admin2', 1),
-('1122334455', 'admin3@example.com', 'Admin User 3', 'securepassword3', '1122334455', 'Active', 'admin3', 1),
+('1122334455', 'admin3@example.com', 'Admin User 3', 'securepassword3', '0322334455', 'Active', 'admin3', 1),
 
 -- Customers
-('2233445566', 'customer1@example.com', 'John Doe', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '2233445566', 'Active', 'johndoe1', 2),
-('3344556677', 'customer2@example.com', 'Jane Smith', 'password456', '3344556677', 'Active', 'janesmith2', 2),
-('4455667788', 'customer3@example.com', 'Alice Johnson', 'password789', '4455667788', 'Active', 'alicejohnson3', 2),
-('5566778899', 'customer4@example.com', 'Bob Brown', 'password101', '5566778899', 'Active', 'bobbrown4', 2),
-('6677889900', 'customer5@example.com', 'Charlie Davis', 'password202', '6677889900', 'Active', 'charliedavis5', 2),
-('7788990011', 'customer6@example.com', 'Diana Prince', 'password303', '7788990011', 'Active', 'dianaprince6', 2),
-('8899001122', 'customer7@example.com', 'Ethan Hunt', 'password404', '8899001122', 'Active', 'ethanhunt7', 2),
-('9900112233', 'customer8@example.com', 'Fiona Gallagher', 'password505', '9900112233', 'Active', 'fionagallagher8', 2),
-('1011121314', 'customer9@example.com', 'George Clooney', 'password606', '1011121314', 'Active', 'georgeclooney9', 2),
-('1112131415', 'customer10@example.com', 'Hannah Montana', 'password707', '1112131415', 'Active', 'hannahmontana10', 2),
-('1213141516', 'customer11@example.com', 'Isaac Newton', 'password808', '1213141516', 'Active', 'isaacnewton11', 2),
-('1314151617', 'customer12@example.com', 'Jack Sparrow', 'password909', '1314151617', 'Active', 'jacksparrow12', 2),
-('1415161718', 'customer13@example.com', 'Kara Danvers', 'password010', '1415161718', 'Active', 'karadanvers13', 2),
-('1516171819', 'customer14@example.com', 'Liam Hemsworth', 'password111', '1516171819', 'Active', 'liamhemsworth14', 2),
-('1617181920', 'customer15@example.com', 'Mia Wallace', 'password222', '1617181920', 'Active', 'miawallace15', 2),
-('1718192021', 'customer16@example.com', 'Nina Dobrev', 'password333', '1718192021', 'Active', 'ninadobrev16', 2),
-('1819202122', 'customer17@example.com', 'Oscar Isaac', 'password444', '1819202122', 'Active', 'oscarisaac17', 2),
-('1920212223', 'customer18@example.com', 'Peter Parker', 'password555', '1920212223', 'Active', 'peterparker18', 2),
-('2021222324', 'customer19@example.com', 'Quinn Fabray', 'password666', '2021222324', 'Active', 'quinnfabray19', 2),
+('2233445566', 'customer1@example.com', 'John Doe', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '0333445566', 'Active', 'johndoe1', 2),
+('3344556677', 'customer2@example.com', 'Jane Smith', 'password456', '0944556677', 'Active', 'janesmith2', 2),
+('4455667788', 'customer3@example.com', 'Alice Johnson', 'password789', '0355667788', 'Active', 'alicejohnson3', 2),
+('5566778899', 'customer4@example.com', 'Bob Brown', 'password101', '0366778899', 'Active', 'bobbrown4', 2),
+('6677889900', 'customer5@example.com', 'Charlie Davis', 'password202', '0377889900', 'Active', 'charliedavis5', 2),
+('7788990011', 'customer6@example.com', 'Diana Prince', 'password303', '0388990011', 'Active', 'dianaprince6', 2),
+('8899001122', 'customer7@example.com', 'Ethan Hunt', 'password404', '0399001122', 'Active', 'ethanhunt7', 2),
+('9900112233', 'customer8@example.com', 'Fiona Gallagher', 'password505', '0300112233', 'Active', 'fionagallagher8', 2),
+('1011121314', 'customer9@example.com', 'George Clooney', 'password606', '0311121314', 'Active', 'georgeclooney9', 2),
+('1112131415', 'customer10@example.com', 'Hannah Montana', 'password707', '0312131415', 'Active', 'hannahmontana10', 2),
+('1213141516', 'customer11@example.com', 'Isaac Newton', 'password808', '0313141516', 'Active', 'isaacnewton11', 2),
+('1314151617', 'customer12@example.com', 'Jack Sparrow', 'password909', '0314151617', 'Active', 'jacksparrow12', 2),
+('1415161718', 'customer13@example.com', 'Kara Danvers', 'password010', '0315161718', 'Active', 'karadanvers13', 2),
+('1516171819', 'customer14@example.com', 'Liam Hemsworth', 'password111', '0316171819', 'Active', 'liamhemsworth14', 2),
+('1617181920', 'customer15@example.com', 'Mia Wallace', 'password222', '0317181920', 'Active', 'miawallace15', 2),
+('1718192021', 'customer16@example.com', 'Nina Dobrev', 'password333', '0318192021', 'Active', 'ninadobrev16', 2),
+('1819202122', 'customer17@example.com', 'Oscar Isaac', 'password444', '0319202122', 'Active', 'oscarisaac17', 2),
+('1920212223', 'customer18@example.com', 'Peter Parker', 'password555', '0320212223', 'Active', 'peterparker18', 2),
+('2021222324', 'customer19@example.com', 'Quinn Fabray', 'password666', '0321222324', 'Active', 'quinnfabray19', 2),
 ('2122232425', 'customer20@example.com', 'Rachel Green', '$2a$10$piYOHuFhF7WWTyziAev08.RtlRcnZuruhfrTrgYWO6phJ4l1XvSBm', '2122232425', 'Active', 'rachelgreen20', 2);
 
 
@@ -63,14 +63,13 @@ VALUES
 
 
 -- Thêm dữ liệu cho bảng Brand
-INSERT INTO Brand (name, image)
+INSERT INTO Brand (name)
 VALUES
-('Nike', 'nike.png'),
-('Adidas', 'adidas.png'),
-('Puma', 'puma.png'),
-('Reebok', 'reebok.png'),
-('Converse', 'converse.png'),
-('Under Armour', 'under_armour.png');
+('Nike'),
+('Adidas'),
+('Puma'),
+('Reebok'),
+('Under Armour');
 
 -- Thêm dữ liệu cho bảng Category
 INSERT INTO Category (description, name)
@@ -492,7 +491,7 @@ VALUES
 
 INSERT INTO Voucher (description, discountType, discountValue, endDate, name, startDate, status, minValueOrder)
 VALUES
-('Welcome Voucher', 'Percentage', 10, '2024-12-31', 'WELCOME10', '2024-01-01', 'Upcoming', 300000),
+('Welcome Voucher', 'Percentage', 10, '2024-12-31', 'WELCOME10', '2024-12-10', 'Upcoming', 300000),
 ('Holiday Discount', 'Flat', 20000, '2024-12-25', 'HOLIDAY20', '2024-12-01', 'Active', 200000),
 ('Year-End Sale', 'Percentage', 15, '2024-12-31', 'YEAR15', '2024-12-15', 'Ended', 250000);
 
@@ -577,36 +576,36 @@ VALUES
 
 INSERT INTO Orders (feeShip, orderDate, shippingAddress, status, userID, voucherID, total)
 VALUES
-    (30000, '2024-11-01', '123 Le Loi, Hanoi', 'Shipped', 5, 1, 180000),
-    (30000, '2024-11-02', '456 Hoang Hoa Tham, Hanoi', 'Processing', 4, 2, 120000),
+    (30000, '2024-11-01', '123 Le Loi, Hanoi', 'Shipped', 5, 1, 372000),
+    (30000, '2024-11-02', '456 Hoang Hoa Tham, Hanoi', 'Processing', 4, 2, 880000),
     (30000, '2024-11-03', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 6, 3, 450000),
-    (30000, '2024-11-04', '12 Hai Ba Trung, Ho Chi Minh', 'Shipped', 4, 1, 320000),
-    (30000, '2024-11-05', '34 Nguyen Hue, Ho Chi Minh', 'Processing', 5, NULL, 200000),
-    (30000, '2024-11-06', '56 Tran Phu, Da Nang', 'Shipped', 6, 2, 110000),
-    (30000, '2024-11-07', '78 Dien Bien Phu, Da Nang', 'Delivered', 7, NULL, 375000),
-    (30000, '2024-11-08', '90 Vo Van Kiet, Can Tho', 'Processing', 8, 2, 285000),
-    (30000, '2024-11-09', '11 Nguyen Trai, Hai Phong', 'Shipped', 6, NULL, 50000),
-    (30000, '2024-11-10', '22 Hai Ba Trung, Hai Phong', 'Delivered', 10, 1, 400000),
-    (30000, '2024-11-11', '33 Nguyen Cong Tru, Hue', 'Processing', 11, NULL, 200000),
-    (30000, '2024-11-12', '44 Le Loi, Hue', 'Shipped', 12, 2, 320000),
-    (30000, '2024-11-13', '55 Tran Phu, Nha Trang', 'Processing', 13, NULL, 200000),
+    (30000, '2024-11-04', '12 Hai Ba Trung, Ho Chi Minh', 'Shipped', 4, 1, 613000),
+    (30000, '2024-11-05', '34 Nguyen Hue, Ho Chi Minh', 'Processing', 5, NULL, 900000),
+    (30000, '2024-11-06', '56 Tran Phu, Da Nang', 'Shipped', 6, 2, 380000),
+    (30000, '2024-11-07', '78 Dien Bien Phu, Da Nang', 'Delivered', 7, NULL, 630000),
+    (30000, '2024-11-08', '90 Vo Van Kiet, Can Tho', 'Processing', 8, 2, 995000),
+    (30000, '2024-11-09', '11 Nguyen Trai, Hai Phong', 'Shipped', 6, NULL, 120000),
+    (30000, '2024-11-10', '22 Hai Ba Trung, Hai Phong', 'Delivered', 10, 1, 3270000),
+    (30000, '2024-11-11', '33 Nguyen Cong Tru, Hue', 'Processing', 11, NULL, 430000),
+    (30000, '2024-11-12', '44 Le Loi, Hue', 'Shipped', 12, 2, 520000),
+    (30000, '2024-11-13', '55 Tran Phu, Nha Trang', 'Processing', 13, NULL, 1140000),
     (30000, '2024-11-14', '66 Nguyen Thien Thuat, Nha Trang', 'Delivered', 14, 3, 450000),
-    (30000, '2024-11-15', '77 Tran Hung Dao, Vung Tau', 'Processing', 15, NULL, 375000),
-    (30000, '2024-11-16', '88 Nguyen Trai, Vung Tau', 'Shipped', 16, 1, 320000),
-    (30000, '2024-11-17', '99 Le Hong Phong, Da Lat', 'Delivered', 17, NULL, 50000),
-    (30000, '2024-11-18', '10 Nguyen Van Cu, Da Lat', 'Processing', 18, NULL, 200000),
-    (30000, '2024-11-19', '20 Tran Hung Dao, Quy Nhon', 'Shipped', 19, 1, 320000),
-    (30000, '2024-11-20', '30 Vo Thi Sau, Quy Nhon', 'Delivered', 20, NULL, 400000),
-    (30000, '2024-11-21', '123 Le Loi, Hanoi', 'Shipped', 5, 2, 320000),
+    (30000, '2024-11-15', '77 Tran Hung Dao, Vung Tau', 'Processing', 15, NULL, 1300000),
+    (30000, '2024-11-16', '88 Nguyen Trai, Vung Tau', 'Shipped', 16, 1, 97500),
+    (30000, '2024-11-17', '99 Le Hong Phong, Da Lat', 'Delivered', 17, NULL, 140000),
+    (30000, '2024-11-18', '10 Nguyen Van Cu, Da Lat', 'Processing', 18, NULL, 360000),
+    (30000, '2024-11-19', '20 Tran Hung Dao, Quy Nhon', 'Shipped', 19, 1, 84000),
+    (30000, '2024-11-20', '30 Vo Thi Sau, Quy Nhon', 'Delivered', 20, NULL, 1030000),
+    (30000, '2024-11-21', '123 Le Loi, Hanoi', 'Shipped', 5, 2, 150000),
     (30000, '2024-11-22', '456 Hoang Hoa Tham, Hanoi', 'Processing', 10, 3, 450000),
-    (30000, '2024-11-23', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 8, NULL, 285000),
-    (30000, '2024-11-24', '12 Hai Ba Trung, Ho Chi Minh', 'Processing', 4, 1, 320000),
-    (30000, '2024-11-25', '34 Nguyen Hue, Ho Chi Minh', 'Delivered', 5, 2, 320000),
-    (30000, '2024-11-26', '56 Tran Phu, Da Nang', 'Shipped', 6, NULL, 375000),
+    (30000, '2024-11-23', '789 Nguyen Chi Thanh, Hanoi', 'Delivered', 8, NULL, 830000),
+    (30000, '2024-11-24', '12 Hai Ba Trung, Ho Chi Minh', 'Processing', 4, 1, 37500),
+    (30000, '2024-11-25', '34 Nguyen Hue, Ho Chi Minh', 'Delivered', 5, 2, 490000),
+    (30000, '2024-11-26', '56 Tran Phu, Da Nang', 'Shipped', 6, NULL, 35000),
     (30000, '2024-11-27', '78 Dien Bien Phu, Da Nang', 'Processing', 7, 3, 375000),
-    (30000, '2024-11-28', '90 Vo Van Kiet, Can Tho', 'Delivered', 8, 1, 285000),
-    (30000, '2024-11-29', '11 Nguyen Trai, Hai Phong', 'Shipped', 9, 1, 320000),
-    (30000, '2024-11-30', '22 Hai Ba Trung, Hai Phong', 'Processing', 10, NULL, 400000);
+    (30000, '2024-11-28', '90 Vo Van Kiet, Can Tho', 'Delivered', 8, 1, 367500),
+    (30000, '2024-11-30', '11 Nguyen Trai, Hai Phong', 'Shipped', 9, 1, 111000),
+    (0, '2024-12-01', '22 Hai Ba Trung, Hai Phong', 'Processing', 10, NULL, 220000);
 
 
 
@@ -750,56 +749,4 @@ VALUES
 ('Excellent material.', '2024-11-19', 5, 19, 19),
 ('Highly recommend!', '2024-11-20', 5, 20, 20);
 
-INSERT INTO Wishlist (productID, userID)
-VALUES
-(1, 1),
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(10, 1),
-(11, 1),
-(12, 1),
-(13, 1),
-(14, 1),
-(15, 1),
-(16, 1),
-(17, 1),
-(18, 1),
-(19, 1),
-(20, 1),
-(21, 1),
-(22, 1),
-(23, 1),
-(24, 1),
-(25, 1),
-(26, 1),
-(27, 1),
-(28, 1),
-(29, 1),
-(30, 1),
-(31, 1),
-(32, 1),
-(33, 1),
-(34, 1),
-(35, 1),
-(36, 1),
-(37, 1),
-(38, 1),
-(39, 1),
-(40, 1),
-(41, 1),
-(42, 1),
-(43, 1),
-(44, 1),
-(45, 1),
-(46, 1),
-(47, 1),
-(48, 1),
-(49, 1),
-(50, 1);
 

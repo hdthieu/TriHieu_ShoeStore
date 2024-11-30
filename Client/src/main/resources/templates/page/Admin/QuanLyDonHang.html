@@ -23,34 +23,25 @@
             <h4 class="text-light text-center mt-4">AdminAD</h4>
             <ul class="nav flex-column mt-3">
               <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="http://localhost:3000/orders/Home" onclick="setActive(this)">Home</a>
+                <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
               </li>
               <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+                <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
               </li>
               <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Bài viết</a>
+                <a class="nav-link text-light" href="#" onclick="setActive(this)">Bài viết</a>
               </li>
               <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh mục</a>
+                <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
               </li>
               <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
+                <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
               </li>
               <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Đơn hàng</a>
+                <a class="nav-link text-light" href="http://localhost:3000/admin/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
               </li>
-              <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
-              </li>
-              <li class="nav-item mt-3">
-                  <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
-              </li>
-              <li class="nav-item mt-3">
-                <a class="nav-link text-light" href="http://localhost:3000/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
-            </li>
           </ul>
-          <div class="styleUser text-center">
+          <div class="styleUser text-center" style="margin-top: 110%">
               <h6>Hồ Đức Trí Hiếu</h6>
               <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
           </div>
@@ -83,10 +74,10 @@
                     <td th:text="${order.orderID}"></td>
                     <td th:text="${order.dateCreated}"></td>
                     <td th:text="${order.name}"></td>
-                    <td th:text="${order.totalPrice}"></td>
+                    <td  class="price" th:text="${order.totalPrice}"></td>
                     <td th:text="${order.status}"></td>
                     <td>
-                      <a class="btn btn-primary btn-sm" th:href="@{/client/orderDetail/view/{orderID}(orderID=${order.orderID})}">Xem</a>
+                      <a class="btn btn-primary btn-sm" th:href="@{/admin/orderDetail/view/{orderID}(orderID=${order.orderID})}">Xem</a>
                     </td>
                   </tr>
                   </tbody>
@@ -95,7 +86,7 @@
                   <ul class="pagination">
                     <!-- Nút "Prev" -->
                     <li class="page-item" th:classappend="${!ordersPage.hasPrevious()} ? 'disabled'">
-                      <a class="page-link" th:href="@{/orders/view(page=${ordersPage.number - 1}, size=${ordersPage.size})}"
+                      <a class="page-link" th:href="@{/admin/orders/view(page=${ordersPage.number - 1}, size=${ordersPage.size})}"
                          th:if="${ordersPage.hasPrevious()}">&laquo; Prev</a>
                       <a class="page-link" href="#" th:if="${!ordersPage.hasPrevious()}">&laquo; Prev</a>
                     </li>
@@ -113,7 +104,7 @@
 
                     <!-- Nút "Next" -->
                     <li class="page-item" th:classappend="${!ordersPage.hasNext()} ? 'disabled'">
-                      <a class="page-link" th:href="@{/orders/view(page=${ordersPage.number + 1}, size=${ordersPage.size})}"
+                      <a class="page-link" th:href="@{/admin/orders/view(page=${ordersPage.number + 1}, size=${ordersPage.size})}"
                          th:if="${ordersPage.hasNext()}">Next &raquo;</a>
                       <a class="page-link" href="#" th:if="${!ordersPage.hasNext()}">Next &raquo;</a>
                     </li>
@@ -132,5 +123,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/Order.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const priceElements = document.querySelectorAll('.price');
+        priceElements.forEach(element => {
+          const rawValue = parseFloat(element.textContent);
+          if (!isNaN(rawValue)) {
+            element.textContent = rawValue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

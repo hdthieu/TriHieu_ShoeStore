@@ -84,14 +84,6 @@ public class OrderController {
         return ResponseEntity.ok(stats);
     }
 
-
-    // Tính tổng tiền cho đơn hàng
-    private double calculateTotalPrice(Order order) {
-        return order.getOrderDetails().stream()
-                .mapToDouble(od -> od.getQuantity() * od.getPrice())
-                .sum();
-    }
-
     @GetMapping("/dsachOrders")
     public List<Map<String, Object>> getAllOrders() {
         // Lấy danh sách đơn hàng với chi tiết sản phẩm đã được tải
@@ -103,7 +95,7 @@ public class OrderController {
                     map.put("orderID", order.getOrderID());
                     map.put("dateCreated", order.getOrderDate());
                     map.put("name", order.getUser().getName());
-                    map.put("totalPrice", calculateTotalPrice(order));
+                    map.put("totalPrice", order.getTotal());
                     map.put("status", order.getStatus());
                     return map;
                 })
