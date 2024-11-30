@@ -18,7 +18,7 @@ public class User {
     private int userID;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Address> addresses;
     @Column(name = "phoneNumber")
@@ -32,18 +32,34 @@ public class User {
     @JoinColumn(name = "roleID")
     private Role role;
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private Cart cart;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
+    @JsonIgnore
     private List<Order> orders;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviews;
 
+    public User(int userID) {
+        this.userID = userID;
+    }
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    private List<Wishlist> wishlists;
+    public User() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", userName='" + userName + '\'' +
+                ", status='" + status + '\'' +
+                ", CI='" + CI + '\'' +
+                '}';
+    }
 }

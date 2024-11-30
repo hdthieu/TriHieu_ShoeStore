@@ -35,7 +35,7 @@ public class LoginController {
     if (authentication != null && authentication.isAuthenticated()) {
       UserDTO user = userService.findByEmail(userDTO.getEmail());
 
-      if (user != null && customUserDetailService.checkPassword(userDTO.getPassword(), user.getPassword())) {
+      if (user != null) {
         session.setAttribute("user", user);
         String roleName = user.getRole().getName();
         if ("Admin".equals(roleName)) {

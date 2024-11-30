@@ -12,8 +12,6 @@ package com.shoestore.Server.service.impl;
 import com.shoestore.Server.entities.Review;
 import com.shoestore.Server.repositories.ReviewRepository;
 import com.shoestore.Server.service.ReviewService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +26,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Page<Review> getAllReview(Pageable pageable) {
-        return reviewRepository.findAll(pageable);
+    public List<Review> getAllReview() {
+        return reviewRepository.findAll();
     }
 
     @Override
@@ -41,16 +39,8 @@ public class ReviewServiceImpl implements ReviewService {
         return false;
     }
 
-
-
     @Override
-    public Page<Review> findReviews(Integer rating, String name, String date, Pageable pageable) {
-        if ("old".equalsIgnoreCase(date)) {
-            return reviewRepository.findReviewsByOldDate(rating, name, pageable); // Sắp xếp theo ngày tăng dần
-        } else if ("new".equalsIgnoreCase(date)) {
-            return reviewRepository.findReviewsByNewDate(rating, name, pageable); // Sắp xếp theo ngày giảm dần
-        }
-        return reviewRepository.findReviewNotDate(rating, name, pageable); // Không sắp xếp
+    public List<Review> getReviewByRating(int rating) {
+        return reviewRepository.getAllReviewByRating(rating);
     }
-
 }

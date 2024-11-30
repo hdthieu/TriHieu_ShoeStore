@@ -7,9 +7,7 @@ import com.shoestore.Server.repositories.ProductRepository;
 import com.shoestore.Server.service.ProductService;
 import com.shoestore.Server.specifications.ProductSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -58,8 +56,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
-
     @Override
     public List<Product> getFilteredProducts(List<Integer> categoryIds, List<Integer> brandIds, List<String> colors, List<String> sizes, Double minPrice, Double maxPrice, String sortBy) {
         Specification<Product> spec = Specification.where(null);
@@ -104,37 +100,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll(spec);
     }
 
-    @Override
-    public Page<Product> findProducts(String keyword, String sortBy, String order, Pageable pageable) {
-        Pageable sortedPageable;
-
-        // Kiểm tra nếu `sortBy` và `order` đều không null
-        if (sortBy != null && order != null) {
-            // Xác định hướng sắp xếp
-            Sort.Direction direction = "desc".equalsIgnoreCase(order) ? Sort.Direction.DESC : Sort.Direction.ASC;
-
-            // Xác định trường cần sắp xếp
-            String sortField;
-            if ("price".equalsIgnoreCase(sortBy)) {
-                sortField = "price";
-            } else {
-                sortField = "createDate"; // Mặc định là sắp xếp theo createDate
-            }
-
-            // Tạo Pageable với thông tin sắp xếp
-            sortedPageable = PageRequest.of(
-                    pageable.getPageNumber(),
-                    pageable.getPageSize(),
-                    Sort.by(direction, sortField)
-            );
-        } else {
-            // Nếu không có thông tin sắp xếp, dùng Pageable mặc định
-            sortedPageable = pageable;
-        }
-
-        // Gọi repository với Pageable được điều chỉnh
-        return productRepository.findProducts(keyword, sortedPageable);
-    }
 
 
     // nay cua hieu
@@ -147,34 +112,21 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
         }
     }
-
-    private List<ProductDTO> setImageURLs(List<ProductDTO> productDTOList) {
-        productDTOList.forEach(productDTO -> {
-            List<String> imageUrls = getImageUrlsByProductID(productDTO.getProductID());
-            productDTO.setImageURL(imageUrls);
-        });
-        return productDTOList;
-    }
-
-    @Override
-    public List<String> getImageUrlsByProductID(int id) {
-        return productRepository.findImageUrlsByProductID(id);
-    }
-
-    @Override
-    public List<ProductDTO> getTop10BestSellers() {
-        return setImageURLs(productRepository.findTop10BestSellers(PageRequest.of(0, 10)));
-    }
-
-    @Override
-    public List<ProductDTO> getTop10NewArrivals() {
-        return setImageURLs(productRepository.findTop10NewArrivals(PageRequest.of(0, 10)));
-    }
-
-    @Override
-    public List<ProductDTO> getTop10Trending() {
-        return setImageURLs(productRepository.findTop10Trending(PageRequest.of(0, 10)));
-    }
+//
+//    @Override
+//    public List<ProductDTO> getTop10BestSellers() {
+//        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
+//    }
+//
+//    @Override
+//    public List<ProductDTO> getTop10NewArrivals() {
+//        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
+//    }
+//
+//    @Override
+//    public List<ProductDTO> getTop10Trending() {
+//        return productRepository.findTop10Trending(PageRequest.of(0, 10));
+//    }
 
 
 

@@ -12,10 +12,5 @@ import lombok.ToString;
 public class BrandDTO {
     private int brandID;
     private String name;
-    private String image;
 
-    public BrandDTO(String image, int brandID) {
-        this.image = image;
-        this.brandID = brandID;
-    }
 }

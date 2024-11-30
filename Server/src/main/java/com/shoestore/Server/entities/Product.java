@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,37 +21,26 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "productID")
     private int productID;
-    @Column(name = "productName", nullable = false)
-    @NotBlank(message = "Tên sản phẩm không được để trống") // Không cho phép null hoặc chuỗi rỗng
-    @Size(max = 50, message = "Tên sản phẩm không được vượt quá 50 ký tự") // Giới hạn độ dài tối đa
-    @Pattern(regexp = "^[a-zA-Z0-9 ]*$", message = "Tên sản phẩm chỉ được chứa chữ, số và khoảng trắng") // Chỉ cho phép chữ, số và khoảng trắng
+    @Column(name = "productName")
     private String productName;
     @ElementCollection
     @CollectionTable(name = "Product_ImageURL", joinColumns = @JoinColumn(name = "productID"))
-    @Column(name = "imageURL", nullable = false)
+    @Column(name = "imageURL")
     private List<String> imageURL;
-
-    @Column(name = "description", nullable = false, length = 100)
-    @NotBlank(message = "Mô tả không được để trống")
-    @Size(max = 100, message = "Mô tả không được vượt quá 100 ký tự")
     private String description;
-
-    @Column(name = "price", nullable = false)
-    @DecimalMin(value = "0", inclusive = false, message = "Giá phải lớn hơn 0")
     private double price;
-
     private String status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "brandID", nullable = false)
+    @JoinColumn(name = "brandID")
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "categoryID", nullable = false)
+    @JoinColumn(name = "categoryID")
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supplierID", nullable = false)
+    @JoinColumn(name = "supplierID")
     private Supplier supplier;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -70,13 +57,6 @@ public class Product {
     @JoinColumn(name = "promotionID", nullable = true)
     @JsonIgnore
     private Promotion promotion;
-
-
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private List<Wishlist> wishlists;
-
-
 
     public Product(int productID, String productName, List<String> imageURL, String description, double price, String status, Brand brand, Supplier supplier, Category category, Promotion promotion, LocalDateTime createDate) {
         this.productID = productID;

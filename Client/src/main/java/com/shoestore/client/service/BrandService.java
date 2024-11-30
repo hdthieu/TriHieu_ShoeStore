@@ -17,5 +17,4 @@ import java.util.List;
 @Service
 public interface BrandService {
     public List<BrandDTO> getAllBrand();
-    public List<BrandDTO> getAllBrands();
 }
