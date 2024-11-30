@@ -34,6 +34,16 @@ public class ProductDetailController {
                                                     BindingResult bindingResult      ) {
 
         System.out.println(productDetail.getColor());
+        System.out.println(productDetail.getSize());
+        System.out.println(productDetail.getProduct().getProductID());
+
+        // kiểm tra tồn tại
+        ProductDetail productDetail1 = productDetailService.getProductDetailByProductIdAndColorAndSize(productDetail.getProduct().getProductID(), productDetail.getColor(), productDetail.getSize());
+        System.out.println(productDetail1);
+        if (productDetail1 != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(" Đã tồn tại cặp màu sắc và size cho sản phẩm này");
+        }
+
 
         if (bindingResult.hasErrors()) {
             // Trả về lỗi validation
@@ -72,4 +82,23 @@ public class ProductDetailController {
         }
     }
 
+    @PutMapping("/detail/{id}")
+    // chỉ cập nhật soluong
+    public ResponseEntity<?> updateProductDetail(@PathVariable int id, @Valid @RequestBody ProductDetail productDetail, BindingResult bindingResult) {
+        ProductDetail productDetail1 = productDetailService.getProductDetailById(id);
+        if (productDetail1 == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy sản phẩm có id = " + id);
+        }
+        if (bindingResult.hasErrors()) {
+            // Trả về lỗi validation
+            String errorMessage = bindingResult.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.joining(", "));
+            System.out.println(errorMessage);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
+        productDetail1.setStockQuantity(productDetail.getStockQuantity());
+        productDetailService.save(productDetail1);
+        return ResponseEntity.ok(productDetail1);
+    }
 }

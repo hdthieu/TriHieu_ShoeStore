@@ -18,7 +18,7 @@ public class User {
     private int userID;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses;
     @Column(name = "phoneNumber")
@@ -41,12 +41,12 @@ public class User {
     @JsonBackReference
     private List<Review> reviews;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Wishlist",
-            joinColumns = @JoinColumn(name = "userID"),
-            inverseJoinColumns = @JoinColumn(name = "productID")
-    )
-    @JsonManagedReference
-    private List<Product> wishlist;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "Wishlist",
+//            joinColumns = @JoinColumn(name = "userID"),
+//            inverseJoinColumns = @JoinColumn(name = "productID")
+//    )
+//    @JsonManagedReference
+//    private List<Product> wishlist;
 }

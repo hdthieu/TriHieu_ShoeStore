@@ -71,9 +71,9 @@ public class Product {
     @JsonIgnore
     private Promotion promotion;
 
-    @ManyToMany(mappedBy = "wishlist")
-    @JsonIgnore
-    private List<User> users;
+//    @ManyToMany(mappedBy = "wishlist", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<User> users;
 
 
     public Product(int productID, String productName, List<String> imageURL, String description, double price, String status, Brand brand, Supplier supplier, Category category, Promotion promotion, LocalDateTime createDate) {

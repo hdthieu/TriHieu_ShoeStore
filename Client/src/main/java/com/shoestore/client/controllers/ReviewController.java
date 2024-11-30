@@ -55,7 +55,7 @@ public class ReviewController {
 //        return "page/Admin/QuanLyBaiDanhGia";
 //    }
 
-    @GetMapping("/admin/reviews")
+    @GetMapping("/page/admin/reviews")
     public String findReviews(Model model,
                               @RequestParam(required = false) Integer rating, // Rating có thể null
                               @RequestParam(defaultValue = "0") int page,

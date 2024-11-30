@@ -31,7 +31,7 @@ public class ProductController {
     @Autowired
     private BrandService brandService;
 
-    @GetMapping("/admin/product")
+    @GetMapping("/page/admin/product")
     public String listProductsAdmin(Model model){
         List<ProductDTO> products= productService.getAllProduct();
         model.addAttribute("products",products);
@@ -39,7 +39,7 @@ public class ProductController {
         return "page/Admin/QuanLySanPham";
     }
 
-    @GetMapping("/admin/product/add")
+    @GetMapping("/page/admin/product/add")
     public String listCategoryAdmin(Model model){
         List<CategoryDTO> categories= categoryService.getAllCategory();
         model.addAttribute("categories",categories);
@@ -51,7 +51,7 @@ public class ProductController {
         return "page/Admin/ThemSanPham";
     }
 
-    @PostMapping("/admin/product/add")
+    @PostMapping("/page/admin/product/add")
     public String addProduct(ProductDTO productDTO, Model model) {
         try {
             // Gửi sản phẩm mới đến server để lưu
@@ -64,14 +64,14 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/admin/detail/{id}")
+    @GetMapping("/page/admin/detail/{id}")
     public String showProductDetail(@PathVariable int id, Model model) {
         ProductDTO productDTO = productService.getProductByIdForDetail(id);
         model.addAttribute("product", productDTO);
         return "page/Admin/ChiTietSanPham";
     }
 
-    @GetMapping("/admin/update/{id}")
+    @GetMapping("/page/admin/update/{id}")
     public String showProductDetailUpdate(@PathVariable int id, Model model) {
         ProductDTO productDTO = productService.getProductByIdForDetail(id);
         model.addAttribute("product", productDTO);
@@ -84,7 +84,7 @@ public class ProductController {
         return "page/Admin/SuaSanPham";
     }
 
-    @GetMapping("/admin/products")
+    @GetMapping("/page/admin/products")
     public String findProducts(Model model,
                                @RequestParam(required = false) String keyword, // Keyword có thể null
                                @RequestParam(defaultValue = "0") int page, // Trang mặc định là 0
