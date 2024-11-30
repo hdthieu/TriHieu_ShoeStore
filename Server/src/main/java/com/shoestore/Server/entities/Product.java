@@ -72,9 +72,9 @@ public class Product {
     private Promotion promotion;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Wishlist> wishlists;
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private List<Wishlist> wishlists;
 
 
 
