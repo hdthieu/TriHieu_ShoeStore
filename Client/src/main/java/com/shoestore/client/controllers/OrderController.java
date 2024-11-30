@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable; // Import đúng từ Spring Data
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -31,7 +34,6 @@ public class OrderController {
     public String showHomePage(Model model) {
         String today = LocalDate.now().toString();
         Map<String, Object> revenueStats = orderService.getRevenueStatistics(today, today);
-        Map<String, Object> revenueYear = orderService.getYearlyRevenue();
         List<Map<String, Object>> loyalCustomer = orderService.getTop10LoyalCustomers();
         Map<String, Long> statistics = orderService.getOrderStatistics();
         List<ProductDTO> topSellingProducts = orderService.getTopSellingProducts("day");
@@ -39,11 +41,24 @@ public class OrderController {
         model.addAttribute("totalOrders", revenueStats.get("totalOrders"));
         model.addAttribute("startDate", today);
         model.addAttribute("endDate", today);
-        model.addAttribute("totalRevenueYear", revenueYear.get("totalRevenue"));
-        model.addAttribute("totalOrdersYear", revenueYear.get("totalQuantity"));
         model.addAttribute("loyalCustomer", loyalCustomer);
         model.addAttribute("products", topSellingProducts);
         model.addAttribute("statistics", statistics);
+
+        Map<String, Object> revenueYear = orderService.getYearlyRevenue();
+        Object totalRevenueObj = revenueYear.get("totalRevenue");
+        long totalRevenue = (totalRevenueObj instanceof Number) ? ((Number) totalRevenueObj).longValue() : 0;
+        // Định dạng số totalRevenue với dấu chấm làm phân cách hàng nghìn
+        DecimalFormat formatter = new DecimalFormat("#.###");
+        formatter.setGroupingUsed(true);
+        formatter.setGroupingSize(3);
+        formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+        String formattedRevenue = formatter.format(totalRevenue);
+        System.out.println("Formatted Revenue: " + formattedRevenue);
+        // Truyền giá trị đã định dạng vào model
+        revenueYear.put("totalRevenueYear", formattedRevenue);
+        model.addAttribute("totalOrdersYear", revenueYear.get("totalQuantity"));
+        model.addAttribute("revenueYear", revenueYear);
         return "page/Admin/TrangChuQuanLy";
     }
 

@@ -36,10 +36,10 @@ import java.util.*;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Value("${user.dir}")  // Lấy thư mục gốc của dự án
+    @Value("${user.dir}")
     private String userDir;
 
-    @Value("${file.upload-dir:src/main/resources/static}")  // Đọc đường dẫn thư mục lưu ảnh từ application.properties
+    @Value("${file.upload-dir:src/main/resources/static}")
     private String uploadDir;
 
     private final ProductService productService;
