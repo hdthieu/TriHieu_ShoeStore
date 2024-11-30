@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-
+import java.text.DecimalFormat;
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
             JOIN FETCH o.orderDetails od
             JOIN FETCH od.productDetail pd
             JOIN FETCH pd.product p
-            ORDER BY o.orderDate ASC
+            ORDER BY o.orderDate DESC
         """;
 
         return entityManager.createQuery(jpql, Order.class).getResultList();
@@ -64,37 +64,59 @@ public class OrderServiceImpl implements OrderService {
             Object[] row = result.get(0);
 
             data.put("totalOrders", row[0] != null ? row[0] : 0);
-            data.put("totalQuantity", row[1] != null ? row[1] : 0);
-            data.put("totalRevenueNotComplete", row[2] != null ? row[2] : 0);
-            data.put("totalRevenue", row[3] != null ? row[3] : 0);
+            data.put("totalRevenue", row[1] != null ? row[1] : 0);
+//            data.put("totalRevenueNotComplete", row[2] != null ? row[2] : 0);
+//            data.put("totalRevenue", row[3] != null ? row[3] : 0);
         } else {
             // Nếu không có dữ liệu, gán tất cả giá trị là 0
             data.put("totalOrders", 0);
-            data.put("totalQuantity", 0);
             data.put("totalRevenue", 0);
-            data.put("totalDiscountedRevenue", 0);
+//            data.put("totalRevenue", 0);
+//            data.put("totalDiscountedRevenue", 0);
         }
 
         return data;
     }
 
 
-    // lấy doanh thu 1 năm và số sản phẩm
+
+
     @Override
     public Map<String, Object> getRevenueAndQuantityForCurrentYear() {
         int currentYear = LocalDate.now().getYear();
+        System.out.println("Current Year: " + currentYear); // In ra năm hiện tại
+
         List<Object[]> result = orderRepository.findTotalRevenueAndQuantityByYear(currentYear);
+
+        // In ra kết quả từ truy vấn database (các dòng dữ liệu)
+        System.out.println("Result from database: " + result);
+
         Map<String, Object> data = new HashMap<>();
+        DecimalFormat df = new DecimalFormat("#,###.##");  // Định dạng số với dấu phân cách hàng nghìn
+
         if (result != null && !result.isEmpty()) {
             Object[] row = result.get(0);
+
+            // In ra các giá trị lấy từ row
+            System.out.println("Total Quantity: " + (row[0] != null ? row[0] : 0));
+            System.out.println("Total Revenue: " + (row[1] != null ? df.format(row[1]) : 0));
+
             data.put("totalQuantity", row[0] != null ? row[0] : 0);
             data.put("totalRevenue", row[1] != null ? row[1] : 0);
         } else {
+            System.out.println("No data found.");
+
             data.put("totalQuantity", 0);
             data.put("totalRevenue", 0);
         }
+
+        // In ra Map kết quả
+        System.out.println("Data Map: " + data);
+
         return data;
     }
+
+
 
     @Override
     public List<Object[]> getTop10LoyalCustomers(int minOrders) {

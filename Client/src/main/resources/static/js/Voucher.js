@@ -156,7 +156,7 @@ document.getElementById("voucher-form-edit").addEventListener("submit", function
     const minValueOrder = parseFloat(document.getElementById("giaTriDonToiThieu-edit").value);
     const startDate = document.getElementById("ngayBatDau-edit").value;
     const endDate = document.getElementById("ngayKetThuc-edit").value;
-
+    console.log(discountType)
     const errors = [];
     if (!name) {
         errors.push("Vui lòng nhập tên phiếu giảm giá.");

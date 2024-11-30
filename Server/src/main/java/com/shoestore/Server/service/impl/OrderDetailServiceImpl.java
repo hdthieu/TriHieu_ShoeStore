@@ -53,7 +53,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         """;
 
         Query query = entityManager.createNativeQuery(sql);
-        query.setParameter(1, orderID);  // Thay ?1 bằng tham số 'orderID'
+        query.setParameter(1, orderID);
 
         // Lấy kết quả từ cơ sở dữ liệu
         List<Object[]> results = query.getResultList();
@@ -146,7 +146,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public List<Product> getTopSellingProducts(LocalDate startDate, LocalDate endDate, int limit) {
         List<Object[]> results = orderDetailRepository.findTopSellingProducts(startDate, endDate);
 
-        // Chỉ lấy sản phẩm bán chạy nhất (dưới hạn số lượng sản phẩm)
+        // Chỉ lấy sản phẩm bán chạy nhất (giới hạn số lượng sản phẩm)
         return results.stream()
                 .limit(limit)
                 .map(obj -> (Product) obj[0])
