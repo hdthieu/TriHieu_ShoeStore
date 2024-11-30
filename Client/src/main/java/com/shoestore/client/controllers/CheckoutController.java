@@ -39,11 +39,17 @@ public class CheckoutController {
     private OrderService orderService;
     @Autowired
     private OrderDetailService orderDetailService;
-
+    @Autowired
+    private PaymentService paymentService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private BrandService brandService;
     @Autowired
     private HttpSession session;
+
     @GetMapping("/checkout")
-    public String showFormCheckout(
+    public String showFormCheckoutFromCart(
             @RequestParam("id") List<Integer> productDetailId,
             @RequestParam("quantity") List<Integer> quantities,
             @RequestParam("delivery") int delivery,
@@ -64,7 +70,7 @@ public class CheckoutController {
         int userId = user.getUserID();
         System.out.println(user);
 
-        List<AddressDTO> addressDTOS=addressService.getAddressByUserId(userId);
+        List<AddressDTO> addressDTOS = addressService.getAddressByUserId(userId);
         System.out.println(addressDTOS);
 
         // Map sản phẩm với số lượng
@@ -78,24 +84,75 @@ public class CheckoutController {
 
                     // Tìm ProductDetail theo ID
                     ProductDetailDTO productDetail = productDetailService.getProductDetailById(productDetailsId);
-                    ProductDTO productDTO=productService.getProductByProductDetail(productDetailsId);
+                    ProductDTO productDTO = productService.getProductByProductDetail(productDetailsId);
                     // Tạo DTO chứa thông tin cần thiết
-                    return new ProductDetailCheckoutDTO(productDetail, quantity,productDTO.getProductName(),productDTO.getImageURL(),productDTO.getPrice());
+                    return new ProductDetailCheckoutDTO(productDetail, quantity, productDTO.getProductName(), productDTO.getImageURL(), productDTO.getPrice());
                 })
                 .toList();
         DecimalFormat formatter = new DecimalFormat("#,###.##");
-        model.addAttribute("user",user);
-        model.addAttribute("address",addressDTOS);
-        model.addAttribute("ProductDetailCheckoutDTO",productDetailCheckoutDTOS);
+        model.addAttribute("user", user);
+        model.addAttribute("address", addressDTOS);
+        model.addAttribute("ProductDetailCheckoutDTO", productDetailCheckoutDTOS);
         model.addAttribute("subTotal", formatter.format(subTotal) + " VNĐ");
         model.addAttribute("delivery", delivery == 0 ? "FREE" : formatter.format(delivery) + " VNĐ");
         model.addAttribute("total", formatter.format(total));
         // Trả về thông báo thành công
         return "page/Customer/Checkout";
     }
+
+    @GetMapping("/checkoutFromProductDetail")
+    public String showFormCheckoutFromProductDetail(
+            @RequestParam("quantity") int quantities,
+            @RequestParam("productDetailId") int productDetailId,
+            @RequestParam("price") int price,
+            Model model) {
+        System.out.println(quantities);
+        System.out.println(price);
+        System.out.println(productDetailId);
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        // Lấy thông tin user từ session
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login"; // Nếu không có user trong session, chuyển hướng về trang đăng nhập
+        }
+
+        // Dùng userId để lấy giỏ hàng của người dùng
+        int userId = user.getUserID();
+        List<AddressDTO> addressDTOS = addressService.getAddressByUserId(userId);
+        ProductDetailDTO productDetailDTO = productDetailService.getProductDetailById(productDetailId);
+        ProductDetailCheckoutDTO productDetailCheckoutDTO = new ProductDetailCheckoutDTO();
+        productDetailCheckoutDTO.setProductDetailDTO(productDetailDTO);
+        //Tìm product có mã đẻ lấy price,img,size
+        ProductDTO productDTO=productService.getProductByProductDetail(productDetailId);
+        productDetailCheckoutDTO.setPrice(productDTO.getPrice());
+        productDetailCheckoutDTO.setName(productDTO.getProductName());
+        productDetailCheckoutDTO.setImage(productDTO.getImageURL());
+        productDetailCheckoutDTO.setQuantity(quantities);
+        List<ProductDetailCheckoutDTO> productDetailCheckoutDTOS = new ArrayList<>();
+        productDetailCheckoutDTOS.add(productDetailCheckoutDTO);
+
+        int subTotal=price* quantities;
+        int delivery=0;
+        int total=subTotal+delivery;
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+        model.addAttribute("user", user);
+        model.addAttribute("address", addressDTOS);
+        model.addAttribute("ProductDetailCheckoutDTO", productDetailCheckoutDTOS);
+        model.addAttribute("subTotal", formatter.format(subTotal) + " VNĐ");
+        model.addAttribute("delivery",formatter.format(delivery) + " VNĐ");
+        model.addAttribute("total", formatter.format(total));
+
+
+        return "page/Customer/Checkout";
+    }
+
     private String formatAddress(AddressDTO addressDTO) {
         return addressDTO.getStreet() + ", ward " + addressDTO.getWard() + ", district " + addressDTO.getDistrict() + ", " + addressDTO.getCity();
     }
+
     private Integer extractProductDetailID(String productDetailStr) {
         // Tìm vị trí "productDetailID=" trong chuỗi
         int startIndex = productDetailStr.indexOf("productDetailID=") + "productDetailID=".length();
@@ -108,6 +165,7 @@ public class CheckoutController {
         // Trích xuất giá trị và chuyển thành số nguyên
         return Integer.parseInt(productDetailStr.substring(startIndex, endIndex).trim());
     }
+
     @PostMapping("/order/payment/add")
     public String addOrder(@RequestBody Map<String, Object> payload,
                            OrderCheckoutDTO orderCheckoutDTO
@@ -131,8 +189,8 @@ public class CheckoutController {
         }
 
 
-        AddressDTO addressDTO=addressService.getAddressById(address);
-        String shippingAddress=formatAddress(addressDTO);
+        AddressDTO addressDTO = addressService.getAddressById(address);
+        String shippingAddress = formatAddress(addressDTO);
         // Dùng userId để lấy giỏ hàng của người dùng
         int userId = user.getUserID();
         //Chuẩn bị dữ liệu order xong
@@ -142,27 +200,32 @@ public class CheckoutController {
         orderCheckoutDTO.setUser(user);
         orderCheckoutDTO.setStatus("Processing");
         orderCheckoutDTO.setShippingAddress(shippingAddress);
-        System.out.println(orderCheckoutDTO);
-        OrderCheckoutDTO orderSave=orderService.addOrder(orderCheckoutDTO);
-        int orderId=orderSave.getOrderID();
-        OrderCheckoutDTO orderCheckoutDTODTO=orderService.getById(orderId);
-        System.out.println(orderCheckoutDTODTO);
-//        List<OrderDetailResponeDTO> orderDetailResponeDTOS = new ArrayList<>();
+
+        OrderCheckoutDTO orderSave = orderService.addOrder(orderCheckoutDTO);
+        int orderId = orderSave.getOrderID();
+        OrderCheckoutDTO orderCheckoutDTODTO = orderService.getById(orderId);
+
         for (Map<String, Object> productDetail : productDetails) {
-            OrderDetailResponeDTO orderDetailResponeDTO=new OrderDetailResponeDTO();
+            OrderDetailResponeDTO orderDetailResponeDTO = new OrderDetailResponeDTO();
             Number price = (Number) productDetail.get("price");
             orderDetailResponeDTO.setPrice(price.doubleValue());
             orderDetailResponeDTO.setQuantity((Integer) productDetail.get("quantity"));
 
             String productDetailIdStr = (String) productDetail.get("productDetailId");
             Integer productDetailID = extractProductDetailID(productDetailIdStr);
-            ProductDetailDTO productDetailDTO=productDetailService.getProductDetailById(productDetailID);
+            ProductDetailDTO productDetailDTO = productDetailService.getProductDetailById(productDetailID);
             orderDetailResponeDTO.setProductDetail(productDetailDTO);
             orderDetailResponeDTO.setOrder(orderCheckoutDTODTO);
             System.out.println(orderDetailResponeDTO);
-            OrderDetailResponeDTO orderDetailSave=orderDetailService.addOrderDetail(orderDetailResponeDTO);
-        }
+            OrderDetailResponeDTO orderDetailSave = orderDetailService.addOrderDetail(orderDetailResponeDTO);
 
+        }
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setStatus("Pending");
+        paymentDTO.setPaymentDate(LocalDate.now());
+        paymentDTO.setOrder(orderSave);
+        System.out.println("Payment gui:"+paymentDTO);
+        PaymentDTO paymentSave = paymentService.addPayment(paymentDTO);
         // Xử lý dữ liệu ở đây và trả về phản hồi
         return "redirect:/login";
     }

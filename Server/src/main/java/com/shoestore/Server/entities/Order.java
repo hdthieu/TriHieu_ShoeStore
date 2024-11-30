@@ -29,9 +29,12 @@ public class Order {
     @JsonIgnore
     private Voucher voucher;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<OrderDetail> orderDetails;
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Payment payment;
+
     private String shippingAddress;
     @ManyToOne
     @JoinColumn(name = "userID")
