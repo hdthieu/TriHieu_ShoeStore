@@ -29,25 +29,7 @@
             margin-top: 50%;
             color: #fff;
         }
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1050;
-        }
-        .modal-dialog {
-            background-color: white;
-            border-radius: 5px;
-            width: 50%;
-            max-width: 500px;
-            overflow: hidden;
-        }
+
 
         .btn-outline-primary {
             border-color: #0056b3; /* Màu viền mới */
@@ -58,6 +40,84 @@
             background-color: #0056b3; /* Nền khi hover */
             color: #fff;              /* Màu chữ khi hover */
         }
+
+        .btn-outline-primary.active {
+            background-color: #0056b3; /* Nền khi hover */
+            color: #fff;
+        }
+
+
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pagination .btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination .btn:hover {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination .page-info {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .pagination .btn i {
+            font-size: 18px;
+        }
+
+        /* Đặc biệt cho nút 'Prev' và 'Next' */
+        .pagination .btn-outline-primary {
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .pagination .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Thêm hiệu ứng hover */
+        .pagination .btn-outline-primary:focus,
+        .pagination .btn-outline-primary:hover {
+            box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Để nút disabled trông khác biệt */
+        .pagination .btn.disabled {
+            background-color: #e0e0e0;
+            color: #b0b0b0;
+            cursor: not-allowed;
+            border-color: #dcdcdc;
+        }
+
+        /* Ẩn các nút disabled */
+        .pagination .btn.disabled {
+            pointer-events: none;
+        }
+
+        form table td {
+            padding: 10px; /* Tạo khoảng cách bên trong mỗi ô */
+        }
+
+
+
 
 
     </style>
@@ -70,33 +130,27 @@
                 <div class="sidebar-sticky">
                     <h4 class="text-light text-center mt-4">AdminAD</h4>
                     <ul class="nav flex-column mt-3">
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Home</a>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
                         </li>
-                        <li class="nav-item mt-4">
+                        <li class="nav-item mt-3">
                             <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
                         </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý bài đánh giá</a>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-light" th:href="@{/page/admin/reviews}" onclick="setActive(this)">Bài viết</a>
                         </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh mục</a>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-light" th:href="@{/page/admin/products}" onclick="setActive(this)">Sản phẩm</a>
                         </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="http://127.0.0.1:5500/page/QuanLySanPham.html" onclick="setActive(this)">Sản phẩm</a>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
                         </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Đơn hàng</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-light" href="http://localhost:3000/admin/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
                         </li>
                     </ul>
-                    <div class="styleUser text-center">
-                        <h6>Đào Thanh Phú</h6>
+                    <div class="styleUser text-center" style="margin-top: 110%">
+                        <h6>Hồ Đức Trí Hiếu</h6>
                         <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
                     </div>
                 </div>
@@ -106,48 +160,59 @@
             <div class="main-content col-md-10">
                 <h2 class="mt-4">Quản lý bài đánh giá</h2>
 
-                <!-- Bộ lọc -->
-                <div class="filters mb-4">
-                    <!-- Lọc theo xếp hạng -->
-                    <div class="btnRating" role="group">
-                        <span>Bộ lọc xếp hạng: </span>
-                        <button class="btn btn-outline-primary btn-sm" onclick="filterByRating()" id="all">Tất cả (42)</button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="filterByRating()"> ⭐ (5)</button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="filterByRating()"> ⭐⭐ (8)</button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="filterByRating()"> ⭐⭐⭐ (12)</button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="filterByRating()"> ⭐⭐⭐⭐ (10)</button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="filterByRating()"> ⭐⭐⭐⭐⭐ (7)</button>
-                    </div>
+                <form method="GET" action="/page/admin/reviews" class="mt-3" style="margin-bottom: 15px;">
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Tìm kiếm</button>
+                    <table>
+                        <tr>
+                            <!-- Tìm kiếm theo tên sản phẩm -->
+                            <td>
+                                <label for="searchProduct">Lọc theo tên sản phẩm:</label>
+                                <input type="text" id="searchProduct" name="nameProduct"
+                                       placeholder="Nhập tên sản phẩm..."
+                                       class="form-control" style="width: 250px;">
+                            </td>
 
-                    <!-- Tìm kiếm theo tên sản phẩm -->
-                    <div class="mt-3">
-                        <label for="searchProduct">Tìm kiếm sản phẩm: </label>
-                        <input type="text" id="searchProduct" placeholder="Nhập tên sản phẩm..." onkeyup="searchByProductName()" class="form-control d-inline-block" style="width: 300px;">
-                    </div>
+                            <!-- Lọc theo thứ tự ngày tạo -->
+                            <td>
+                                <label for="sortReviews">Lọc theo ngày:</label>
+                                <select id="sortReviews" name="sortOrder" class="form-control" style="width: 200px;">
+                                    <option value="">Chọn</option>
+                                    <option value="new">Mới nhất</option>
+                                    <option value="old">Cũ nhất</option>
+                                </select>
+                            </td>
 
-                    <!-- Lọc theo thứ tự ngày tạo -->
-                    <div class="mt-3">
-                        <label for="sortReviews">Sắp xếp: </label>
-                        <select id="sortReviews" onchange="sortReviewsByDate()" class="form-control d-inline-block" style="width: 200px;">
-                            <option value="newest">Mới nhất</option>
-                            <option value="oldest">Cũ nhất</option>
-                        </select>
-                    </div>
-                </div>
+                            <!-- Bộ lọc xếp hạng -->
+                            <td>
+                                <label for="filterRating">Lọc theo xếp hạng:</label>
+                                <select id="filterRating" name="rating" class="form-control" style="width: 200px;">
+                                    <option value="">Tất cả</option>
+                                    <option value="5">5 sao</option>
+                                    <option value="4">4 sao</option>
+                                    <option value="3">3 sao</option>
+                                    <option value="2">2 sao</option>
+                                    <option value="1">1 sao</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                    </table>
+                </form>
+
 
 
                 <!-- Danh sách bài đánh giá -->
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead class="thead-light">
-                            <tr>
-                                <th>Username</th>
-                                <th>Ngày tạo</th>
-                                <th>Sản phẩm</th>
-                                <th>Nội dung</th>
-                                <th>Xếp hạng</th>
-                                <th>Hành động</th>
-                            </tr>
+                        <tr>
+                            <th>Username</th>
+                            <th>Ngày tạo</th>
+                            <th>Sản phẩm</th>
+                            <th>Nội dung</th>
+                            <th>Xếp hạng</th>
+                            <th>Hành động</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr th:each="review : ${reviews}">
@@ -158,14 +223,44 @@
                             <td th:text="${review.contents}"></td>
                             <td th:text="${review.start}"></td>
                             <td>
-                                <button class="btn btn-danger btn-sm" onclick="deleteReview(this)">Delete</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteReview(this)">Xóa</button>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
+
+                    <div class="pagination">
+                        <!-- Prev -->
+                        <a th:href="@{${requestURL}(page=${currentPage - 1})}"
+                           th:if="${currentPage > 0}"
+                           class="btn btn-outline-primary btn-sm"
+                           role="button">
+                            <i class="fas fa-chevron-left"></i> Prev
+                        </a>
+                        <span th:if="${currentPage == 0}" class="btn btn-outline-primary btn-sm disabled">
+        <i class="fas fa-chevron-left"></i> Prev
+    </span>
+
+                        <!-- Hiển thị trang hiện tại và tổng số trang -->
+                        <span class="page-info" th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span>
+
+                        <!-- Next -->
+                        <a th:href="@{${requestURL}(page=${currentPage + 1})}"
+                           th:if="${currentPage < totalPages - 1}"
+                           class="btn btn-outline-primary btn-sm"
+                           role="button">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </a>
+                        <span th:if="${currentPage == totalPages - 1}" class="btn btn-outline-primary btn-sm disabled">
+        Next <i class="fas fa-chevron-right"></i>
+    </span>
+                    </div>
+
+
+
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -215,32 +310,6 @@
 
         }
 
-        // Lấy tất cả các nút trong nhóm
-        const buttons = document.querySelectorAll('.btnRating .btn');
-
-        // Hàm thay đổi lớp khi nhấn vào nút
-        function setActive(button) {
-            // Đặt tất cả các nút về lớp mặc định (btn-outline-primary)
-            buttons.forEach(btn => {
-                btn.classList.remove('btn-primary');  // Loại bỏ lớp btn-primary
-                btn.classList.add('btn-outline-primary');  // Thêm lớp btn-outline-primary
-            });
-
-            // Đặt nút được chọn thành btn-primary (giữ màu như hover)
-            button.classList.remove('btn-outline-primary');
-            button.classList.add('btn-primary');
-        }
-
-        // Gắn sự kiện click cho tất cả các nút
-        buttons.forEach(button => {
-            button.addEventListener('click', function () {
-                setActive(button);  // Gọi hàm khi nhấn nút
-            });
-        });
-
-        // Đặt nút "Tất cả" là mặc định được chọn
-        document.getElementById('all').classList.remove('btn-outline-primary');
-        document.getElementById('all').classList.add('btn-primary');
 
 
 

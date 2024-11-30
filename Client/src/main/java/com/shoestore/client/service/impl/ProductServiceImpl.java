@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -124,8 +125,6 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-
-
     // Lấy Top 10 sản phẩm bán chạy
     @Override
     public List<ProductHomeDTO> getTop10BestSellers() {
@@ -133,8 +132,7 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        System.out.println("Response Body: " + response.getBody());
-        return response.getBody().getProductDTOs();
+        return response.getBody().getBestSellers();
     }
 
     // Lấy Top 10 sản phẩm mới ra mắt
@@ -144,7 +142,7 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getProductDTOs();
+        return response.getBody().getNewArrivals();
     }
 
     // Lấy Top 10 sản phẩm thịnh hành
@@ -154,6 +152,32 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getProductDTOs();
+        return response.getBody().getTrendingProducts();
     }
+
+    @Override
+    public ProductResponseDTO findProducts(String keyword, String sortBy, String order, int page, int size) {
+        // Xây dựng URL với tất cả tham số, kể cả keyword (cho phép null)
+        String apiUrl = UriComponentsBuilder
+                .fromHttpUrl("http://localhost:8080/products/findproducts")
+                .queryParam("keyword", keyword) // Keyword có thể null
+                .queryParam("page", page)       // Trang
+                .queryParam("size", size)       // Kích thước mỗi trang
+                .queryParam("sortBy", sortBy)   // Trường sắp xếp (có thể null)
+                .queryParam("order", order)     // Thứ tự sắp xếp (có thể null)
+                .toUriString();
+
+        // Gọi API với RestTemplate
+        ResponseEntity<ProductResponseDTO> response = restTemplate.exchange(
+                apiUrl, HttpMethod.GET, null, ProductResponseDTO.class
+        );
+
+        // Log response body (Có thể bỏ qua trong môi trường production)
+        System.out.println("Response Body: " + response.getBody());
+
+        // Trả về danh sách sản phẩm từ response
+        return response.getBody();
+    }
+
+
 }

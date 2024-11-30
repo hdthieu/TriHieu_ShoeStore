@@ -7,11 +7,16 @@ import com.shoestore.Server.service.BrandService;
 import com.shoestore.Server.service.CategoryService;
 import com.shoestore.Server.service.ProductService;
 import com.shoestore.Server.service.SupplierService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 
 
@@ -31,6 +36,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
@@ -112,8 +118,21 @@ public class ProductController {
             @RequestParam("status") String status,  // Trạng thái sản phẩm
             @RequestParam("brandID") int brandID,  // ID thương hiệu
             @RequestParam("categoryID") int categoryID,  // ID danh mục
-            @RequestParam("supplierID") int supplierID  // ID nhà cung cấp
+            @RequestParam("supplierID") int supplierID ,
+            @Valid @ModelAttribute Product product, BindingResult bindingResult
     ) {
+
+        if (bindingResult.hasErrors()) {
+            // Trả về lỗi nếu có
+            String errorMessage = bindingResult.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.joining(", "));
+            System.out.println(errorMessage);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
+
+
+
         try {
             // Kiểm tra tham số đầu vào
             if (productName == null || productName.isEmpty()) {
@@ -156,7 +175,7 @@ public class ProductController {
             }
 
             // Tạo đối tượng Product từ các tham số nhận được
-            Product product = new Product();
+            product = new Product();
             product.setProductName(productName);
             product.setDescription(description);
             product.setPrice(price);
@@ -220,20 +239,41 @@ public class ProductController {
         }
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<Product> updateProduct(
+    public ResponseEntity<?> updateProduct(
             @PathVariable int id,
             @RequestParam(value = "image", required = false) MultipartFile[] files ,  // Tham số ảnh có thể có hoặc không
             @RequestParam("productName") String productName,  // Tên sản phẩm
             @RequestParam("description") String description,  // Mô tả sản phẩm
-            @RequestParam("price") double price,  // Giá sản phẩm
+            @RequestParam("price") String priceStr,  // Giá sản phẩm
             @RequestParam("status") String status,  // Trạng thái sản phẩm
             @RequestParam("brand") int brandID,  // ID thương hiệu
             @RequestParam("category") int categoryID,  // ID danh mục
-            @RequestParam("supplier") int supplierID  // ID nhà cung cấp
+            @RequestParam("supplier") int supplierID,  // ID nhà cung cấp
+            @Valid @ModelAttribute Product existingProduct, BindingResult bindingResult
     ) {
+
+
+        double price = 0;
+        if (priceStr != null && !priceStr.isEmpty()) {
+            try {
+                price = Double.parseDouble(priceStr); // Chuyển đổi sang double
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá sản phẩm không hợp lệ.");
+            }
+        }else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Giá sản phẩm không được rỗng.");
+
+        if (bindingResult.hasErrors()) {
+            // Trả về lỗi nếu có
+            String errorMessage = bindingResult.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.joining(", "));
+            System.out.println(errorMessage);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+        }
         try {
             // Tìm sản phẩm hiện tại từ ID
-            Product existingProduct = productService.getProductById(id);
+             existingProduct = productService.getProductById(id);
             if (existingProduct == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Nếu không tìm thấy sản phẩm
             }
@@ -288,35 +328,77 @@ public class ProductController {
     }
 
 
+    @GetMapping("/findproducts")
+    public ResponseEntity<Map<String, Object>> findProducts(
+            @RequestParam(required = false) String keyword, // Cho phép null
+            @RequestParam(defaultValue = "0") int page, // Trang mặc định là 0
+            @RequestParam(defaultValue = "5") int size, // Kích thước mặc định là 5
+            @RequestParam(required = false) String sortBy, // Có thể null
+            @RequestParam(required = false) String order) {
+
+        // Giải mã giá trị của keyword, chuyển %20 thành dấu cách (nếu có)
+        if (keyword != null) {
+            keyword = URLDecoder.decode(keyword, StandardCharsets.UTF_8);
+        }
+
+        System.out.println("Keyword: " + keyword);
+
+        // Tạo đối tượng Pageable để phân trang
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Gọi phương thức service để lấy kết quả
+        Page<Product> productPage = productService.findProducts(keyword, sortBy, order, pageable);
+
+        // Chuẩn bị response
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", productPage.getContent());
+        response.put("totalItems", productPage.getTotalElements());
+        response.put("totalPages", productPage.getTotalPages());
+        response.put("currentPage", page);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
+//    @GetMapping("/{id}") // Ánh xạ HTTP GET
+//    public ResponseEntity<Map<String,Object>> getProductsById(@PathVariable int id){
+//        List<Product> products=productService.getById(id);
+//        Map<String,Object> response= new HashMap<>();
+//        response.put("product",products);
+//        return ResponseEntity.ok(response);
+//    }
+
 
 
     // API lấy danh sách Best Sellers
-//    @GetMapping("/best-sellers")
-//    public ResponseEntity<Map<String, Object>> getBestSellers() {
-//        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
-//        System.out.println(bestSellers);
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("bestSellers", bestSellers);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    // API lấy danh sách New Arrivals
-//    @GetMapping("/new-arrivals")
-//    public ResponseEntity<Map<String, Object>> getNewArrivals() {
-//        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
-//        Map<String, Object> response = new HashMap<>();
-//        System.out.println(newArrivals);
-//        response.put("newArrivals", newArrivals);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    // API lấy danh sách Trending
-//    @GetMapping("/trending")
-//    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
-//        List<ProductDTO> trendingProducts = productService.getTop10Trending();
-//        System.out.println(trendingProducts);
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("trendingProducts", trendingProducts);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/best-sellers")
+    public ResponseEntity<Map<String, Object>> getBestSellers() {
+        List<ProductDTO> bestSellers = productService.getTop10BestSellers();
+        System.out.println(bestSellers);
+        Map<String, Object> response = new HashMap<>();
+        response.put("bestSellers", bestSellers);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách New Arrivals
+    @GetMapping("/new-arrivals")
+    public ResponseEntity<Map<String, Object>> getNewArrivals() {
+        List<ProductDTO> newArrivals = productService.getTop10NewArrivals();
+        Map<String, Object> response = new HashMap<>();
+        System.out.println(newArrivals);
+        response.put("newArrivals", newArrivals);
+        return ResponseEntity.ok(response);
+    }
+
+    // API lấy danh sách Trending
+    @GetMapping("/trending")
+    public ResponseEntity<Map<String, Object>> getTrendingProducts() {
+        List<ProductDTO> trendingProducts = productService.getTop10Trending();
+        System.out.println(trendingProducts);
+        Map<String, Object> response = new HashMap<>();
+        response.put("trendingProducts", trendingProducts);
+        return ResponseEntity.ok(response);
+    }
+
 }
