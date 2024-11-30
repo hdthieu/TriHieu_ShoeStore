@@ -40,86 +40,80 @@
             justify-content: space-between;
         }
         .sidebar .nav-link.active-border {
-        border-left: 4px solid #17a2b8; 
-        background-color: #495057;
-        color: #ffffff; 
-      }
-      .styleUser{
-        margin-top: 50%;
-        color: #fff;
-      }
+            border-left: 4px solid #17a2b8;
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .styleUser{
+            margin-top: 50%;
+            color: #fff;
+        }
 
 
-      .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1050;
-}
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+        }
 
-.modal-dialog {
-    background-color: white;
-    border-radius: 5px;
-    width: 50%;
-    max-width: 500px;
-    overflow: hidden;
-}
+        .modal-dialog {
+            background-color: white;
+            border-radius: 5px;
+            width: 50%;
+            max-width: 500px;
+            overflow: hidden;
+        }
 
 
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="sidebar col-md-2 d-none d-md-block">
-                <div class="sidebar-sticky">
-                    <h4 class="text-light text-center mt-4">AdminAD</h4>
-                    <ul class="nav flex-column mt-3">
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Home</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý bài đánh giá</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh mục</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Đơn hàng</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Quản lý kho</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link text-light" href="#" onclick="setActive(this)">Danh sách liên hệ</a>
-                        </li>
-                    </ul>
-                    <div class="styleUser text-center">
-                        <h6>Đào Thanh Phú</h6>
-                        <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
-                    </div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="sidebar col-md-2 d-none d-md-block">
+            <div class="sidebar-sticky">
+                <h4 class="text-light text-center mt-4">AdminAD</h4>
+                <ul class="nav flex-column mt-3">
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-light" th:href="@{/page/admin/reviews}" onclick="setActive(this)">Đánh giá</a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-light" th:href="@{/page/admin/products}" onclick="setActive(this)">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-light" href="http://localhost:3000/admin/vouchers/view" onclick="setActive(this)">Khuyến Mãi</a>
+                    </li>
+                </ul>
+                <div class="styleUser text-center" style="margin-top: 110%">
+                    <h6>Hồ Đức Trí Hiếu</h6>
+                    <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
                 </div>
-            </nav>
-        </div>
-        </div>
+            </div>
+        </nav>
+    </div>
+</div>
 
 <!-- Chi tiết sản phẩm -->
 <div id="productDetailForm" class="container-fluid" style=" width: 100%; height: 100vh; overflow-y: auto;">
     <h1 class="text-center mb-4">Chi tiết sản phẩm</h1>
-    
+
     <!-- Card lớn hơn với chiều rộng 60% -->
     <div class="card" style="width: 60%; margin: 0 auto;">
         <div class="card-header">Thông tin sản phẩm</div>
@@ -149,8 +143,8 @@
                 <div class="col-md-2">
                     <label>Hình ảnh sản phẩm</label>
                     <th:block th:each="image : ${product.imageURL}">
-                    <img th:src="@{http://localhost:8080/images/{image}(image=${image})}" alt="Hình ảnh sản phẩm"
-                         style="width:100%; height:auto; border:1px solid #ccc; padding:5px;" />
+                        <img th:src="@{http://localhost:8080/images/{image}(image=${image})}" alt="Hình ảnh sản phẩm"
+                             style="width:100%; height:auto; border:1px solid #ccc; padding:5px;" />
                     </th:block>
 
                 </div>
@@ -161,22 +155,31 @@
 
     <!-- Card cho bảng chi tiết (Size, Color, Quantity) -->
     <div class="card mt-4" style="width: 60%; margin: 0 auto;">
-        <div class="card-header">Chi tiết sản phẩm</div>
+        <div class="card-header">Chi tiết sản phẩm
+
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th class="col-md-4">Kích thước</th>
-                        <th class="col-md-4">Màu sắc</th>
-                        <th class="col-md-4">Số lượng</th>
-                    </tr>
+                <tr>
+                    <th class="col-md-4">Kích thước</th>
+                    <th class="col-md-4">Màu sắc</th>
+                    <th class="col-md-4">Số lượng</th>
+                </tr>
                 </thead>
                 <tbody>
                 <!-- Lặp qua danh sách productDetails -->
                 <tr th:each="detail : ${product.productDetails}">
+                    <td style="display:none;" th:text="${detail.productDetailID}"></td>
                     <td th:text="${detail.size}"></td>
                     <td th:text="${detail.color}"></td>
                     <td th:text="${detail.stockQuantity}"></td>
+                    <!-- Edit Button -->
+                    <td>
+
+                        <button type="button" class="btn btn-info btn-sm" onclick="showEditDetailModal(this)">Sửa</button>
+
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -237,6 +240,7 @@
                         <input type="number" class="form-control" id="detailQuantity" name="quantity" required>
                     </div>
                 </form>
+                <div id="error-message" style="color: red; display: none;"></div>
             </div>
 
             <div class="modal-footer">
@@ -248,22 +252,61 @@
 </div>
 
 
+<!-- Modal Sưa -->
+<div id="editDetailModal" class="modal" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sửa số lượng</h5>
+                <button type="button" class="close" onclick="closeEditDetailModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editDetailForm">
+
+                    <input type="hidden" id="editProductDetailID">
+
+                    <div class="form-group">
+                        <label for="detailQuantity">Số lượng</label>
+                        <input type="number" class="form-control" id="editdetailQuantity" name="quantity" required>
+                    </div>
+                </form>
+                <div id="editerror-message" style="color: red; display: none;"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveEditDetail()">Lưu</button>
+                <button type="button" class="btn btn-secondary" onclick="closeEditDetailModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     function setActive(element) {
-    let menuItems = document.querySelectorAll('.sidebar .nav-link');
-    menuItems.forEach(item => item.classList.remove('active-border')); // Xóa lớp active-border khỏi tất cả các mục
-    element.classList.add('active-border'); // Thêm lớp active-border cho mục được chọn
-}
+        let menuItems = document.querySelectorAll('.sidebar .nav-link');
+        menuItems.forEach(item => item.classList.remove('active-border')); // Xóa lớp active-border khỏi tất cả các mục
+        element.classList.add('active-border'); // Thêm lớp active-border cho mục được chọn
+    }
 
-function showAddDetailModal() {
-    document.getElementById('addDetailModal').style.display = 'flex';
-}
+    function showAddDetailModal() {
+        document.getElementById('addDetailModal').style.display = 'flex';
+    }
 
-function closeAddDetailModal() {
-    document.getElementById('addDetailModal').style.display = 'none';
-}
-
+    function closeAddDetailModal() {
+        document.getElementById('addDetailModal').style.display = 'none';
+    }
+    function closeEditDetailModal() {
+        document.getElementById('editDetailModal').style.display = 'none';
+    }
+    function showEditDetailModal(button) {
+        const productDetailID = button.closest('tr').querySelector('td').textContent.trim();
+        document.getElementById('editProductDetailID').value = productDetailID;
+        document.getElementById('editDetailModal').style.display = 'flex';
+    }
 
     function saveDetail() {
         // Lấy giá trị từ form
@@ -294,24 +337,76 @@ function closeAddDetailModal() {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Lỗi khi thêm chi tiết sản phẩm');
+                    // Lấy thông tin lỗi từ server
+                    return response.text().then(errorText => {
+                        try {
+                            const errorData = JSON.parse(errorText); // Parse JSON nếu có thể
+                            throw new Error(errorData.message || errorData.join(", "));
+                        } catch {
+                            throw new Error("Lỗi: " + errorText); // Nếu không parse được, hiển thị lỗi gốc
+                        }
+                    });
                 }
-                return response.json();
+                return response.json(); // Phản hồi thành công
             })
             .then(data => {
                 alert('Chi tiết sản phẩm đã được thêm thành công!');
                 console.log(data);
-                // Đóng modal sau khi lưu thành công
-                closeAddDetailModal();
+                closeAddDetailModal(); // Đóng modal
+                window.location.reload(); // Reload trang
+            })
+            .catch(error => {
+                console.error('Lỗi khi thêm chi tiết sản phẩm:', error.message);
+
+                // Hiển thị lỗi lên giao diện
+                const errorMessageElement = document.getElementById('error-message');
+                errorMessageElement.textContent = error.message; // Cập nhật thông báo lỗi
+                errorMessageElement.style.display = 'block'; // Hiển thị phần tử lỗi
+            });
+
+    }
+
+
+    function saveEditDetail() {
+        const productDetailID = document.getElementById('editProductDetailID').value;
+        const quantity = document.getElementById('editdetailQuantity').value;
+
+        const productDetail = {
+            stockQuantity: parseInt(quantity)
+        };
+
+        fetch(`http://localhost:8080/products-details/detail/${productDetailID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productDetail)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errorText => {
+                        throw new Error(errorText);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Cập nhật số lượng thành công!');
+                closeEditDetailModal();
                 window.location.reload();
             })
             .catch(error => {
-                alert('Có lỗi xảy ra: ' + error.message);
+                console.error('Lỗi:', error.message);
+                document.getElementById('editerror-message').textContent = error.message;
+                document.getElementById('editerror-message').style.display = 'block';
             });
     }
+
+    // Xử lý nút quay lại
     document.getElementById("goBackButton").addEventListener("click", function () {
         window.history.back();
     });
+
 
 
 </script>
