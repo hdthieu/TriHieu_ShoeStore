@@ -153,15 +153,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .collect(Collectors.toList());
     }
 
-    public void save(OrderDetail orderDetail) {
-        orderDetailRepository.save(orderDetail);
-    }
 
     @Override
     public List<OrderDetail> findByProductIDAndOrderID(int productID, int orderID) {
         return orderDetailRepository.findByProductIDAndOrderID(productID, orderID);
     }
-
+    @Override
+    public OrderDetail save(OrderDetail orderDetail) {
+        return orderDetailRepository.save(orderDetail);
+    }
 //    @Override
 //    public Optional<OrderDetail> findByProductIDAndOrderIDDelete(int productID, int orderID) {
 //        return orderDetailRepository.findByProductProductIDAndOrderOrderID(productID, orderID);

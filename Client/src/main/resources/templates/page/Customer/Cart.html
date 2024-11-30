@@ -5,130 +5,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <link rel="stylesheet" href="/css/Cart.css">
 </head>
 
 <body class="page-cart">
-    <div id="header"></div>
-    <div id="breadcrumb-container"></div>
-    <div class="cart">
-        <div class="cart__items">
-            <!-- Iterate over cart items -->
+<div id="header"></div>
+<div id="breadcrumb-container"></div>
+<div class="cart">
+    <div class="cart__items">
+        <!-- Iterate over cart items -->
 
-            <div th:each="cartItem : ${cartItems}" class="cart-item">
-                <div class="cart-item__checkbox">
-                    <input type="checkbox" class="cart-item__checkbox-input">
-                </div>
-                <div class="cart-item__image-wrapper">
-                    <!-- Dynamically set image source -->
-                    <img th:src="${cartItem.productImage[0]}" alt="Product Image" class="cart-item__image">
-                </div>
-                <div class="cart-item__details">
-                    <h4 class="cart-item__name" th:text="${cartItem.productName}"></h4>
-                    <p class="cart-item__price">
-                        <span th:text="${cartItem.productPrice} + ' VNĐ'">Price</span>
-                        <span class="cart-item__stock"
-                              th:switch="${cartItem.stockQuantity>0}">
+        <div th:each="cartItem : ${cartItems}" class="cart-item">
+            <div class="cart-item__checkbox">
+                <input type="checkbox" class="cart-item__checkbox-input" th:value="${cartItem.id.productDetailId}"/>
+            </div>
+            <div class="cart-item__image-wrapper">
+                <!-- Dynamically set image source -->
+                <img th:src="${cartItem.productImage[0]}" alt="Product Image" class="cart-item__image">
+            </div>
+            <div class="cart-item__details">
+                <h4 class="cart-item__name" th:text="${cartItem.productName}"></h4>
+                <p class="cart-item__price">
+                    <span th:text="${cartItem.productPrice} + ' VNĐ'">Price</span>
+                    <span class="cart-item__stock"
+                          th:switch="${cartItem.stockQuantity>0}">
                             <span th:case="true" th:class="cart-item__stock--in" th:text="'In Stock'"></span>
-                            <span th:case="false" th:class="cart-item__stock--out"th:text="'Out of Stock'"></span>
+                            <span th:case="false" th:class="cart-item__stock--out" th:text="'Out of Stock'"></span>
                         </span>
-                    </p>
-                    <div class="cart-item__options">
-                        <!-- Dropdown for size -->
-<!--                        <select class="cart-item__dropdown cart-item__dropdown--size">-->
-<!--                            <option th:each="productDetail : ${productDetails}"-->
-<!--                                    th:value="${productDetail.size}"-->
-<!--                                    th:text="${productDetail.size}"></option>-->
-<!--                        </select>-->
-                        <span style="font-weight: bold" th:text="${cartItem.size.sizeValue}"></span>
-                        <span th:text="${cartItem.color.colorName}"></span>
-<!--                        &lt;!&ndash; Dropdown for color &ndash;&gt;-->
-<!--                        <select class="cart-item__dropdown cart-item__dropdown--color">-->
-<!--                            <option th:each="productDetail : ${cartItem.productDetails}"-->
-<!--                                    th:value="${productDetail.color}"-->
-<!--                                    th:text="${productDetail.color}">Color</option>-->
-<!--                        </select>-->
+                </p>
+                <div class="cart-item__options">
+                    <!-- Dropdown for size -->
+                    <!--                        <select class="cart-item__dropdown cart-item__dropdown--size">-->
+                    <!--                            <option th:each="productDetail : ${productDetails}"-->
+                    <!--                                    th:value="${productDetail.size}"-->
+                    <!--                                    th:text="${productDetail.size}"></option>-->
+                    <!--                        </select>-->
+                    <span style="font-weight: bold" th:text="${cartItem.size.sizeValue}"></span>
+                    <span th:text="${cartItem.color.colorName}"></span>
+                    <!--                        &lt;!&ndash; Dropdown for color &ndash;&gt;-->
+                    <!--                        <select class="cart-item__dropdown cart-item__dropdown--color">-->
+                    <!--                            <option th:each="productDetail : ${cartItem.productDetails}"-->
+                    <!--                                    th:value="${productDetail.color}"-->
+                    <!--                                    th:text="${productDetail.color}">Color</option>-->
+                    <!--                        </select>-->
 
-                        <!-- Quantity -->
-                        <div class="cart-item__quantity">
-                            <button class="cart-item__quantity-btn cart-item__quantity-btn--decrease">-</button>
-                            <input type="text" class="cart-item__quantity-input" th:value="${cartItem.quantity}" readonly th:data-price="${cartItem.productPrice}">
-                            <button class="cart-item__quantity-btn cart-item__quantity-btn--increase">+</button>
-                        </div>
+                    <!-- Quantity -->
+                    <div class="cart-item__quantity">
+                        <button class="cart-item__quantity-btn cart-item__quantity-btn--decrease">-</button>
+                        <input type="text" class="cart-item__quantity-input" th:value="${cartItem.quantity}" readonly
+                               th:data-price="${cartItem.productPrice}">
+                        <button class="cart-item__quantity-btn cart-item__quantity-btn--increase">+</button>
                     </div>
                 </div>
-
-                <div class="cart-item__actions">
-                    <div class="cart-item__total-price" th:text="${cartItem.productPrice * cartItem.quantity}+ ' VNĐ'"></div>
-                    <span class="cart-item__delete"><i class="fas fa-trash"></i> Delete</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="cart-summary">
-            <h3 class="cart-summary__title">Delivery</h3>
-            <div class="cart-summary__delivery-options">
-                <button class="cart-summary__delivery-btn cart-summary__delivery-btn--active" id="fast-delivery">Fast</button>
-                <button class="cart-summary__delivery-btn" id="express-delivery">Express</button>
-            </div>
-            <p class="cart-summary__delivery-date">Delivery date: June 24, 2022</p>
-
-            <div class="cart-summary__promo">
-                <input type="text" placeholder="Promocode" class="cart-summary__promo-input">
-                <button class="cart-summary__promo-apply">Apply</button>
-            </div>
-            <p class="cart-summary__promo-discount">20% off discount</p>
-
-            <div class="cart-summary__totals">
-                <p class="cart-summary__subtotal">Subtotal: <span id="subtotal">0.00 VNĐ</span></p></p>
-                <p class="cart-summary__discount">Discount (20%) <span>-16.19VNĐ</span></p>
-                <p class="cart-summary__delivery">Delivery: <span id="delivery-fee">0.00 VNĐ</span></p>
-                <h4 class="cart-summary__total">Total: <span id="total">0.00 VNĐ</span></h4>
             </div>
 
-            <button class="cart-summary__checkout" onclick="location.href='Checkout.html'">Proceed to checkout</button>
-            <button class="cart-summary__continue" onclick="location.href='Home.html'">Continue shopping</button>
+            <div class="cart-item__actions">
+                <div class="cart-item__total-price"
+                     th:text="${cartItem.productPrice * cartItem.quantity}+ ' VNĐ'"></div>
+                <span class="cart-item__delete"><i class="fas fa-trash"></i> Delete</span>
+            </div>
         </div>
     </div>
-    <div id="footer"></div>
 
-    <script src="/js/Cart.js"></script>
-    <script src="/js/script.js"></script>
+    <div class="cart-summary">
+        <h3 class="cart-summary__title">Delivery</h3>
+        <div class="cart-summary__delivery-options">
+            <button class="cart-summary__delivery-btn cart-summary__delivery-btn--active" id="fast-delivery">Fast
+            </button>
+            <button class="cart-summary__delivery-btn" id="express-delivery">Express</button>
+        </div>
+        <p class="cart-summary__delivery-date">Delivery date: June 24, 2022</p>
+
+        <div class="cart-summary__promo">
+            <input type="text" placeholder="Promocode" class="cart-summary__promo-input">
+            <button class="cart-summary__promo-apply">Apply</button>
+        </div>
+        <p class="cart-summary__promo-discount">20% off discount</p>
+
+        <div class="cart-summary__totals">
+            <p class="cart-summary__subtotal">Subtotal: <span id="subtotal">0.00 VNĐ</span></p></p>
+            <p class="cart-summary__discount">Discount (20%) <span>-16.19VNĐ</span></p>
+            <p class="cart-summary__delivery">Delivery: <span id="delivery-fee">0.00 VNĐ</span></p>
+            <h4 class="cart-summary__total">Total: <span id="total">0.00 VNĐ</span></h4>
+        </div>
+
+        <button class="cart-summary__checkout" id="checkout-btn">Proceed to checkout</button>
+        <button class="cart-summary__continue" onclick="location.href='Home.html'">Continue shopping</button>
+    </div>
+</div>
+<div id="footer"></div>
+
+<script src="/js/Cart.js"></script>
+<script src="/js/script.js"></script>
 <script>
+    // Khai báo cartItems bên ngoài DOMContentLoaded để có thể truy cập được trong toàn bộ script
+    let cartItems;
+
     document.addEventListener("DOMContentLoaded", function () {
-        const cartItems = document.querySelectorAll(".cart-item");
+        cartItems = document.querySelectorAll(".cart-item");  // Lấy tất cả các phần tử giỏ hàng
         const subtotalElement = document.getElementById("subtotal");
         let subtotal = 0;  // Biến lưu tổng các sản phẩm được chọn
         const fastDeliveryButton = document.getElementById("fast-delivery");
         const expressDeliveryButton = document.getElementById("express-delivery");
+        const checkoutButton = document.querySelector(".cart-summary__checkout");
 
         // Lắng nghe sự kiện click vào nút Fast Delivery
         fastDeliveryButton.addEventListener("click", function () {
-            // Xóa bỏ lớp active khỏi nút khác
             expressDeliveryButton.classList.remove("cart-summary__delivery-btn--active");
-
-            // Thêm lớp active cho nút Fast
             fastDeliveryButton.classList.add("cart-summary__delivery-btn--active");
-
-            // Cập nhật phí giao hàng
             document.getElementById("delivery-fee").textContent = "0.00 VNĐ";
             updateTotal();
         });
 
         // Lắng nghe sự kiện click vào nút Express Delivery
         expressDeliveryButton.addEventListener("click", function () {
-            // Xóa bỏ lớp active khỏi nút khác
             fastDeliveryButton.classList.remove("cart-summary__delivery-btn--active");
-
-            // Thêm lớp active cho nút Express
             expressDeliveryButton.classList.add("cart-summary__delivery-btn--active");
-
-            // Cập nhật phí giao hàng
-            document.getElementById("delivery-fee").textContent = "30.00 VNĐ";
+            document.getElementById("delivery-fee").textContent = "30000 VNĐ";
             updateTotal();
         });
+
         // Hàm tính tổng tiền của từng sản phẩm
         function updateItemTotal(totalPriceElement, pricePerItem, quantity) {
             const newTotal = pricePerItem * quantity;
@@ -153,8 +151,6 @@
             subtotalElement.textContent = `${subtotal.toFixed(1)} VNĐ`;
             updateTotal();
         }
-
-
 
         // Lắng nghe sự kiện thay đổi số lượng
         cartItems.forEach(cartItem => {
@@ -190,15 +186,56 @@
         // Cập nhật Subtotal khi trang được tải lần đầu
         updateSubtotal();
 
-
-
-// Hàm cập nhật Total (Tổng tiền cuối cùng)
+        // Hàm cập nhật Total (Tổng tiền cuối cùng)
         function updateTotal() {
             const subtotal = parseFloat(document.getElementById("subtotal").textContent) || 0;
             const deliveryFee = parseFloat(document.getElementById("delivery-fee").textContent) || 0;
             const total = subtotal + deliveryFee;
             document.getElementById("total").textContent = `${total.toFixed(1)} VNĐ`;
         }
+
+    });
+
+    // Lắng nghe sự kiện click vào nút Checkout
+    document.getElementById("checkout-btn").addEventListener("click", function () {
+        // Lấy tất cả các checkbox đã được chọn
+        const selectedCheckboxes = document.querySelectorAll(".cart-item__checkbox-input:checked");
+
+        // Nếu không có checkbox nào được chọn
+        if (selectedCheckboxes.length === 0) {
+            alert("Vui lòng chọn sản phẩm trước khi thêm vào giỏ hàng!");
+            return;
+        }
+
+        // Chuẩn bị danh sách sản phẩm để gửi
+        const selectedProducts = Array.from(selectedCheckboxes).map(checkbox => {
+            const cartItem = checkbox.closest(".cart-item");
+            const quantity = cartItem.querySelector(".cart-item__quantity-input").value;
+            const delivery = document.getElementById("delivery-fee").textContent
+            const subToTal = document.getElementById("subtotal").textContent
+            const total = document.getElementById("total").textContent
+            return {
+                id: checkbox.value,
+                quantity: parseInt(quantity),
+                delivery: parseInt(delivery),
+                subToTal:parseInt(subToTal),
+                total:parseInt(total)
+            };
+        });
+
+        // Gửi dữ liệu đến Spring Boot
+        const url = "/checkout"; // Thay URL theo controller của bạn
+        const queryParams = new URLSearchParams();
+
+        selectedProducts.forEach(product => {
+            queryParams.append("id", product.id);
+            queryParams.append("quantity", product.quantity);
+            queryParams.append("delivery", product.delivery);
+            queryParams.append("subToTal", product.subToTal);
+            queryParams.append("total", product.total);
+        });
+    console.log(`${url}?${queryParams.toString()}`)
+        window.location.href = `${url}?${queryParams.toString()}`;
 
     });
 

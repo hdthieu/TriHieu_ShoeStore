@@ -7,9 +7,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CartServiceImpl implements CartService {
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
+
+    public CartServiceImpl(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
+    }
+
     @Override
-    public Cart getCartById(int id) {
-        return cartRepository.findById(id).orElse(null);
+    public Cart getCartByUserId(int id) {
+        return cartRepository.findCartByUserId(id);
     }
 }
