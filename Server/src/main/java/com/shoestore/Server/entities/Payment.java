@@ -1,5 +1,6 @@
 package com.shoestore.Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -24,5 +25,14 @@ public class Payment {
     private LocalDate paymentDate;
     private String status;
     @OneToOne(mappedBy = "payment",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Receipt receipt;
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "paymentID=" + paymentID +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

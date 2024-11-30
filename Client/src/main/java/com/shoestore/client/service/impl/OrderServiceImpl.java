@@ -1,7 +1,6 @@
 package com.shoestore.client.service.impl;
 
-import com.shoestore.client.dto.request.OrderDTO;
-import com.shoestore.client.dto.request.ProductDTO;
+import com.shoestore.client.dto.request.*;
 import com.shoestore.client.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -91,6 +90,25 @@ public class OrderServiceImpl implements OrderService {
     public Map<String, Long> getOrderStatistics() {
         String SERVER_API_URL = "http://localhost:8080/Order/OrderStatistics";
         ResponseEntity<Map> response = restTemplate.getForEntity(SERVER_API_URL, Map.class);
+        return response.getBody();
+    }
+
+    @Override
+    public OrderCheckoutDTO addOrder(OrderCheckoutDTO orderCheckoutDTO) {
+        String apiUrl = "http://localhost:8080/Order/add";
+        ResponseEntity<OrderCheckoutDTO> response=restTemplate.postForEntity(
+                apiUrl,orderCheckoutDTO, OrderCheckoutDTO.class
+        );
+        return response.getBody();
+    }
+
+    @Override
+    public OrderCheckoutDTO getById(int id) {
+        String apiUrl = "http://localhost:8080/Order/" + id;
+        ResponseEntity<OrderCheckoutDTO> response = restTemplate.exchange(
+                apiUrl, HttpMethod.GET, null, OrderCheckoutDTO.class
+        );
+        System.out.println("Response Body: " + response.getBody());
         return response.getBody();
     }
 

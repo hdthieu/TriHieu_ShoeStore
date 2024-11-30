@@ -23,7 +23,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/orders")
 public class OrderController {
-
     @Autowired
     private OrderService orderService;
     @GetMapping("/loyal-customers")

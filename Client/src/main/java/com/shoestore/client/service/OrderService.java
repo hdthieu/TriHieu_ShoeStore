@@ -1,5 +1,6 @@
 package com.shoestore.client.service;
 
+import com.shoestore.client.dto.request.OrderCheckoutDTO;
 import com.shoestore.client.dto.request.OrderDTO;
 import com.shoestore.client.dto.request.ProductDTO;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,6 @@ public interface OrderService {
     public Map<String, Object> getYearlyRevenue();
     public List<Map<String, Object>> getTop10LoyalCustomers();
     public Map<String, Long> getOrderStatistics();
+    OrderCheckoutDTO addOrder(OrderCheckoutDTO orderCheckoutDTO);
+    OrderCheckoutDTO getById(int id);
 }

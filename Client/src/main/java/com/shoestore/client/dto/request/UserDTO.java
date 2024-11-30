@@ -20,7 +20,7 @@ public class UserDTO {
   private String status;
   private RoleDTO role;
   private List<AddressDTO> addresses;
-  private CartDTO cart;
+//  private CartDTO cart;
   private String ci;
 
 

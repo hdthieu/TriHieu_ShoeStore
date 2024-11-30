@@ -133,7 +133,8 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getBestSellers();
+        System.out.println("Response Body: " + response.getBody());
+        return response.getBody().getProductDTOs();
     }
 
     // Lấy Top 10 sản phẩm mới ra mắt
@@ -143,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getNewArrivals();
+        return response.getBody().getProductDTOs();
     }
 
     // Lấy Top 10 sản phẩm thịnh hành
@@ -153,6 +154,6 @@ public class ProductServiceImpl implements ProductService {
         ResponseEntity<ProductHomeResponseDTO> response = restTemplate.exchange(
                 apiUrl, HttpMethod.GET, null, ProductHomeResponseDTO.class
         );
-        return response.getBody().getTrendingProducts();
+        return response.getBody().getProductDTOs();
     }
 }

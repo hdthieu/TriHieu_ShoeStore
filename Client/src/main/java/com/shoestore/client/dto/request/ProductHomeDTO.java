@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,7 +12,6 @@ import java.util.List;
 public class ProductHomeDTO {
   private int productID;
   private String productName;
-  private List<String> imageURL;
   private double price;
   private String status;
   private String description;

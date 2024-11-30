@@ -27,16 +27,23 @@ public class OrderDetailController {
 
     @Autowired
     private OrderDetailService orderDetailService;
-
-    @Autowired
-    private ProductService productService;
-
     @Autowired
     private ProductDetailService productDetailService;
-
     @Autowired
     private OrderService orderService;
 
+    @PostMapping("/add")
+    public ResponseEntity<OrderDetail> addProductDetail(@RequestBody OrderDetail orderDetail) {
+        System.out.println(orderDetail);
+        Order order=orderService.findById(orderDetail.getOrder().getOrderID());
+        ProductDetail productDetail=productDetailService.getProductDetailById(orderDetail.getProductDetail().getProductDetailID());
+        System.out.println(order);
+        System.out.println(productDetail);
+        orderDetail.setOrder(order);
+        orderDetail.setProductDetail(productDetail);
+        OrderDetail orderDetailAdd=orderDetailService.save(orderDetail);
+        return ResponseEntity.ok(orderDetailAdd);
+    }
     @GetMapping("/top-selling")
 //    http://localhost:8080/OrderDetail/top-selling?type=day&limit=5
     public ResponseEntity<List<Product>> getTopSellingProducts(
@@ -72,15 +79,7 @@ public class OrderDetailController {
         return ResponseEntity.ok(orderDetail);
     }
 
-//    @PostMapping("/addProductToOrder")
-//    public ResponseEntity<?> addProductToOrder(@RequestBody OrderDetailDTO orderDetailDTO) {
-//        try {
-//            OrderDetail newOrderDetail = orderDetailService.addProductToOrder(orderDetailDTO);
-//            return ResponseEntity.ok().body(Map.of("success", true, "message", "Product added to order!", "data", newOrderDetail));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("success", false, "message", e.getMessage()));
-//        }
-//    }
+
 //
 //
 //    // Lấy danh sách sản phẩm chưa có trong OrderDetail

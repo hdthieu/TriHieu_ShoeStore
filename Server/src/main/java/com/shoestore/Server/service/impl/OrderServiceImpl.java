@@ -39,6 +39,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order addOrder(Order order) {
+        if (order.getVoucher() != null && order.getVoucher().getVoucherID() == 0) {
+            order.setVoucher(null);
+        }
+        return orderRepository.save(order);
+    }
+
+    @Override
     public List<Order> findAll() {
         String jpql = """
             SELECT o 
