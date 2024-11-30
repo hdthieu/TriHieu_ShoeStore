@@ -42,8 +42,8 @@ public class User {
     private List<Review> reviews;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Wishlist> wishlists;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private List<Wishlist> wishlists;
 
 }
