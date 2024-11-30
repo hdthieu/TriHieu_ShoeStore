@@ -115,15 +115,15 @@
       <div class="tab-products__list" id="bestsellers">
         <div th:each="product : ${top10BestSellers}" class="tab-product-card">
           <div class="tab-product-card__image-wrapper">
-<!--            <img th:src="@{/images/products/{imageName}(imageName=${product.image})}" alt="Product 1" class="tab-product-card__image" />-->
+            <img th:src="@{'http://localhost:8080/ImageProduct/'+${product.productID} +'/'+ ${product.imageURL[1]}}" alt="Product Image" class="tab-product-card__image"/>
 <!--            <span th:if="${product.discount > 0}" class="tab-product-card__discount-badge" th:text="'-' + ${product.discount} + '%'"></span>-->
           </div>
           <div class="tab-product-card__info">
             <h3 class="tab-product-card__name" th:text="${product.productName}"></h3>
             <p class="tab-product-card__category" th:text="${product.categoryName}"></p>
             <p class="tab-product-card__price">
-              <span th:text="${product.price}"></span>
-<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price&#45;&#45;old" th:text="${product.oldPrice}"></span>-->
+              <span th:text="${product.price}"></span> VNĐ
+<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price--old" th:text="${product.oldPrice}"></span>-->
             </p>
           </div>
           <div class="tab-product-card__actions">
@@ -132,46 +132,46 @@
         </div>
       </div>
 
-<!--      &lt;!&ndash; New Arrivals Tab &ndash;&gt;-->
-<!--      <div class="tab-products__list" id="new-arrivals" style="display: none">-->
-<!--        <div th:each="product : ${top10NewArrivals}" class="tab-product-card">-->
-<!--          <div class="tab-product-card__image-wrapper">-->
-<!--&lt;!&ndash;            <img th:src="@{/images/products/{imageName}(imageName=${product.image})}" alt="Product 2" class="tab-product-card__image" />&ndash;&gt;-->
+      <!-- New Arrivals Tab -->
+      <div class="tab-products__list" id="new-arrivals" style="display: none">
+        <div th:each="product : ${top10NewArrivals}" class="tab-product-card">
+          <div class="tab-product-card__image-wrapper">
+            <img th:src="@{'http://localhost:8080/ImageProduct/'+${product.productID} +'/'+ ${product.imageURL[1]}}" alt="Product Image" class="tab-product-card__image"/>
 <!--            <span th:if="${product.discount > 0}" class="tab-product-card__discount-badge" th:text="'-' + ${product.discount} + '%'"></span>-->
-<!--          </div>-->
-<!--          <div class="tab-product-card__info">-->
-<!--            <h3 class="tab-product-card__name" th:text="${product.name}"></h3>-->
-<!--            <p class="tab-product-card__category" th:text="${product.category}"></p>-->
-<!--            <p class="tab-product-card__price">-->
-<!--              <span th:text="${product.price}"></span>-->
-<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price&#45;&#45;old" th:text="${product.oldPrice}"></span>-->
-<!--            </p>-->
-<!--          </div>-->
-<!--          <div class="tab-product-card__actions">-->
-<!--            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Add to Cart</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+          </div>
+          <div class="tab-product-card__info">
+            <h3 class="tab-product-card__name" th:text="${product.productName}"></h3>
+            <p class="tab-product-card__category" th:text="${product.categoryName}"></p>
+            <p class="tab-product-card__price">
+              <span th:text="${product.price}"></span> VNĐ
+<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price--old" th:text="${product.oldPrice}"></span>-->
+            </p>
+          </div>
+          <div class="tab-product-card__actions">
+            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.productID} + ')'">Add to Cart</button>
+          </div>
+        </div>
+      </div>
 
-<!--      &lt;!&ndash; Trending Tab &ndash;&gt;-->
-<!--      <div class="tab-products__list" id="trending" style="display: none">-->
-<!--        <div th:each="product : ${top10Trending}" class="tab-product-card">-->
-<!--          <div class="tab-product-card__image-wrapper">-->
-<!--&lt;!&ndash;            <img th:src="@{/images/products/{imageName}(imageName=${product.image})}" alt="Product 3" class="tab-product-card__image" />&ndash;&gt;-->
+      <!-- Trending Tab -->
+      <div class="tab-products__list" id="trending" style="display: none">
+        <div th:each="product : ${top10Trending}" class="tab-product-card">
+          <div class="tab-product-card__image-wrapper">
+            <img th:src="@{'http://localhost:8080/ImageProduct/'+${product.productID} +'/'+ ${product.imageURL[1]}}" alt="Product Image" class="tab-product-card__image"/>
 <!--            <span th:if="${product.discount > 0}" class="tab-product-card__discount-badge" th:text="'-' + ${product.discount} + '%'"></span>-->
-<!--          </div>-->
-<!--          <div class="tab-product-card__info">-->
-<!--            <h3 class="tab-product-card__name" th:text="${product.name}"></h3>-->
-<!--            <p class="tab-product-card__category" th:text="${product.category}"></p>-->
-<!--            <p class="tab-product-card__price">-->
-<!--              <span th:text="${product.price}"></span>-->
-<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price&#45;&#45;old" th:text="${product.oldPrice}"></span>-->
-<!--            </p>-->
-<!--          </div>-->
-<!--          <div class="tab-product-card__actions">-->
-<!--            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.id} + ')'">Add to Cart</button>-->
-<!--          </div>-->
-<!--        </div>-->
+          </div>
+          <div class="tab-product-card__info">
+            <h3 class="tab-product-card__name" th:text="${product.productName}"></h3>
+            <p class="tab-product-card__category" th:text="${product.categoryName}"></p>
+            <p class="tab-product-card__price">
+              <span th:text="${product.price}"></span> VNĐ
+<!--              <span th:if="${product.oldPrice}" class="tab-product-card__price--old" th:text="${product.oldPrice}"></span>-->
+            </p>
+          </div>
+          <div class="tab-product-card__actions">
+            <button class="tab-product-card__add-to-cart" th:onclick="'addToCart(' + ${product.productID} + ')'">Add to Cart</button>
+          </div>
+        </div>
       </div>
 
       <!-- Next Button -->
@@ -249,25 +249,11 @@
     <p>We partner with the most reliable brands to bring you the best products and services.</p>
   </div>
   <div class="brand-section">
-    <div class="brand-item">
-      <img th:src="@{/images/logos/logo1.png}" alt="Adidas Logo" />
-    </div>
-    <div class="brand-item">
-      <img th:src="@{/images/logos/logo1.png}" alt="Adidas Logo" />
-    </div>
-    <div class="brand-item">
-      <img th:src="@{/images/logos/logo2.png}" alt="Nike Logo" />
-    </div>
-    <div class="brand-item">
-      <img th:src="@{/images/logos/logo3.png}" alt="New Balance Logo" />
-    </div>
-    <div class="brand-item">
-      <img th:src="@{/images/logos/logo4.png}" alt="Timberland Logo" />
-    </div>
-    <div class="brand-item">
-      <img th:src="@{/images/logos/logo5.png}" alt="Asics Logo" />
+    <div class="brand-item" th:each="brand : ${brands}">
+      <img th:src="@{${'http://localhost:8080/ImageBrand/'+brand.image}}" th:alt="${brand.name + ' Logo'}" />
     </div>
   </div>
+
 
   <!-- Product Section -->
   <div class="product-section">

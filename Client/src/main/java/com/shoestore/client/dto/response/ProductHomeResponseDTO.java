@@ -17,6 +17,12 @@ public class ProductHomeResponseDTO {
   private int totalItems;
   private int totalPages;
   @JsonProperty("bestSellers")
-  private List<ProductHomeDTO> productDTOs;
+  private List<ProductHomeDTO> bestSellers;
+
+  @JsonProperty("trendingProducts")
+  private List<ProductHomeDTO> trendingProducts;
+
+  @JsonProperty("newArrivals")
+  private List<ProductHomeDTO> newArrivals;
 }
 

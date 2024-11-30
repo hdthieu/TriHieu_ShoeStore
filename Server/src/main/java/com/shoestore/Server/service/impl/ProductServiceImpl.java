@@ -112,21 +112,34 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.findByProductIDNotIn(productIDsInOrderDetail);
         }
     }
-//
-//    @Override
-//    public List<ProductDTO> getTop10BestSellers() {
-//        return productRepository.findTop10BestSellers(PageRequest.of(0, 10));
-//    }
-//
-//    @Override
-//    public List<ProductDTO> getTop10NewArrivals() {
-//        return productRepository.findTop10NewArrivals(PageRequest.of(0, 10));
-//    }
-//
-//    @Override
-//    public List<ProductDTO> getTop10Trending() {
-//        return productRepository.findTop10Trending(PageRequest.of(0, 10));
-//    }
+
+    private List<ProductDTO> setImageURLs(List<ProductDTO> productDTOList) {
+        productDTOList.forEach(productDTO -> {
+            List<String> imageUrls = getImageUrlsByProductID(productDTO.getProductID());
+            productDTO.setImageURL(imageUrls);
+        });
+        return productDTOList;
+    }
+
+    @Override
+    public List<String> getImageUrlsByProductID(int id) {
+        return productRepository.findImageUrlsByProductID(id);
+    }
+
+    @Override
+    public List<ProductDTO> getTop10BestSellers() {
+        return setImageURLs(productRepository.findTop10BestSellers(PageRequest.of(0, 10)));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10NewArrivals() {
+        return setImageURLs(productRepository.findTop10NewArrivals(PageRequest.of(0, 10)));
+    }
+
+    @Override
+    public List<ProductDTO> getTop10Trending() {
+        return setImageURLs(productRepository.findTop10Trending(PageRequest.of(0, 10)));
+    }
 
 
 
