@@ -99,7 +99,8 @@ public class SearchController {
 
         return "page/Customer/SearchFragment";
     }
-    @GetMapping("/product-search")
+
+    @GetMapping("/customer/product-search")
     public String showProducts(
 
             Model model) {
