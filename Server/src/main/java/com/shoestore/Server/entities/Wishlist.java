@@ -22,6 +22,6 @@ public class Wishlist {
 
   @ManyToOne
   @JoinColumn(name = "productID", nullable = false)
-  @JsonBackReference
+  @JsonBackReference("product")
   private Product product;
 }

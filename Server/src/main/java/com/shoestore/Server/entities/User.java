@@ -18,7 +18,7 @@ public class User {
     private int userID;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses;
     @Column(name = "phoneNumber")
@@ -41,7 +41,9 @@ public class User {
     @JsonBackReference
     private List<Review> reviews;
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Wishlist> wishlists;
+
 }
