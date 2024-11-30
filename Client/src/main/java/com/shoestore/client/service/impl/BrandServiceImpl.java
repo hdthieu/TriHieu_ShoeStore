@@ -34,4 +34,14 @@ public class BrandServiceImpl implements BrandService {
         System.out.println("Response Body: " + response.getBody());
         return response.getBody().getBrandDTOs();
     }
+
+    @Override
+    public List<BrandDTO> getAllBrands() {
+        String apiUrl="http://localhost:8080/brands";
+        ResponseEntity<BrandResponseDTO> response= restTemplate.exchange(
+                apiUrl, HttpMethod.GET,null, BrandResponseDTO.class
+        );
+        System.out.println("Response Body: " + response.getBody());
+        return response.getBody().getBrandDTOss();
+    }
 }

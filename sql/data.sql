@@ -63,14 +63,13 @@ VALUES
 
 
 -- Thêm dữ liệu cho bảng Brand
-INSERT INTO Brand (name, image)
+INSERT INTO Brand (name)
 VALUES
-('Nike', 'nike.png'),
-('Adidas', 'adidas.png'),
-('Puma', 'puma.png'),
-('Reebok', 'reebok.png'),
-('Converse', 'converse.png'),
-('Under Armour', 'under_armour.png');
+('Nike'),
+('Adidas'),
+('Puma'),
+('Reebok'),
+('Under Armour');
 
 -- Thêm dữ liệu cho bảng Category
 INSERT INTO Category (description, name)
@@ -492,7 +491,7 @@ VALUES
 
 INSERT INTO Voucher (description, discountType, discountValue, endDate, name, startDate, status, minValueOrder)
 VALUES
-('Welcome Voucher', 'Percentage', 10, '2024-12-31', 'WELCOME10', '2024-01-01', 'Upcoming', 300000),
+('Welcome Voucher', 'Percentage', 10, '2024-12-31', 'WELCOME10', '2024-12-10', 'Upcoming', 300000),
 ('Holiday Discount', 'Flat', 20000, '2024-12-25', 'HOLIDAY20', '2024-12-01', 'Active', 200000),
 ('Year-End Sale', 'Percentage', 15, '2024-12-31', 'YEAR15', '2024-12-15', 'Ended', 250000);
 
@@ -606,7 +605,7 @@ VALUES
     (30000, '2024-11-27', '78 Dien Bien Phu, Da Nang', 'Processing', 7, 3, 375000),
     (30000, '2024-11-28', '90 Vo Van Kiet, Can Tho', 'Delivered', 8, 1, 367500),
     (30000, '2024-11-30', '11 Nguyen Trai, Hai Phong', 'Shipped', 9, 1, 111000),
-    (0, '2024-12-01', '22 Hai Ba Trung, Hai Phong', 'Processing', 10, NULL, 250000);
+    (0, '2024-12-01', '22 Hai Ba Trung, Hai Phong', 'Processing', 10, NULL, 220000);
 
 
 
@@ -750,56 +749,4 @@ VALUES
 ('Excellent material.', '2024-11-19', 5, 19, 19),
 ('Highly recommend!', '2024-11-20', 5, 20, 20);
 
-INSERT INTO Wishlist (productID, userID)
-VALUES
-(1, 1),
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(10, 1),
-(11, 1),
-(12, 1),
-(13, 1),
-(14, 1),
-(15, 1),
-(16, 1),
-(17, 1),
-(18, 1),
-(19, 1),
-(20, 1),
-(21, 1),
-(22, 1),
-(23, 1),
-(24, 1),
-(25, 1),
-(26, 1),
-(27, 1),
-(28, 1),
-(29, 1),
-(30, 1),
-(31, 1),
-(32, 1),
-(33, 1),
-(34, 1),
-(35, 1),
-(36, 1),
-(37, 1),
-(38, 1),
-(39, 1),
-(40, 1),
-(41, 1),
-(42, 1),
-(43, 1),
-(44, 1),
-(45, 1),
-(46, 1),
-(47, 1),
-(48, 1),
-(49, 1),
-(50, 1);
 
