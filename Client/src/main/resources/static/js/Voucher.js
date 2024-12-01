@@ -1,3 +1,9 @@
+document.getElementById('resetButton').addEventListener('click', function() {
+    // Reset giá trị của form
+    document.getElementById('voucher-form').reset();
+
+    // Đảm bảo giữ lại các kiểu dáng đã được định nghĩa sẵn
+});
 // Hàm xóa voucher
 function deleteVoucher(voucherID, row) {
     // Gửi yêu cầu DELETE tới server để xóa voucher
@@ -151,7 +157,7 @@ document.getElementById("voucher-form-edit").addEventListener("submit", function
     const voucherId = this.dataset.voucherId;
     const name = document.getElementById("tenPhieuGiamGiaEdit").value.trim();
     const description = document.getElementById("moTa-edit").value.trim();
-    const discountType = document.querySelector('input[name="discount-type"]:checked')?.value;
+    const discountType = document.querySelector('input[name="discount-type-edit"]:checked')?.value;
     const discountValue = parseFloat(document.getElementById("phanTramGiam-edit").value);
     const minValueOrder = parseFloat(document.getElementById("giaTriDonToiThieu-edit").value);
     const startDate = document.getElementById("ngayBatDau-edit").value;

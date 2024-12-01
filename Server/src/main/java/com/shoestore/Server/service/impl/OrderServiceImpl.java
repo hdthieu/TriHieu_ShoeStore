@@ -50,14 +50,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> findAll() {
         String jpql = """
-            SELECT o 
-            FROM Order o
-            JOIN FETCH o.user u
-            JOIN FETCH o.orderDetails od
-            JOIN FETCH od.productDetail pd
-            JOIN FETCH pd.product p
-            ORDER BY o.orderDate DESC
-        """;
+        SELECT o 
+        FROM Order o
+        JOIN FETCH o.user u
+        JOIN FETCH o.orderDetails od
+        JOIN FETCH od.productDetail pd
+        JOIN FETCH pd.product p
+        ORDER BY o.orderID DESC
+    """;
 
         return entityManager.createQuery(jpql, Order.class).getResultList();
     }

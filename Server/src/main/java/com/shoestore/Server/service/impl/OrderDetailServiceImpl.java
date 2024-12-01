@@ -39,17 +39,35 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     public Map<String, Object> fetchOrderDetailByOrderID(Long orderID) {
         // Lệnh Native SQL để lấy thông tin đơn hàng và chi tiết sản phẩm
+//        String sql = """
+//            SELECT o.status, o.feeShip, o.shippingAddress, v.discountValue AS voucherDiscount, v.discountType AS voucherType,
+//                   od.quantity, od.price, p.productName, u.name AS userName, u.phoneNumber, a.street AS userAddress, o.orderDate, pd.productID, u.email, pd.imageURL
+//            FROM OrderDetail od
+//            JOIN ProductDetail pd ON od.productDetailID = pd.productDetailID
+//            JOIN Product p ON pd.productID = p.productID
+//            JOIN Orders o ON od.orderID = o.orderID
+//            LEFT JOIN Voucher v ON o.voucherID = v.voucherID
+//            LEFT JOIN Users u ON o.userID = u.userID
+//            LEFT JOIN Address a ON u.userID = a.userID
+//            WHERE o.orderID = ?1
+//        """;
         String sql = """
-            SELECT o.status, o.feeShip, o.shippingAddress, v.discountValue AS voucherDiscount, v.discountType AS voucherType,
-                   od.quantity, od.price, p.productName, u.name AS userName, u.phoneNumber, a.street AS userAddress, o.orderDate, pd.productID, u.email
-            FROM OrderDetail od
-            JOIN ProductDetail pd ON od.productDetailID = pd.productDetailID
-            JOIN Product p ON pd.productID = p.productID
-            JOIN Orders o ON od.orderID = o.orderID
-            LEFT JOIN Voucher v ON o.voucherID = v.voucherID
-            LEFT JOIN Users u ON o.userID = u.userID
-            LEFT JOIN Address a ON u.userID = a.userID
-            WHERE o.orderID = ?1
+             SELECT o.status, o.feeShip, o.shippingAddress, v.discountValue AS voucherDiscount, v.discountType AS voucherType,
+                             od.quantity, od.price, p.productName, u.name AS userName, u.phoneNumber, a.street AS userAddress, o.orderDate,
+                             pd.productID, u.email,
+                             (SELECT TOP 1 pi.imageURL
+                     FROM Product_ImageURL pi
+                     WHERE pi.productID = p.productID) AS imageURL,
+                             pa.status AS paymentStatus
+                     FROM OrderDetail od
+                     JOIN ProductDetail pd ON od.productDetailID = pd.productDetailID
+                     JOIN Product p ON pd.productID = p.productID
+                     JOIN Orders o ON od.orderID = o.orderID
+                     LEFT JOIN Voucher v ON o.voucherID = v.voucherID
+                     LEFT JOIN Users u ON o.userID = u.userID
+                     LEFT JOIN Address a ON u.userID = a.userID
+                     LEFT JOIN Payment pa ON o.orderID = pa.orderID
+                     WHERE o.orderID = ?1
         """;
 
         Query query = entityManager.createNativeQuery(sql);
@@ -80,31 +98,36 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 orderInfo.put("shippingAddress", result[2]);
                 orderInfo.put("voucher", voucherDiscount);
                 orderInfo.put("voucherType", voucherType);
-
+                orderInfo.put("paymentStatus", result[15]); // Thêm trạng thái thanh toán
             }
 
             // Lấy thông tin sản phẩm
             int quantity = Optional.ofNullable(result[5]).map(q -> (int) q).orElse(0);
             double price = Optional.ofNullable(result[6]).map(p -> (double) p).orElse(0.0);
             String productName = (String) result[7];
-//            String imageUrl = (String) result[8];
             String userName = (String) result[8];
             String phoneNumber = (String) result[9];
-
             String addressStr = (String) result[10];
             java.sql.Date sqlDate = (java.sql.Date) result[11];
             int productID = (int) result[12];
             String email = (String) result[13];
+            String imageUrl = (String) result[14]; // Cột 14 là imageURL trong truy vấn đã sửa
+
             LocalDate orderDate = sqlDate.toLocalDate();
 
             totalProductValue += quantity * price;
+
             // Thêm thông tin sản phẩm vào danh sách
             Map<String, Object> detail = new HashMap<>();
             detail.put("productName", productName);
             detail.put("quantity", quantity);
             detail.put("price", price);
             detail.put("productID", productID);
-//            detail.put("imageURL", imageUrl);
+
+            if (imageUrl != null) {
+                detail.put("imageURL", imageUrl);
+            }
+
             orderDetails.add(detail);
             response.put("userName", userName);
             response.put("phoneNumber", phoneNumber);
@@ -112,6 +135,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             response.put("orderDate", orderDate);
             response.put("email", email);
         }
+
+
 
         // Tính toán tổng tiền
         double voucherDiscount = Optional.ofNullable(orderInfo.get("voucher")).map(v -> (double) v).orElse(0.0); // Giá trị giảm giá
@@ -137,7 +162,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         response.put("orderDetails", orderDetails);
         response.putAll(orderInfo);
         response.put("totalAmount", totalAmount);
-
+        response.put("paymentStatus", orderInfo.get("paymentStatus"));
         // Trả về kết quả
         return response;
     }
