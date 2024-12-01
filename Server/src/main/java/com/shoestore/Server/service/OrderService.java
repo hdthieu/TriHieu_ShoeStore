@@ -17,4 +17,6 @@ public interface OrderService {
     public void updateOrderStatus(int orderId, String status) ;
     Order findById(int orderID);
     Order addOrder(Order order);
+    List<Order> findByUserId(int userId);
+
 }

@@ -151,8 +151,8 @@
           </li>
         </ul>
         <div class="styleUser text-center" style="margin-top: 110%">
-          <h6>Hồ Đức Trí Hiếu</h6>
-          <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
+          <h6 th:text="${userName}"></h6>
+          <button class="btn btn-danger stylebtnDangXuat" onclick="window.location.href='/logout'">Đăng Xuất</button>
         </div>
       </div>
     </nav>

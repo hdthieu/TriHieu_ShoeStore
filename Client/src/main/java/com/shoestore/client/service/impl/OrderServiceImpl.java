@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -112,5 +113,28 @@ public class OrderServiceImpl implements OrderService {
         return response.getBody();
     }
 
+
+    @Override
+    public List<OrderDTO> getOrdersByUserId(int userId) {
+        String apiUrl = "http://localhost:8080/Order/user/" + userId; // API để lấy danh sách đơn hàng theo userId
+
+        try {
+            ResponseEntity<List<OrderDTO>> response = restTemplate.exchange(
+                    apiUrl,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<OrderDTO>>() {}
+            );
+
+            // Kiểm tra phản hồi
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody(); // Trả về danh sách đơn hàng
+            } else {
+                throw new RuntimeException("Failed to fetch orders: " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching orders: " + e.getMessage(), e);
+        }
+    }
 
 }

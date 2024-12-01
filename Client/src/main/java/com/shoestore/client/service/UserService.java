@@ -23,4 +23,5 @@ public interface UserService {
     public boolean delete(int id);
     public List<UserDTO> getUsersFromServer() ;
     public UserDTO saveUser(UserDTO userDTO);
+    public UserDTO updateUser(int id, UserDTO updatedUser);
 }
