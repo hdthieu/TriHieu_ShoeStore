@@ -1,9 +1,3 @@
-document.getElementById('resetButton').addEventListener('click', function() {
-    // Reset giá trị của form
-    document.getElementById('voucher-form').reset();
-
-    // Đảm bảo giữ lại các kiểu dáng đã được định nghĩa sẵn
-});
 // Hàm xóa voucher
 function deleteVoucher(voucherID, row) {
     // Gửi yêu cầu DELETE tới server để xóa voucher
