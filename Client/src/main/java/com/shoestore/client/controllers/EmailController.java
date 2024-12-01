@@ -59,7 +59,7 @@ public class EmailController {
         // Header with logo, shop name, and shop details
         emailContent.append("<div style='text-align: center; margin-bottom: 20px;'>");
         emailContent.append("<img src='https://chonden.com/wp-content/uploads/2021/12/db5508cd17203bcd348a16ae60a36fab-300x300.jpg' alt='Shop Logo' style='max-width: 200px;'><br>");
-        emailContent.append("<h2 style='margin: 5px;'>Tên Shop</h2>");
+        emailContent.append("<h2 style='margin: 5px;'>HEHEBOIZ</h2>");
         emailContent.append("<p style='margin: 0;'>Địa chỉ: 123 Shop Street, City</p>");
         emailContent.append("<p style='margin: 0;'>Email: contact@shop.com | Số điện thoại: 0123456789</p>");
         emailContent.append("</div>");
@@ -67,7 +67,9 @@ public class EmailController {
         // Invoice details
         emailContent.append("<h3>Thông tin hóa đơn</h3>");
         emailContent.append("<p><strong>Mã đơn:</strong> " + orderDetails.get("orderID") + "</p>");
-        emailContent.append("<p><strong>Trạng thái:</strong> " + orderDetails.get("orderStatus") + "</p>");
+        emailContent.append("<p><strong>Trạng thái đơn hàng:</strong> <span style='background: yellow;'>" + orderDetails.get("orderStatus") + "</span></p>");
+        emailContent.append("<p><strong>Thanh toán:</strong> <span style='background: yellow;'>" + orderDetails.get("orderPayment") + "</span></p>");
+
 
         // Customer details section
         emailContent.append("<h3>Thông tin khách hàng</h3>");

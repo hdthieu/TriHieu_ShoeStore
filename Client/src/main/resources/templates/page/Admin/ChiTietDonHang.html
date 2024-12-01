@@ -22,13 +22,13 @@
                 <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
               </li>
               <li class="nav-item mt-3">
-                <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+                <a class="nav-link text-light" href="http://localhost:3000/admin/users/list" onclick="setActive(this)">Thành viên</a>
               </li>
               <li class="nav-item mt-3">
-                <a class="nav-link text-light" href="#" onclick="setActive(this)">Bài viết</a>
+                <a class="nav-link text-light" href="http://localhost:3000/admin/product/review" onclick="setActive(this)">Bài viết</a>
               </li>
               <li class="nav-item mt-3">
-                <a class="nav-link text-light" href="#" onclick="setActive(this)">Sản phẩm</a>
+                <a class="nav-link text-light" href="http://localhost:3000/admin/product" onclick="setActive(this)">Sản phẩm</a>
               </li>
               <li class="nav-item mt-3">
                 <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
@@ -103,7 +103,15 @@
                       <strong>Trạng thái:</strong>
                     </div>
                     <div class="col-6">
-                      <span id="orderStatus" th:text="${orderDetail['status']}"></span>
+                      <span id="orderStatus" th:text="${orderDetail['status']}" style=" background: yellow;"></span>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-6 text-right">
+                      <strong>Thanh Toán:</strong>
+                    </div>
+                    <div class="col-6">
+                      <span id="orderPayment" style=" background: yellow;" th:text="${orderDetail['paymentStatus']}"></span>
                     </div>
                   </div>
                   <div class="row mb-2">
@@ -202,12 +210,11 @@
                     <tbody id="productList">
                       <tr th:each="product, iterStat : ${orderDetail.orderDetails}">
                         <td th:text="${iterStat.count}"></td>
-                        <td>
-                          <img src="https://vietjack.com/html/images/html.gif"
-                               alt="Hình ảnh sản phẩm"
-                               class="img-thumbnail"
-                               style="max-width: 50px" />
+                        <td style="    width: 150px; height: 90px; text-align: center;">
+                          <img th:src="@{'http://localhost:8080/ImageProduct/' + ${product.productID} + '/' + ${product.imageURL}}"
+                               alt="Product Image">
                         </td>
+
                         <td>
                           <p class="mb-0 font-weight-bold" th:text="${product.productName}"></p>
                           <small>Đơn giá: <span id="price-${product.productID}" th:text="${product.price}"></span></small>
@@ -302,7 +309,7 @@
         // Chuyển font sang định dạng base64
         const reader = new FileReader();
         reader.onload = function (e) {
-          const fontBase64 = e.target.result.split(',')[1]; // Bỏ phần đầu "data:..."
+          const fontBase64 = e.target.result.split(',')[1];
           const pdf = new jsPDF();
 
           // Thêm font vào jsPDF
@@ -393,6 +400,7 @@
       document.getElementById("printInvoiceButton").addEventListener("click", function() {
         const orderID = document.getElementById("orderID");
         const orderStatus = document.getElementById("orderStatus");
+        const orderPayment = document.getElementById("orderPayment")
         const feeShip = document.getElementById("feeShip");
         const totalAmount = document.getElementById("totalPayable");
         const customerName = document.getElementById("customerName");
@@ -401,7 +409,7 @@
         const discountVoucher =   document.getElementById('discount');
         const customerEmail = "hoductrihieu@gmail.com";
 
-        if (!orderID || !orderStatus || !feeShip || !totalAmount || !customerName || !customerPhone || !customerAddress || !customerEmail || !discountVoucher) {
+        if (!orderID || !orderStatus || !feeShip || !totalAmount || !customerName || !customerPhone || !customerAddress || !customerEmail || !discountVoucher || !orderPayment) {
           alert("Một số thông tin hóa đơn thiếu hoặc không tồn tại.");
           return;
         }
@@ -447,6 +455,7 @@
           },
           body: JSON.stringify({
             orderID: orderID.innerText,
+            orderPayment: orderPayment.innerText,
             orderStatus: orderStatus.innerText,
             feeShip: formattedFeeShip,
             totalAmount: formattedTotalAmount,
