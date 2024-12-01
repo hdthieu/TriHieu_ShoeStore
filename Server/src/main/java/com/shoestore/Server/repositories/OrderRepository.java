@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-
         @Query("SELECT COUNT(o.orderID), SUM(o.total) " +
                 "FROM Order o " +
                 "WHERE YEAR(o.orderDate) = :year")
@@ -48,6 +47,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     long countByStatus(String status);
 
-
+  List<Order> findByUser_UserID(int userID);
 
 }

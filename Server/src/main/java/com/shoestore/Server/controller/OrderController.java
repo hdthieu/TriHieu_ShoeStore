@@ -134,5 +134,28 @@ public class OrderController {
         return orderService.getOrderStatistics();
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Map<String, Object>>> getOrdersByUserId(@PathVariable("userId") int userId) {
+        try {
+            List<Order> orders = orderService.findByUserId(userId);
+            List<Map<String, Object>> result = orders.stream()
+                    .map(order -> {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("orderID", order.getOrderID());
+                        map.put("dateCreated", order.getOrderDate());
+                        map.put("name", order.getUser().getName());
+                        map.put("totalPrice", order.getTotal());
+                        map.put("status", order.getStatus());
+                        return map;
+                    })
+                    .collect(Collectors.toList());
+            System.out.println(orders);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
 
 }

@@ -6,40 +6,38 @@
       <h2 class="main-title">My Account</h2>
       <!-- Contact Details -->
       <h4 class="section-title">Contact Details</h4>
-      <form>
+      <form action="/customer/account/update-account" method="post">
         <div class="form-wrapper">
           <div class="form-elem">
             <label class="form-label">Your Name</label>
             <div class="form-input-wrapper">
-              <input type="text" class="form-control" value="Richard Doe" readonly />
-              <button type="button" class="form-change-btn">Change</button>
+              <input type="text" name="name" class="form-control" th:value="${user.name}" />
             </div>
           </div>
           <div class="form-elem">
             <label class="form-label">Email Address</label>
             <div class="form-input-wrapper">
-              <input type="email" class="form-control" value="richard@gmail.com" readonly />
-              <button type="button" class="form-change-btn">Change</button>
+              <input type="email" name="email" class="form-control" th:value="${user.email}" />
             </div>
           </div>
           <div class="form-elem">
             <label class="form-label">Phone Number</label>
             <div class="form-input-wrapper">
-              <input type="text" class="form-control" value="+9686 6864 3434" readonly />
-              <button type="button" class="form-change-btn">Change</button>
+              <input type="text" name="phoneNumber" class="form-control" th:value="${user.phoneNumber}" />
             </div>
           </div>
-          <div class="form-elem">
-            <label class="form-label">Password</label>
-            <div class="form-input-wrapper">
-              <input type="password" class="form-control" value="Pass Key" readonly />
-              <button type="button" class="form-change-btn">Change</button>
-            </div>
-          </div>
+<!--          <div class="form-elem">-->
+<!--            <label class="form-label">Password</label>-->
+<!--            <div class="form-input-wrapper">-->
+<!--              <input type="password" name="password" class="form-control" th:value="${user.password}" />-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
       </form>
-      
-      </div>
+
+
+    </div>
     </div>
   </div>
 </div>

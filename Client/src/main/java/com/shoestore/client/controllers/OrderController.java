@@ -2,7 +2,9 @@ package com.shoestore.client.controllers;
 
 import com.shoestore.client.dto.request.OrderDTO;
 import com.shoestore.client.dto.request.ProductDTO;
+import com.shoestore.client.dto.request.UserDTO;
 import com.shoestore.client.service.OrderService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,8 @@ public class OrderController {
     public List<Map<String, Object>> getTop10LoyalCustomers() {
         return orderService.getTop10LoyalCustomers();
     }
+    @Autowired
+    private HttpSession session;
     @GetMapping("/Home")
     public String showHomePage(Model model) {
         String today = LocalDate.now().toString();
@@ -59,6 +63,14 @@ public class OrderController {
         revenueYear.put("totalRevenueYear", formattedRevenue);
         model.addAttribute("totalOrdersYear", revenueYear.get("totalQuantity"));
         model.addAttribute("revenueYear", revenueYear);
+
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user != null) {
+            System.out.println(user.getName());
+            model.addAttribute("userName", user.getName());
+        } else {
+            model.addAttribute("userName", "Guest");
+        }
         return "page/Admin/TrangChuQuanLy";
     }
 
