@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.text.DecimalFormat;
 @Service
 public class OrderServiceImpl implements OrderService {
+
     private final OrderRepository orderRepository;
     @PersistenceContext
     private EntityManager entityManager;
@@ -143,5 +144,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    @Override
+    public List<Order> findByUserId(int userId) {
+        return orderRepository.findByUser_UserID(userId);
+    }
 
 }

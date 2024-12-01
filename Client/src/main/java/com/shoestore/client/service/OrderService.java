@@ -21,4 +21,5 @@ public interface OrderService {
     public Map<String, Long> getOrderStatistics();
     OrderCheckoutDTO addOrder(OrderCheckoutDTO orderCheckoutDTO);
     OrderCheckoutDTO getById(int id);
+    List<OrderDTO> getOrdersByUserId(int userId);
 }

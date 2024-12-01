@@ -5,6 +5,7 @@ import com.shoestore.client.dto.response.UserResponseDTO;
 import com.shoestore.client.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -147,5 +148,27 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserDTO updateUser(int id, UserDTO updatedUser) {
+        String apiUrl = SERVER_BASE_URL + "auth/users/" + id; // URL API để cập nhật người dùng
+
+        try {
+            // Gửi yêu cầu PUT tới API
+            ResponseEntity<UserDTO> response = restTemplate.exchange(
+                    apiUrl, HttpMethod.PUT,
+                    new HttpEntity<>(updatedUser), // Body gửi lên server
+                    UserDTO.class
+            );
+
+            // Kiểm tra phản hồi từ server
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody(); // Trả về đối tượng UserDTO sau khi cập nhật
+            } else {
+                throw new RuntimeException("Lỗi khi cập nhật người dùng: " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Lỗi khi cập nhật người dùng: " + e.getMessage(), e);
+        }
+    }
 
 }
