@@ -130,13 +130,13 @@
                         <a class="nav-link text-light" href="http://localhost:3000/admin/orders/Home" onclick="setActive(this)">Home</a>
                     </li>
                     <li class="nav-item mt-3">
-                        <a class="nav-link text-light" href="#" onclick="setActive(this)">Thành viên</a>
+                        <a class="nav-link text-light" href="http://localhost:3000/admin/users/list" onclick="setActive(this)">Thành viên</a>
                     </li>
                     <li class="nav-item mt-3">
-                        <a class="nav-link text-light" th:href="@{/page/admin/reviews}" onclick="setActive(this)">Đánh giá</a>
+                        <a class="nav-link text-light" href="http://localhost:3000/page/admin/reviews" onclick="setActive(this)">Đánh giá</a>
                     </li>
                     <li class="nav-item mt-3">
-                        <a class="nav-link text-light" th:href="@{/page/admin/products}" onclick="setActive(this)">Sản phẩm</a>
+                        <a class="nav-link text-light" href="http://localhost:3000/page/admin/products" onclick="setActive(this)">Sản phẩm</a>
                     </li>
                     <li class="nav-item mt-3">
                         <a class="nav-link text-light" href="http://localhost:3000/admin/orders/view" onclick="setActive(this)">Đơn hàng</a>
@@ -146,8 +146,8 @@
                     </li>
                 </ul>
                 <div class="styleUser text-center" style="margin-top: 110%">
-                    <h6>Hồ Đức Trí Hiếu</h6>
-                    <button class="btn btn-danger stylebtnDangXuat">Đăng Xuất</button>
+                    <h6 id="username-display"></h6>
+                    <button class="btn btn-danger stylebtnDangXuat" onclick="logout()">Đăng Xuất</button>
                 </div>
             </div>
         </nav>
@@ -313,10 +313,23 @@
 
 
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const username = sessionStorage.getItem("username"); // Lấy username từ Session Storage
+        if (username) {
+            console.log("Username found in Session Storage:", username);
+            document.getElementById("username-display").innerText = username; // Hiển thị lại
+        } else {
+            console.log("No username found. Redirecting to login page.");
+            window.location.href = "/login"; // Chuyển hướng về trang đăng nhập nếu không có username
+        }
+    });
 
 
-
-
+    function logout() {
+        sessionStorage.removeItem("username"); // Xóa username khỏi Session Storage
+        console.log("Username removed from Session Storage");
+        window.location.href = "/login"; // Chuyển hướng về trang đăng nhập
+    }
 
 
 

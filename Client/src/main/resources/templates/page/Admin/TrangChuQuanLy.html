@@ -138,7 +138,7 @@
             <a class="nav-link text-light" href="http://localhost:3000/admin/users/list" onclick="setActive(this)">Thành viên</a>
           </li>
           <li class="nav-item mt-3">
-            <a class="nav-link text-light" href="http://localhost:3000/page/admin/reviews" onclick="setActive(this)">Bài viết</a>
+            <a class="nav-link text-light" href="http://localhost:3000/page/admin/reviews" onclick="setActive(this)">Đánh giá</a>
           </li>
           <li class="nav-item mt-3">
             <a class="nav-link text-light" href="http://localhost:3000/page/admin/products" onclick="setActive(this)">Sản phẩm</a>
@@ -151,7 +151,7 @@
           </li>
         </ul>
         <div class="styleUser text-center" style="margin-top: 110%">
-          <h6 th:text="${userName}"></h6>
+          <h6 id="username-display" th:text="${userName}"></h6>
           <button class="btn btn-danger stylebtnDangXuat" onclick="window.location.href='/logout'">Đăng Xuất</button>
         </div>
       </div>
@@ -564,6 +564,19 @@
   //
   // // Định dạng số với dấu phẩy
   // revenueElement.innerText = revenue.toLocaleString();
+
+
+  // Lấy giá trị username từ nội dung thẻ h6
+  document.addEventListener("DOMContentLoaded", () => {
+    const usernameElement = document.getElementById("username-display");
+    if (usernameElement) {
+      const username = usernameElement.innerText.trim(); // Lấy username từ HTML
+      if (username) {
+        sessionStorage.setItem("username", username); // Lưu vào Session Storage
+        console.log("Username saved to Session Storage:", username);
+      }
+    }
+  });
 
 
 </script>
